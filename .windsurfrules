@@ -1,0 +1,4 @@
+Read docs/RULES.md before making any change.
+Read docs/ARCHITECTURE.md to understand the system.
+Read the AGENTS.md in the directory you are modifying before touching any file.
+Follow the Development Cycle: TEST → LEARN → PLAN → BUILD → TEST for every phase.

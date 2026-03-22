@@ -1,0 +1,15 @@
+{
+  "models": {
+    "fast": "claude-3-5-haiku-20241022",
+    "balanced": "claude-sonnet-4-20250514",
+    "smart": "claude-opus-4-20250514",
+    "reasoning": "claude-opus-4-20250514"
+  },
+  "organization": {
+    "name": "",
+    "industry": "",
+    "description": ""
+  },
+  "max_interview_turns": 15,
+  "default_model_tier": "balanced"
+}

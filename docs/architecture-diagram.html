@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Interview Synth — Architecture</title>
+<script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+<style>
+  :root {
+    --bg: #0a0a0f;
+    --surface: #12121a;
+    --border: #1e1e2e;
+    --text: #c9d1d9;
+    --muted: #6e7681;
+    --accent: #58a6ff;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Inter', -apple-system, sans-serif;
+    padding: 2rem;
+  }
+  h1 { font-size: 1.4rem; font-weight: 600; letter-spacing: .04em; margin-bottom: .25rem; }
+  .subtitle { color: var(--muted); font-size: .85rem; margin-bottom: 2rem; }
+  .section { margin-bottom: 2.5rem; }
+  .section h2 {
+    font-size: .75rem;
+    text-transform: uppercase;
+    letter-spacing: .1em;
+    color: var(--muted);
+    border-bottom: 1px solid var(--border);
+    padding-bottom: .5rem;
+    margin-bottom: 1rem;
+  }
+  .mermaid {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 1.5rem;
+    overflow-x: auto;
+  }
+  .mermaid svg { max-width: 100%; }
+  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+  @media (max-width: 900px) { .grid { grid-template-columns: 1fr; } }
+  .legend {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 1rem 1.25rem;
+    font-size: .8rem;
+    line-height: 1.7;
+  }
+  .legend dt { color: var(--accent); font-weight: 600; display: inline; }
+  .legend dd { display: inline; margin-left: .25rem; color: var(--text); }
+  .legend dd::after { content: ''; display: block; }
+</style>
+</head>
+<body>
+
+<h1>Synthetic Audience Interview System</h1>
+<p class="subtitle">Agent-first multi-agent research pipeline — architecture overview</p>
+
+<!-- 1. High-Level System -->
+<div class="section">
+  <h2>1 — System Layers</h2>
+  <div class="mermaid">
+graph TB
+    subgraph FRONTEND["🖥  Frontend — React SPA (port 5174)"]
+        direction LR
+        P1["ConversationPanel"]
+        P2["PersonaPanel"]
+        P3["InterviewPanel"]
+        P4["LogPanel"]
+    end
+
+    subgraph API["⚡ API Layer — FastAPI (port 8001)"]
+        direction LR
+        CR["chat_routes"]
+        SR["state_routes"]
+        CFR["config_routes"]
+        EV["events (SSE)"]
+    end
+
+    subgraph CORE["🧠  Core"]
+        direction LR
+        AR["agent_runtime\n5 capabilities"]
+        ORC["orchestrator\nbackground worker"]
+        MS["model_selector"]
+        HUB["HUB\nsingle source of truth"]
+    end
+
+    subgraph STORAGE["💾  Persistence"]
+        direction LR
+        CJ["data/config.json"]
+        SJ["data/state.json"]
+        PR["prompts/*.md"]
+    end
+
+    FRONTEND -- "REST + SSE" --> API
+    API -- "thin wrappers" --> CORE
+    AR -- "reads/writes" --> HUB
+    ORC -- "reads/writes" --> HUB
+    ORC -- "calls" --> AR
+    AR -- "resolves tier" --> MS
+    HUB -- "load/save" --> STORAGE
+    MS -- "reads" --> CJ
+
+    style FRONTEND fill:#1a1a2e,stroke:#58a6ff,color:#c9d1d9
+    style API fill:#1a1a2e,stroke:#f78166,color:#c9d1d9
+    style CORE fill:#1a1a2e,stroke:#7ee787,color:#c9d1d9
+    style STORAGE fill:#1a1a2e,stroke:#d2a8ff,color:#c9d1d9
+    style HUB fill:#2d1f3d,stroke:#d2a8ff,color:#e6e6e6,stroke-width:3px
+  </div>
+</div>
+
+<!-- 2. Event / Pub-Sub Flow -->
+<div class="section">
+  <h2>2 — Event Flow (Pub/Sub)</h2>
+  <div class="mermaid">
+sequenceDiagram
+    participant U as User / Frontend
+    participant API as FastAPI
+    participant AR as agent_runtime
+    participant SSE as SSE Broadcast
+    participant OQ as Orchestrator Queue
+    participant ORC as Orchestrator Worker
+    participant HUB as Hub (state)
+
+    U->>API: POST /api/chat
+    API->>AR: send_message("context_agent", msg)
+    AR->>HUB: append_message + API call
+    AR->>AR: emit_event("message_received")
+    AR-->>SSE: broadcast(event)
+    AR-->>OQ: enqueue(event)
+    SSE-->>U: SSE push to frontend
+    OQ->>ORC: _process_event()
+    ORC->>AR: send_message("orchestrator", summary)
+    ORC->>ORC: _parse_actions(response)
+    ORC->>AR: execute actions (CREATE_AGENT, RUN_INTERVIEW, etc.)
+    AR->>HUB: state mutations
+    AR-->>SSE: broadcast new events
+    SSE-->>U: real-time UI updates
+  </div>
+</div>
+
+<!-- 3. Agent Architecture -->
+<div class="section">
+  <h2>3 — Agent Hierarchy</h2>
+  <div class="mermaid">
+graph TD
+    ORC["🎯 Orchestrator\n(smart tier)\nwatches events · decides everything"]
+
+    ORC --> CTX["💬 Context Agent\nmulti-turn · interviews user\n→ produces research brief"]
+    ORC --> PA["🧬 Persona Architect\nsingle-shot · brief → personas\n+ system prompts"]
+    ORC --> ID["📋 Interview Designer\nsingle-shot · brief + personas\n→ strategy + interviewer prompt"]
+    ORC --> INT["🎙 Interviewer × N\nmulti-turn · one per persona\nprompt from designer"]
+    ORC --> PER["🎭 Persona Agent × N\nmulti-turn · one per interview\nprompt from architect"]
+    ORC --> QR["✅ Quality Reviewer\noptional · single-shot\nspawned by orchestrator"]
+
+    INT <-. "multi-turn\nconversation loop\n(max 15 turns)" .-> PER
+
+    style ORC fill:#2d333b,stroke:#58a6ff,color:#e6e6e6,stroke-width:3px
+    style CTX fill:#1c2128,stroke:#7ee787,color:#c9d1d9
+    style PA fill:#1c2128,stroke:#d2a8ff,color:#c9d1d9
+    style ID fill:#1c2128,stroke:#f78166,color:#c9d1d9
+    style INT fill:#1c2128,stroke:#ffa657,color:#c9d1d9
+    style PER fill:#1c2128,stroke:#ffa657,color:#c9d1d9
+    style QR fill:#1c2128,stroke:#6e7681,color:#c9d1d9
+  </div>
+</div>
+
+<!-- 4. Pipeline Phases -->
+<div class="section">
+  <h2>4 — Pipeline Phases</h2>
+  <div class="mermaid">
+stateDiagram-v2
+    [*] --> idle
+    idle --> context_gathering : user sends first message
+    context_gathering --> persona_generation : brief detected [BRIEF_COMPLETE]
+    persona_generation --> interviewing : personas + strategy ready
+    interviewing --> interviewing : next persona interview
+    interviewing --> complete : all interviews done
+    complete --> [*]
+  </div>
+</div>
+
+<!-- 5. Data Model + File Structure -->
+<div class="section">
+  <h2>5 — Data Model &amp; Module Map</h2>
+  <div class="grid">
+    <div class="legend">
+      <h3 style="color:var(--accent);margin-bottom:.5rem;font-size:.85rem;">Hub State Shape</h3>
+      <dl>
+        <dt>phase</dt><dd>"idle | context_gathering | persona_generation | interviewing | complete"</dd>
+        <dt>agents{}</dt><dd>id → {type, model_tier, system_prompt, messages[], status, metadata}</dd>
+        <dt>events[]</dt><dd>{event_type, agent_id, summary, data, timestamp}</dd>
+        <dt>outputs.brief</dt><dd>Research brief JSON (from context agent)</dd>
+        <dt>outputs.personas</dt><dd>{design_rationale, personas[{name, role, system_prompt, …}]}</dd>
+        <dt>outputs.interview_strategy</dt><dd>{interview_strategy, interviewer_system_prompt}</dd>
+        <dt>outputs.transcripts[]</dt><dd>{persona_id, status, turns[{role, content}]}</dd>
+        <dt>system_log[]</dt><dd>API call records (model, tokens, errors)</dd>
+        <dt>orchestrator_log[]</dt><dd>Decision records (event, decision, reasoning)</dd>
+      </dl>
+    </div>
+    <div class="legend">
+      <h3 style="color:var(--accent);margin-bottom:.5rem;font-size:.85rem;">File → Purpose</h3>
+      <dl>
+        <dt>server.py</dt><dd>FastAPI entry, wires routes + pub/sub subscribers</dd>
+        <dt>config.py</dt><dd>Loads config.json, .env, prompt files</dd>
+        <dt>core/hub.py</dt><dd>State CRUD — the only shared dependency</dd>
+        <dt>core/agent_runtime.py</dt><dd>create · send · log · emit · export</dd>
+        <dt>core/model_selector.py</dt><dd>Tier → model ID resolution</dd>
+        <dt>core/orchestrator.py</dt><dd>Background worker thread, action executor</dd>
+        <dt>api/*_routes.py</dt><dd>Thin REST wrappers over core</dd>
+        <dt>api/events.py</dt><dd>SSE streaming endpoint</dd>
+        <dt>prompts/*.md</dt><dd>Base prompts loaded at runtime from disk</dd>
+        <dt>src/*.jsx</dt><dd>React 4-panel UI (Conversation, Persona, Interview, Log)</dd>
+      </dl>
+    </div>
+  </div>
+</div>
+
+<!-- 6. Orchestrator Actions -->
+<div class="section">
+  <h2>6 — Orchestrator Actions</h2>
+  <div class="mermaid">
+graph LR
+    A["Orchestrator\nreceives event"] --> D{parse JSON actions}
+    D --> CA["CREATE_AGENT\nid, type, prompt, tier,\ninitial_message"]
+    D --> SM["SEND_MESSAGE\ntarget_agent_id,\nmessage"]
+    D --> AP["ADVANCE_PHASE\nnew_phase, reason"]
+    D --> RR["REQUEST_REVISION\ntarget_agent_id,\nfeedback"]
+    D --> RI["RUN_INTERVIEW\npersona_id\n(spawns interviewer\n+ persona pair)"]
+    D --> CS["COMPLETE_SYSTEM\nsummary"]
+
+    style A fill:#2d333b,stroke:#58a6ff,color:#e6e6e6
+    style CA fill:#1c2128,stroke:#7ee787,color:#c9d1d9
+    style SM fill:#1c2128,stroke:#7ee787,color:#c9d1d9
+    style AP fill:#1c2128,stroke:#ffa657,color:#c9d1d9
+    style RR fill:#1c2128,stroke:#f78166,color:#c9d1d9
+    style RI fill:#1c2128,stroke:#d2a8ff,color:#c9d1d9
+    style CS fill:#1c2128,stroke:#6e7681,color:#c9d1d9
+  </div>
+</div>
+
+<script>
+  mermaid.initialize({
+    startOnLoad: true,
+    theme: 'dark',
+    themeVariables: {
+      darkMode: true,
+      background: '#12121a',
+      primaryColor: '#2d333b',
+      primaryTextColor: '#c9d1d9',
+      primaryBorderColor: '#58a6ff',
+      lineColor: '#484f58',
+      secondaryColor: '#1c2128',
+      tertiaryColor: '#161b22',
+      noteBkgColor: '#1c2128',
+      noteTextColor: '#c9d1d9',
+      noteBorderColor: '#484f58',
+      actorBkg: '#2d333b',
+      actorTextColor: '#c9d1d9',
+      actorBorder: '#58a6ff',
+      signalColor: '#c9d1d9',
+      signalTextColor: '#c9d1d9',
+      labelBoxBkgColor: '#2d333b',
+      labelBoxBorderColor: '#484f58',
+      labelTextColor: '#c9d1d9',
+      loopTextColor: '#c9d1d9',
+      activationBkgColor: '#2d333b',
+      activationBorderColor: '#58a6ff',
+      sequenceNumberColor: '#0a0a0f'
+    },
+    flowchart: { curve: 'basis', padding: 20 },
+    sequence: { mirrorActors: false, messageMargin: 40 }
+  });
+</script>
+</body>
+</html>
