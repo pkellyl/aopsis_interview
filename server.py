@@ -1,5 +1,8 @@
 """Synthetic Audience Interview System. FastAPI entry point."""
 
+import os
+from contextlib import asynccontextmanager
+
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from dotenv import load_dotenv
@@ -11,7 +14,16 @@ from api import config_routes, state_routes, chat_routes, events
 
 load_dotenv()
 
-app = FastAPI(title="Interview Synth", version="0.1.0")
+
+@asynccontextmanager
+async def lifespan(app):
+    """Initialize config and state on server start."""
+    config.load()
+    hub.load()
+    yield
+
+
+app = FastAPI(title="Interview Synth", version="0.1.0", lifespan=lifespan)
 
 app.add_middleware(
     CORSMiddleware,
@@ -29,12 +41,6 @@ app.include_router(events.router)
 agent_runtime.subscribe(events.broadcast)
 
 
-@app.on_event("startup")
-def startup():
-    """Initialize config and state on server start."""
-    config.load()
-    hub.load()
-
 
 
 @app.get("/api/health")
@@ -46,3 +52,9 @@ def health():
         "agent_count": len(hub.get_all_agents()),
         "has_api_key": bool(config.get_api_key())
     }
+
+
+if __name__ == "__main__":
+    import uvicorn
+    port = int(os.environ.get("PORT", 8080))
+    uvicorn.run("server:app", host="0.0.0.0", port=port)
