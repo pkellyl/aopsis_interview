@@ -1,0 +1,914 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employee Satisfaction Research - TestCorp</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: system-ui, -apple-system, sans-serif;
+            background-color: #f8fafc;
+            color: #1e293b;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 960px;
+            margin: 0 auto;
+            padding: 24px;
+        }
+
+        header {
+            background: white;
+            border-radius: 8px;
+            padding: 24px;
+            margin-bottom: 24px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        .header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 16px;
+        }
+
+        .org-info {
+            display: flex;
+            gap: 24px;
+            font-size: 14px;
+            color: #475569;
+        }
+
+        .org-info strong {
+            display: block;
+            color: #1e293b;
+            margin-bottom: 4px;
+        }
+
+        h1 {
+            font-size: 24px;
+            font-weight: bold;
+            color: #1e293b;
+            margin-bottom: 12px;
+            line-height: 1.3;
+        }
+
+        .research-meta {
+            font-size: 12px;
+            color: #64748b;
+            padding-top: 12px;
+            border-top: 1px solid #e2e8f0;
+        }
+
+        .executive-summary {
+            background: linear-gradient(135deg, #2563eb 0%, #7c3aed 100%);
+            color: white;
+            border-radius: 8px;
+            padding: 24px;
+            margin-bottom: 24px;
+        }
+
+        .executive-summary h2 {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 12px;
+            opacity: 0.9;
+        }
+
+        .executive-summary p {
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        section {
+            background: white;
+            border-radius: 8px;
+            padding: 24px;
+            margin-bottom: 24px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        section h2 {
+            font-size: 18px;
+            font-weight: 600;
+            color: #1e293b;
+            margin-bottom: 20px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid #e2e8f0;
+        }
+
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+
+        .metric-card {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 16px;
+            text-align: center;
+        }
+
+        .metric-card .value {
+            font-size: 28px;
+            font-weight: bold;
+            color: #2563eb;
+        }
+
+        .metric-card .label {
+            font-size: 12px;
+            color: #64748b;
+            margin-top: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .drivers-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+
+        .driver-card {
+            background: #f8fafc;
+            border-left: 4px solid #2563eb;
+            padding: 16px;
+            border-radius: 4px;
+        }
+
+        .driver-card h3 {
+            font-size: 14px;
+            font-weight: 600;
+            color: #1e293b;
+            margin-bottom: 12px;
+        }
+
+        .driver-card p {
+            font-size: 13px;
+            color: #475569;
+            line-height: 1.5;
+            margin-bottom: 12px;
+        }
+
+        .quote {
+            background: white;
+            border-left: 3px solid #7c3aed;
+            padding: 12px;
+            margin: 12px 0;
+            font-size: 12px;
+            color: #475569;
+            font-style: italic;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 16px;
+            font-size: 13px;
+        }
+
+        table th {
+            background: #f1f5f9;
+            padding: 12px;
+            text-align: left;
+            font-weight: 600;
+            color: #1e293b;
+            border-bottom: 2px solid #e2e8f0;
+        }
+
+        table td {
+            padding: 12px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        table tr:hover {
+            background: #f8fafc;
+        }
+
+        .barrier-item {
+            background: #f8fafc;
+            border-radius: 8px;
+            padding: 16px;
+            margin-bottom: 12px;
+            border-left: 4px solid #d97706;
+        }
+
+        .barrier-item h3 {
+            font-size: 14px;
+            font-weight: 600;
+            color: #1e293b;
+            margin-bottom: 8px;
+        }
+
+        .barrier-item .evidence {
+            font-size: 12px;
+            color: #475569;
+            margin-bottom: 8px;
+            padding-left: 12px;
+            border-left: 2px solid #e2e8f0;
+        }
+
+        .barrier-item .impact {
+            font-size: 12px;
+            color: #059669;
+            font-weight: 500;
+        }
+
+        .signals-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+
+        .signal-box {
+            border-radius: 8px;
+            padding: 16px;
+        }
+
+        .signal-box.positive {
+            background: #ecfdf5;
+            border: 1px solid #d1fae5;
+        }
+
+        .signal-box.warning {
+            background: #fef3c7;
+            border: 1px solid #fde68a;
+        }
+
+        .signal-box h3 {
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
+
+        .signal-box.positive h3 {
+            color: #059669;
+        }
+
+        .signal-box.warning h3 {
+            color: #d97706;
+        }
+
+        .signal-item {
+            font-size: 12px;
+            line-height: 1.5;
+            margin-bottom: 8px;
+            padding-left: 16px;
+            position: relative;
+        }
+
+        .signal-item:before {
+            content: "•";
+            position: absolute;
+            left: 0;
+        }
+
+        .signal-box.positive .signal-item {
+            color: #047857;
+        }
+
+        .signal-box.warning .signal-item {
+            color: #b45309;
+        }
+
+        .recommendation {
+            background: #f8fafc;
+            border-radius: 8px;
+            padding: 16px;
+            margin-bottom: 16px;
+            border-left: 4px solid #2563eb;
+        }
+
+        .recommendation h3 {
+            font-size: 14px;
+            font-weight: 600;
+            color: #1e293b;
+            margin-bottom: 8px;
+        }
+
+        .recommendation-meta {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 12px;
+            font-size: 11px;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .feasibility {
+            background: #dbeafe;
+            color: #1e40af;
+            padding: 4px 8px;
+            border-radius: 4px;
+        }
+
+        .impact {
+            background: #e0e7ff;
+            color: #3730a3;
+            padding: 4px 8px;
+            border-radius: 4px;
+        }
+
+        .recommendation-content {
+            font-size: 13px;
+            color: #475569;
+            line-height: 1.6;
+        }
+
+        .recommendation-content strong {
+            color: #1e293b;
+            display: block;
+            margin-top: 8px;
+        }
+
+        .comparison-note {
+            background: #f0f9ff;
+            border-left: 4px solid #0284c7;
+            padding: 12px;
+            margin-top: 16px;
+            font-size: 12px;
+            color: #0c4a6e;
+            border-radius: 4px;
+        }
+
+        .chart-container {
+            margin-bottom: 24px;
+            background: white;
+            border-radius: 8px;
+            padding: 16px;
+        }
+
+        .chart-title {
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 12px;
+            color: #1e293b;
+        }
+
+        canvas {
+            max-width: 100%;
+            height: auto;
+        }
+
+        .interpretation {
+            font-size: 12px;
+            color: #64748b;
+            margin-top: 12px;
+            padding: 12px;
+            background: #f8fafc;
+            border-radius: 4px;
+            border-left: 2px solid #cbd5e1;
+        }
+
+        @media (max-width: 768px) {
+            .signals-grid,
+            .drivers-container {
+                grid-template-columns: 1fr;
+            }
+
+            .header-top {
+                flex-direction: column;
+                gap: 16px;
+            }
+
+            .org-info {
+                flex-wrap: wrap;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header>
+            <div class="header-top">
+                <div>
+                    <h1>Employee Satisfaction at TestCorp</h1>
+                    <p style="color: #475569; margin-top: 4px;">Ownership, Clarity, and Structural Scaling as Key Drivers</p>
+                </div>
+                <div class="org-info">
+                    <div>
+                        <strong>Organization</strong>
+                        TestCorp
+                    </div>
+                    <div>
+                        <strong>Size</strong>
+                        100 people
+                    </div>
+                    <div>
+                        <strong>Industry</strong>
+                        SaaS
+                    </div>
+                </div>
+            </div>
+            <div class="research-meta">
+                Research conducted via structured interviews | Respondents: Marcus Chen (Engineering), Priya Sharma (Customer Success) | Focus: Engagement drivers and growth barriers
+            </div>
+        </header>
+
+        <!-- Executive Summary -->
+        <div class="executive-summary">
+            <h2>Key Finding</h2>
+            <p>TestCorp employees experience high engagement when they own meaningful outcomes end-to-end, have clear visibility into impact, and operate within processes that enable rather than constrain decision-making. As the organization scales, informal mechanisms that enabled this (direct access, rapid iteration, visible autonomy) are eroding. Satisfaction drivers remain strong, but barriers to growth—unclear career paths, reduced voice in structural decisions, and transactional processes—are creating friction that threatens retention of senior contributors.</p>
+        </div>
+
+        <!-- Key Metrics -->
+        <section>
+            <h2>Research Snapshot</h2>
+            <div class="metrics-grid">
+                <div class="metric-card">
+                    <div class="value">2</div>
+                    <div class="label">Respondents</div>
+                </div>
+                <div class="metric-card">
+                    <div class="value">3</div>
+                    <div class="label">Satisfaction Drivers</div>
+                </div>
+                <div class="metric-card">
+                    <div class="value">6</div>
+                    <div class="label">Key Pain Points</div>
+                </div>
+                <div class="metric-card">
+                    <div class="value">5</div>
+                    <div class="label">Recommendations</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Satisfaction Drivers -->
+        <section>
+            <h2>What Drives Satisfaction</h2>
+            <p style="color: #475569; margin-bottom: 20px; font-size: 13px;">Employees report satisfaction from three interconnected sources, each supported by concrete examples:</p>
+            
+            <div class="drivers-container">
+                <div class="driver-card">
+                    <h3>🎯 Ownership & End-to-End Impact</h3>
+                    <p><strong>Marcus</strong> led a data pipeline redesign that was strategically critical. He framed it, fought for resources, and shipped a solution that visibly prevented architectural collapse.</p>
+                    <p><strong>Priya</strong> secured an at-risk Acme renewal by diagnosing adoption issues, directly engaging the customer, and collaborating on features. Satisfaction came from owning the entire outcome.</p>
+                    <div class="quote">"That's real. I'm actually building something." — Priya Sharma</div>
+                </div>
+
+                <div class="driver-card" style="border-left-color: #7c3aed;">
+                    <h3>💬 Access to Decision-Makers</h3>
+                    <p>Both valued informal, collaborative ideation over formal submission processes. <strong>Marcus</strong> appreciated whiteboarding directly with product leads. <strong>Priya</strong> cited peer-to-peer negotiation on customer requests as most effective.</p>
+                    <div class="quote">"It was collaborative. It was thinking together." — Marcus Chen</div>
+                </div>
+
+                <div class="driver-card" style="border-left-color: #059669;">
+                    <h3>👨‍🏫 Recognition & Mentorship Capacity</h3>
+                    <p><strong>Marcus</strong> finds satisfaction in informal mentorship and having his technical judgment trusted on architecture decisions.</p>
+                    <p><strong>Priya</strong> expresses hunger for structured mentorship and direct feedback, indicating this driver is unmet for newer employees.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Growth & Development Barriers -->
+        <section>
+            <h2>Growth & Development Barriers</h2>
+            <p style="color: #475569; margin-bottom: 20px; font-size: 13px;">Four structural barriers limit growth perception and create uncertainty about long-term development:</p>
+            
+            <div class="barrier-item">
+                <h3>1. Lack of Structured Career Conversations</h3>
+                <div class="evidence"><strong>Evidence:</strong> Neither employee reports regular career development discussions with managers. Priya noted no formal onboarding; Marcus acknowledged mentorship is organic, not systematized.</div>
+                <div class="impact"><strong>Impact:</strong> Growth feels accessible only if you proactively claim it. No systematic pathway.</div>
+            </div>
+
+            <div class="barrier-item">
+                <h3>2. Unclear Career Pathways</h3>
+                <div class="evidence"><strong>Evidence:</strong> Priya: "There's no clear path to manager-track versus IC-track roles." Marcus uncertain whether company will prioritize technical depth or shift toward feature velocity.</div>
+                <div class="impact"><strong>Impact:</strong> Ambiguity reduces loyalty and increases vulnerability to external opportunities.</div>
+            </div>
+
+            <div class="barrier-item">
+                <h3>3. Reduced Bandwidth for Development</h3>
+                <div class="evidence"><strong>Evidence:</strong> Marcus notes mentoring feels like "fitting it in" rather than valued work. Priya heads-down operationalizing CS with minimal time for skill-building.</div>
+                <div class="impact"><strong>Impact:</strong> As processes formalize, people development is deprioritized relative to execution.</div>
+            </div>
+
+            <div class="barrier-item">
+                <h3>4. Misalignment of Espoused vs. Enacted Values</h3>
+                <div class="evidence"><strong>Evidence:</strong> Priya observed: "People thriving here work around process, not within it." Marcus noted new policies (code review, hiring freeze) announced without explanation or dialogue.</div>
+                <div class="impact"><strong>Impact:</strong> Creates cognitive dissonance for growth-minded employees and discourages structure-building advocacy.</div>
+            </div>
+        </section>
+
+        <!-- Engagement Patterns -->
+        <section>
+            <h2>Engagement Assessment</h2>
+            <p style="color: #475569; margin-bottom: 20px; font-size: 13px;">Both respondents show strong engagement on meaningful work, but warning signals are emerging around organizational fit and retention:</p>
+
+            <div class="signals-grid">
+                <div class="signal-box positive">
+                    <h3>✓ Positive Engagement Signals</h3>
+                    <div class="signal-item">Discretionary effort on meaningful work (pipeline redesign, Acme renewal)</div>
+                    <div class="signal-item">Cross-functional collaboration when frictionless access exists</div>
+                    <div class="signal-item">Ownership mentality and strategic thinking</div>
+                    <div class="signal-item">Commitment to team and mission</div>
+                    <div class="signal-item">Initiative in mentorship and knowledge sharing</div>
+                </div>
+
+                <div class="signal-box warning">
+                    <h3>⚠ Disengagement Warning Signs</h3>
+                    <div class="signal-item">Marcus: "I'm not sure I'd have the same space now"</div>
+                    <div class="signal-item">Priya self-censoring on structural improvements</div>
+                    <div class="signal-item">Reduced initiative on non-urgent challenges</div>
+                    <div class="signal-item">Building contingency plans; evaluating alternatives</div>
+                    <div class="signal-item">Detachment from organizational decisions</div>
+                </div>
+            </div>
+
+            <div class="comparison-note">
+                <strong>Critical Distinction:</strong> Employees report satisfaction with their work but conditional engagement on organizational factors. They're not unhappy—they're uncertain whether they belong long-term. This is a retention warning, not an immediate departure risk, but signals that conditions enabling engagement are eroding.
+            </div>
+        </section>
+
+        <!-- Respondent Comparison -->
+        <section>
+            <h2>Respondent Profile Comparison</h2>
+            
+            <table>
+                <thead>
+                    <tr>
+                        <th>Dimension</th>
+                        <th>Marcus Chen (Engineering)</th>
+                        <th>Priya Sharma (Customer Success)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Primary Satisfaction</strong></td>
+                        <td>Ownership of strategic architecture decisions; mentorship impact</td>
+                        <td>End-to-end customer problem-solving; function-building</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Growth Anxiety</strong></td>
+                        <td>Company may shift away from technical depth toward feature velocity</td>
+                        <td>Unclear if career path is manager-track or IC-track</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Current Barrier</strong></td>
+                        <td>Friction cost has changed behavior; stopped pushing non-urgent ideas</td>
+                        <td>No assigned mentor; self-censoring on process advocacy</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Strength Concern</strong></td>
+                        <td>Structured thinking (architecture, systems) may be devalued in scrappy culture</td>
+                        <td>Structured thinking (process design, ops) may be devalued in scrappy culture</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Retention Risk Level</strong></td>
+                        <td>Medium (conditional on perceived space for deep work)</td>
+                        <td>Medium-High (conditional on career clarity and mentorship)</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="interpretation">
+                <strong>Convergence:</strong> Both respondents derive satisfaction from ownership and collaborative problem-solving, and both perceive these being constrained by scaling formalization. Their concerns are complementary, not isolated—suggesting this is a company-wide pattern, not individual preference.
+            </div>
+        </section>
+
+        <!-- Pain Points Visualization -->
+        <section>
+            <h2>Top 6 Pain Points Ranked by Impact</h2>
+            <div class="chart-container">
+                <canvas id="painPointsChart"></canvas>
+            </div>
+            <div class="interpretation">
+                Pain points cluster in two categories: structural (career pathways, feedback mechanisms) and cultural (formalization without explanation, reduced voice). Fixing structural issues is faster; addressing cultural misalignment requires explicit leadership conversation.
+            </div>
+        </section>
+
+        <!-- Pain Points Detail -->
+        <section>
+            <h2>Pain Point Details</h2>
+            
+            <div class="barrier-item">
+                <h3>Lack of Structured Career Development & Feedback</h3>
+                <div class="evidence"><strong>Evidence:</strong> Priya stated: "I don't have a super clear picture of what 'next' looks like." Marcus receives no formal feedback on mentorship or technical contributions.</div>
+                <div class="impact"><strong>Impact:</strong> Uncertainty reduces loyalty and increases vulnerability to external opportunities. Growth feels like something you claim informally, not systematically enabled.</div>
+            </div>
+
+            <div class="barrier-item">
+                <h3>Formalization Without Explanation</h3>
+                <div class="evidence"><strong>Evidence:</strong> Code review policy, hiring freeze, Jira templates, sprint planning changes—all rolled out without context or rationale. Employees perceive processes as control mechanisms, not enabling infrastructure.</div>
+                <div class="impact"><strong>Impact:</strong> Contradicts the culture of collaborative problem-solving that attracted these employees. Creates defensiveness and reduces trust in leadership judgment.</div>
+            </div>
+
+            <div class="barrier-item">
+                <h3>Reduced Access & Voice in Organizational Decisions</h3>
+                <div class="evidence"><strong>Evidence:</strong> Marcus now submits ideas through templates instead of whiteboarding; Priya's Customer Influence Board proposal stalled without commitment. Both self-censor to avoid being seen as "pushing process."</div>
+                <div class="impact"><strong>Impact:</strong> Employees with structured thinking feel devalued. If culture shifts to reward scrappiness over thoughtfulness, high-performers will seek alternatives.</div>
+            </div>
+
+            <div class="barrier-item">
+                <h3>Operational Friction & Data Gaps (Secondary)</h3>
+                <div class="evidence"><strong>Evidence:</strong> Priya spends 20 minutes stitching together customer data; systems are fragmented.</div>
+                <div class="impact"><strong>Impact:</strong> Creates busy-work preventing strategic thinking, but is an enabler barrier, not core. Low priority relative to voice/career concerns.</div>
+            </div>
+
+            <div class="barrier-item">
+                <h3>Misalignment of Company Values & Organizational Design</h3>
+                <div class="evidence"><strong>Evidence:</strong> Culture emphasizes autonomy and collaboration, but scaling introduces templates, policies, and top-down announcements without acknowledging tradeoffs.</div>
+                <div class="impact"><strong>Impact:</strong> Employees feel the company is changing without explicit dialogue. Triggers defensive responses and reduces belief in belonging.</div>
+            </div>
+
+            <div class="barrier-item">
+                <h3>Insufficient Mentorship for Newer Employees</h3>
+                <div class="evidence"><strong>Evidence:</strong> Priya (8 months tenure) has no assigned mentor; Marcus mentors informally but acknowledges it's unsustainable as company grows.</div>
+                <div class="impact"><strong>Impact:</strong> Newer employees like Priya learn through trial-and-error. As company scales, informal mentorship collapses, leaving employees without advocates or cultural knowledge.</div>
+            </div>
+        </section>
+
+        <!-- Recommendations -->
+        <section>
+            <h2>Actionable Recommendations (Prioritized)</h2>
+            <p style="color: #475569; margin-bottom: 20px; font-size: 13px;">Ranked by feasibility and impact on retention & engagement:</p>
+
+            <div class="recommendation">
+                <h3>1. Implement Structured Career Development Conversations</h3>
+                <div class="recommendation-meta">
+                    <span class="feasibility">HIGH FEASIBILITY</span>
+                    <span class="impact">HIGH IMPACT</span>
+                </div>
+                <div class="recommendation-content">
+                    <strong>Action:</strong> Schedule quarterly career conversations with all employees. Discuss: (a) what energizes them, (b) skills to develop, (c) 12/24-month trajectory. Document outcomes; follow up.
+                    <br><strong>Why:</strong> Both respondents lack growth clarity. Cost: ~2 hours/employee/year. Impact: employees feel seen; retention risk drops significantly.
+                    <br><strong>For Marcus & Priya:</strong> Marcus clarifies technical leadership vs. IC depth path. Priya resolves manager/IC uncertainty.
+                </div>
+            </div>
+
+            <div class="recommendation">
+                <h3>2. Introduce "Process Rationale" Transparency</h3>
+                <div class="recommendation-meta">
+                    <span class="feasibility">HIGH FEASIBILITY</span>
+                    <span class="impact">HIGH IMPACT</span>
+                </div>
+                <div class="recommendation-content">
+                    <strong>Action:</strong> When implementing new policies, send brief memo (2-3 paragraphs) explaining: (a) problem it solves, (b) constraints it introduces, (c) how input is welcome.
+                    <br><strong>Why:</strong> Reframes formalization as collaborative scaling, not control. Rebuilds trust in leadership judgment.
+                    <br><strong>For Marcus & Priya:</strong> Both will feel less defensive about structural changes. Priya will see structure-advocacy is valued, not discouraged.
+                </div>
+            </div>
+
+            <div class="recommendation">
+                <h3>3. Establish CS-Product-Engineering Alignment Meeting</h3>
+                <div class="recommendation-meta">
+                    <span class="feasibility">MEDIUM FEASIBILITY</span>
+                    <span class="impact">HIGH IMPACT</span>
+                </div>
+                <div class="recommendation-content">
+                    <strong>Action:</strong> Monthly 60-minute meeting: Priya brings customer requests (bucketed by impact/frequency), engineering brings capacity, product brings roadmap context. Decisions documented; visibility for all parties.
+                    <br><strong>Why:</strong> Formalizes the informal collaboration that already works. Gives Priya a structured seat at the table; unburdens Marcus from ad-hoc escalations.
+                    <br><strong>For Marcus & Priya:</strong> Priya gets legitimacy and voice. Marcus gets predictability. Both see expertise valued officially.
+                </div>
+            </div>
+
+            <div class="recommendation">
+                <h3>4. Assign Mentors & Establish Feedback Cycles</h3>
+                <div class="recommendation-meta">
+                    <span class="feasibility">MEDIUM FEASIBILITY</span>
+                    <span class="impact">MEDIUM IMPACT</span>
+                </div>
+                <div class="recommendation-content">
+                    <strong>Action:</strong> Pair new hires with senior mentors for 6-month relationship: monthly 30-min check-ins, quarterly feedback, stakeholder introductions. Create 1-page mentor guide.
+                    <br><strong>Why:</strong> Formalizes organic mentorship, reducing burden on Marcus and ensuring Priya receives intentional feedback.
+                    <br><strong>For Marcus & Priya:</strong> Priya gets clarity and advocacy. Marcus gets recognition for mentorship value and structured outlet.
+                </div>
+            </div>
+
+            <div class="recommendation">
+                <h3>5. Conduct "Scaling Stories" Leadership Conversation (Deferred)</h3>
+                <div class="recommendation-meta">
+                    <span class="feasibility">LOW FEASIBILITY</span>
+                    <span class="impact">VERY HIGH IMPACT</span>
+                </div>
+                <div class="recommendation-content">
+                    <strong>Action:</strong> VP HR + VP Eng + VP Product discuss and document: (a) what early-stage culture to preserve, (b) what must change, (c) how to communicate to employees. Share findings in all-hands.
+                    <br><strong>Why:</strong> Addresses root cause—unspoken tension about company direction. Explicit leadership conversation makes everything else land better.
+                    <br><strong>For Marcus & Priya:</strong> Both would reduce defensiveness if they understood changes were deliberate, not accidental.
+                    <br><strong>Timing:</strong> Implement recommendations 1–4 first; this is the meta-conversation that makes them coherent.
+                </div>
+            </div>
+        </section>
+
+        <!-- Recommendation Prioritization Matrix -->
+        <section>
+            <h2>Recommendation Prioritization Matrix</h2>
+            <div class="chart-container">
+                <canvas id="priorityMatrix"></canvas>
+            </div>
+            <div class="interpretation">
+                Recommendations 1–3 should be implemented immediately (high feasibility, high impact). Recommendations 4–5 follow as supporting infrastructure. The matrix shows quick wins (top-left) vs. strategic initiatives (top-right).
+            </div>
+        </section>
+
+        <!-- Confidence Assessment -->
+        <section>
+            <h2>Research Confidence & Limitations</h2>
+            
+            <h3 style="font-size: 14px; font-weight: 600; margin-top: 16px; margin-bottom: 12px; color: #059669;">High Confidence Themes (supported across respondents)</h3>
+            <ul style="margin-left: 20px; font-size: 13px; color: #475569; line-height: 1.8;">
+                <li><strong>Satisfaction from ownership:</strong> Mentioned by both via concrete examples (pipeline, Acme renewal)</li>
+                <li><strong>Growth uncertainty:</strong> Both report lack of clear pathways and structured feedback</li>
+                <li><strong>Formalization without explanation:</strong> Both cite specific policies rolled out without context</li>
+                <li><strong>Retention risk:</strong> Both surface implicit concerns about fit (conditional, not immediate)</li>
+            </ul>
+
+            <h3 style="font-size: 14px; font-weight: 600; margin-top: 16px; margin-bottom: 12px; color: #d97706;">Low Confidence Signals (mentioned by one respondent)</h3>
+            <ul style="margin-left: 20px; font-size: 13px; color: #475569; line-height: 1.8;">
+                <li><strong>Operational friction (data gaps):</strong> Mentioned only by Priya; may be CS-specific, not company-wide</li>
+                <li><strong>Compensation concerns:</strong> Neither respondent mentioned pay; unclear if this reflects satisfaction or interview framing bias</li>
+                <li><strong>Benefits & equity:</strong> Not explicitly discussed; future research recommended</li>
+            </ul>
+
+            <div class="comparison-note" style="margin-top: 16px; border-left-color: #0c4a6e; color: #0c4a6e;">
+                <strong>Recommendation for next research:</strong> Expand to 5–8 respondents across engineering, product, sales, and operations to test whether themes generalize. Specifically investigate compensation satisfaction and equity concerns among senior contributors.
+            </div>
+        </section>
+
+    </div>
+
+    <script>
+        // Pain Points Chart
+        const painPointsCtx = document.getElementById('painPointsChart');
+        if (painPointsCtx) {
+            const painData = [
+                { label: 'Lack of Career Development', value: 95 },
+                { label: 'Formalization Without Explanation', value: 90 },
+                { label: 'Reduced Access & Voice', value: 85 },
+                { label: 'Misaligned Values & Design', value: 80 },
+                { label: 'Insufficient Mentorship', value: 70 },
+                { label: 'Operational Friction', value: 45 }
+            ];
+
+            const canvas = painPointsCtx;
+            const ctx = canvas.getContext('2d');
+            const padding = 40;
+            const barHeight = 30;
+            const gap = 10;
+            const chartWidth = canvas.width - padding * 2;
+            const maxValue = 100;
+
+            canvas.height = painData.length * (barHeight + gap) + padding * 2;
+            
+            ctx.fillStyle = '#ffffff';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            // Y-axis
+            ctx.strokeStyle = '#e2e8f0';
+            ctx.lineWidth = 1;
+            ctx.beginPath();
+            ctx.moveTo(padding, padding);
+            ctx.lineTo(padding, canvas.height - padding);
+            ctx.stroke();
+
+            // X-axis
+            ctx.beginPath();
+            ctx.moveTo(padding, canvas.height - padding);
+            ctx.lineTo(canvas.width - padding, canvas.height - padding);
+            ctx.stroke();
+
+            // Draw bars
+            painData.forEach((item, idx) => {
+                const y = padding + idx * (barHeight + gap);
+                const barWidth = (item.value / maxValue) * chartWidth;
+                
+                // Bar color gradient by impact
+                let color = '#2563eb';
+                if (item.value >= 85) color = '#dc2626';
+                else if (item.value >= 75) color = '#d97706';
+                else if (item.value >= 60) color = '#f59e0b';
+                
+                ctx.fillStyle = color;
+                ctx.fillRect(padding, y, barWidth, barHeight);
+
+                // Value label
+                ctx.fillStyle = '#1e293b';
+                ctx.font = 'bold 12px system-ui';
+                ctx.textAlign = 'left';
+                ctx.fillText(item.value, padding + barWidth + 8, y + barHeight / 2 + 4);
+
+                // Label
+                ctx.fillStyle = '#475569';
+                ctx.font = '12px system-ui';
+                ctx.textAlign = 'right';
+                ctx.fillText(item.label, padding - 8, y + barHeight / 2 + 4);
+            });
+
+            // Legend
+            ctx.fillStyle = '#64748b';
+            ctx.font = '11px system-ui';
+            ctx.textAlign = 'left';
+            ctx.fillText('Impact Score (0-100)', padding, padding - 10);
+        }
+
+        // Priority Matrix
+        const matrixCtx = document.getElementById('priorityMatrix');
+        if (matrixCtx) {
+            const canvas = matrixCtx;
+            const ctx = canvas.getContext('2d');
+            const padding = 50;
+            const width = canvas.width - padding * 2;
+            const height = canvas.height - padding * 2;
+
+            canvas.height = 400;
+            
+            ctx.fillStyle = '#ffffff';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            // Draw quadrants
+            ctx.fillStyle = '#ecfdf5';
+            ctx.fillRect(padding, padding + height / 2, width / 2, height / 2); // Low feas, High impact
+            
+            ctx.fillStyle = '#dbeafe';
+            ctx.fillRect(padding + width / 2, padding + height / 2, width / 2, height / 2); // High feas, High impact
+            
+            ctx.fillStyle = '#fef3c7';
+            ctx.fillRect(padding, padding, width / 2, height / 2); // Low feas, Low impact
+            
+            ctx.fillStyle = '#f0fdf4';
+            ctx.fillRect(padding + width / 2, padding, width / 2, height / 2); // High feas, Low impact
+
+            // Axes
+            ctx.strokeStyle = '#e2e8f0';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.moveTo(padding, padding + height / 2);
+            ctx.lineTo(padding + width, padding + height / 2);
+            ctx.stroke();
+
+            ctx.beginPath();
+            ctx.moveTo(padding + width / 2, padding);
+            ctx.lineTo(padding + width / 2, padding + height);
+            ctx.stroke();
+
+            // Axis labels
+            ctx.fillStyle = '#475569';
+            ctx.font = '12px system-ui';
+            ctx.textAlign = 'center';
+            ctx.fillText('Feasibility →', padding + width, padding + height + 20);
+            
+            ctx.save();
+            ctx.translate(padding - 30, padding + height / 2);
+            ctx.rotate(-Math.PI / 2);
+            ctx.textAlign = 'center';
+            ctx.fillText('Impact →', 0, 0);
+            ctx.restore();
+
+            // Quadrant labels
+            ctx.font = '11px system-ui';
+            ctx.fillStyle = '#64748b';
+            ctx.textAlign = 'center';
+            ctx.fillText('Quick Wins', padding + width / 4, padding + height / 2 - 10);
+            ctx.fillText('Strategic', padding + 3 * width / 4, padding + height / 2 - 10);
+            ctx.fillText('Low Priority', padding + width / 4, padding + height + 20);
+            ctx.fillText('Deferred', padding + 3 * width / 4, padding + height + 20);
+
+            // Plot recommendations
+            const recommendations = [
+                { num: '1', x: 0.8, y: 0.8, label: 'Career Dev' },
+                { num: '2', x: 0.85, y: 0.75, label: 'Process Rationale' },
+                { num: '3', x: 0.75, y: 0.7, label: 'Alignment Meeting' },
+                { num: '4', x: 0.6, y: 0.55, label: 'Mentorship' },
+                { num: '5', x: 0.3, y: 0.9, label: 'Scaling Stories' }
+            ];
+
+            recommendations.forEach((rec) => {
+                const px = padding + rec.x * width;
+                const py = padding + (1 - rec.y) * height;
+
+                ctx.fillStyle = '#2563eb';
+                ctx.beginPath();
+                ctx.arc(px, py, 8, 0, Math.PI * 2);
+                ctx.fill();
+
+                ctx.fillStyle = '#ffffff';
+                ctx.font = 'bold 12px system-ui';
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                ctx.fillText(rec.num, px, py);
+            });
+
+            // Legend
+            ctx.fillStyle = '#1e293b';
+            ctx.font = 'bold 12px system-ui';
+            ctx.textAlign = 'left';
+            ctx.fillText('Recommendation Prioritization', padding, padding - 15);
+        }
+    </script>
+</body>
+</html>

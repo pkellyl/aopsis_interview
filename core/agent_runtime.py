@@ -1,6 +1,8 @@
 """Agent runtime. Provides the 5 capabilities: create, send, log, emit, export."""
 
 import json
+import time
+import threading
 import anthropic
 from datetime import datetime, timezone
 
@@ -10,6 +12,10 @@ from core import model_selector
 
 _client = None
 _event_callbacks = []
+_api_semaphore = None
+
+MAX_RETRIES = 3
+RETRY_BACKOFF = [1, 3, 9]
 
 
 def _get_client():
@@ -21,6 +27,15 @@ def _get_client():
             raise RuntimeError("ANTHROPIC_API_KEY not set")
         _client = anthropic.Anthropic(api_key=api_key)
     return _client
+
+
+def _get_semaphore():
+    """Return API semaphore, creating if needed."""
+    global _api_semaphore
+    if _api_semaphore is None:
+        max_concurrent = config.get().get("max_concurrent_api_calls", 10)
+        _api_semaphore = threading.Semaphore(max_concurrent)
+    return _api_semaphore
 
 
 # --- Capability 1: CREATE AGENT ---
@@ -40,7 +55,7 @@ def create_agent(agent_id, agent_type, system_prompt, model_tier=None,
 
 # --- Capability 2: SEND MESSAGE ---
 
-def send_message(agent_id, message, role="user"):
+def send_message(agent_id, message, role="user", use_thinking=False):
     """Send a message to a named agent and return its response."""
     agent = hub.get_agent(agent_id)
     if agent is None:
@@ -50,32 +65,64 @@ def send_message(agent_id, message, role="user"):
     emit_event("message_sent", agent_id,
                f"Message sent to {agent_id} ({len(message)} chars)")
 
-    # Build API messages (strip timestamps for API call)
-    api_messages = [
-        {"role": m["role"], "content": m["content"]}
-        for m in agent["messages"]
-    ]
+    # Build API messages (strip timestamps, ensure content is always a string)
+    api_messages = []
+    for m in agent["messages"]:
+        c = m["content"]
+        if isinstance(c, list):
+            c = "\n".join(block.get("text", str(block)) if isinstance(block, dict) else str(block) for block in c)
+        api_messages.append({"role": m["role"], "content": c})
 
-    model = model_selector.resolve(agent["model_tier"])
+    model = model_selector.resolve(agent["model_tier"], agent_type=agent.get("type"))
 
-    try:
-        client = _get_client()
-        response = client.messages.create(
-            model=model,
-            max_tokens=4096,
-            system=agent["system_prompt"],
-            messages=api_messages
-        )
-        content = response.content[0].text
-        tokens_in = response.usage.input_tokens
-        tokens_out = response.usage.output_tokens
-    except Exception as e:
-        error_msg = str(e)
+    sem = _get_semaphore()
+    last_error = None
+    for attempt in range(MAX_RETRIES):
+        try:
+            with sem:
+                client = _get_client()
+                api_kwargs = dict(
+                    model=model,
+                    max_tokens=16384,
+                    system=agent["system_prompt"],
+                    messages=api_messages
+                )
+                if use_thinking:
+                    api_kwargs["thinking"] = {
+                        "type": "enabled",
+                        "budget_tokens": 10000
+                    }
+                response = client.messages.create(**api_kwargs)
+            content = "".join(
+                    block.text for block in response.content
+                    if getattr(block, "type", None) == "text"
+                )
+            tokens_in = response.usage.input_tokens
+            tokens_out = response.usage.output_tokens
+            last_error = None
+            break
+        except (anthropic.RateLimitError, anthropic.APIConnectionError) as e:
+            last_error = e
+            if attempt < MAX_RETRIES - 1:
+                wait = RETRY_BACKOFF[attempt]
+                emit_event("error_occurred", agent_id,
+                           f"API retry {attempt+1}/{MAX_RETRIES} for {agent_id}, waiting {wait}s: {e}")
+                time.sleep(wait)
+        except Exception as e:
+            error_msg = str(e)
+            _log_api_call(agent_id, model, agent["system_prompt"],
+                          api_messages, None, 0, 0, error=error_msg)
+            emit_event("error_occurred", agent_id,
+                       f"API error for {agent_id}: {error_msg}")
+            raise
+
+    if last_error is not None:
+        error_msg = str(last_error)
         _log_api_call(agent_id, model, agent["system_prompt"],
                       api_messages, None, 0, 0, error=error_msg)
         emit_event("error_occurred", agent_id,
-                   f"API error for {agent_id}: {error_msg}")
-        raise
+                   f"API failed after {MAX_RETRIES} retries for {agent_id}: {error_msg}")
+        raise last_error
 
     hub.append_message(agent_id, "assistant", content)
 

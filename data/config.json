@@ -1,9 +1,52 @@
 {
   "models": {
-    "fast": "claude-3-5-haiku-20241022",
-    "balanced": "claude-sonnet-4-20250514",
-    "smart": "claude-opus-4-20250514",
-    "reasoning": "claude-opus-4-20250514"
+    "fast": "claude-haiku-4-5",
+    "balanced": "claude-sonnet-4-6",
+    "smart": "claude-opus-4-6",
+    "reasoning": "claude-opus-4-6"
+  },
+  "presets": {
+    "test": {
+      "fast": "claude-haiku-4-5",
+      "balanced": "claude-haiku-4-5",
+      "smart": "claude-haiku-4-5",
+      "reasoning": "claude-haiku-4-5"
+    },
+    "dev": {
+      "fast": "claude-haiku-4-5",
+      "balanced": "claude-sonnet-4-6",
+      "smart": "claude-sonnet-4-6",
+      "reasoning": "claude-sonnet-4-6"
+    },
+    "production": {
+      "fast": "claude-haiku-4-5",
+      "balanced": "claude-sonnet-4-6",
+      "smart": "claude-opus-4-6",
+      "reasoning": "claude-opus-4-6"
+    }
+  },
+  "agent_overrides": {
+    "synthesis_refiner": "claude-opus-4-6",
+    "persona_architect": "claude-haiku-4-5",
+    "interview_designer": "claude-haiku-4-5",
+    "persona": "claude-sonnet-4-6",
+    "synthesis_designer": "claude-opus-4-6",
+    "synthesis_agent": "claude-opus-4-6",
+    "interviewer": "claude-sonnet-4-6"
+  },
+  "max_personas": {
+    "test": 2,
+    "dev": 12,
+    "production": 8
+  },
+  "turn_limits": {
+    "test": 12,
+    "dev": 10,
+    "production": 15
+  },
+  "max_interviewees": {
+    "test": 2,
+    "dev": 12
   },
   "organization": {
     "name": "",
@@ -11,5 +54,7 @@
     "description": ""
   },
   "max_interview_turns": 15,
-  "default_model_tier": "balanced"
+  "default_model_tier": "balanced",
+  "model_mode": "dev",
+  "max_concurrent_api_calls": 10
 }

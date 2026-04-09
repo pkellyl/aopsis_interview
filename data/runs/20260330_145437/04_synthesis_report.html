@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="UTF-8"><title>Finance Department Process Documentation Report — Single-Site Underground Gold Mine</title><style>
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; max-width: 800px; margin: 40px auto; padding: 0 20px; color: #1a1a1a; line-height: 1.6; }
+h1 { border-bottom: 2px solid #2563eb; padding-bottom: 8px; color: #1e3a5f; }
+h2 { color: #2563eb; margin-top: 32px; }
+h3 { color: #374151; }
+.card { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 16px; margin: 12px 0; }
+.label { font-size: 12px; color: #6b7280; text-transform: uppercase; letter-spacing: 0.05em; }
+.tag { display: inline-block; background: #dbeafe; color: #1e40af; padding: 2px 8px; border-radius: 4px; font-size: 12px; margin: 2px; }
+blockquote { border-left: 3px solid #2563eb; margin: 12px 0; padding: 8px 16px; background: #f0f9ff; }
+pre { background: #f1f5f9; padding: 12px; border-radius: 6px; overflow-x: auto; font-size: 13px; }
+table { border-collapse: collapse; width: 100%; } th, td { border: 1px solid #e2e8f0; padding: 8px 12px; text-align: left; } th { background: #f8fafc; }
+.meta { color: #6b7280; font-size: 13px; }
+@media print { body { margin: 20px; } .card { break-inside: avoid; } }
+</style></head>
+<body>
+<h1>Finance Department Process Documentation Report — Single-Site Underground Gold Mine</h1>
+<h2>Executive Summary</h2><div class='card' style='background:#eff6ff;border-color:#bfdbfe'><p>This report synthesizes three detailed interviews with finance department staff at a single-site underground gold mine: David Motswari (Business Partner Finance, Underground Operations), Priya Desai (Accounts Payable &amp; Procurement Coordinator), and James Kipchoge (Finance Systems Administrator &amp; Analyst). The interviews provide strong coverage of Accounts Payable, Procurement, Cost Accounting, Management Reporting, Business Partnering, and the systems landscape, with partial coverage of Payroll, Fixed Assets, Month-End Close, and Inventory processes. Key structural findings include a heavy reliance on spreadsheet-based workarounds to bridge gaps between disconnected source systems (Ellipse ERP, MineRP, Microster, Deswik), significant key-person dependencies — particularly around David Motswari's operational knowledge and Priya Desai's compensating controls — and a recurring pattern of upstream coding errors that propagate uncorrected through the transaction chain. The function is operationally effective due to individual competence and informal controls, but structurally fragile and well-suited for targeted automation and process improvement analysis.</p></div>
+<h2>Section 1: Finance Function Overview</h2>
+<h2>Finance Team Structure</h2>
+<p>The finance function comprises approximately 20 staff split between on-site business partners embedded in operational areas and a central finance team handling transactional processing, reporting, compliance, and planning.</p>
+<h3>Interviewee Profiles</h3>
+<p>| Name | Role | Team | Area Supported | Seniority |</p>
+<p>|------|------|------|----------------|----------|</p>
+<p>| David Motswari | Business Partner Finance, Underground Operations | On-site business partner | Underground Development &amp; Production | Senior (~12 years on site) |</p>
+<p>| Priya Desai | Accounts Payable &amp; Procurement Coordinator | Central Finance | All operational areas (AP/Procurement) | Mid-level (experienced, tenure not specified) |</p>
+<p>| James Kipchoge | Finance Systems Administrator &amp; Analyst | Central Finance | Cross-functional systems support | Mid-to-Senior (knowledgeable, tenure not specified) |</p>
+<p>Other staff referenced but not interviewed: <strong>Margaret</strong> (Finance Manager/Controller — approves journals, oversees month-end close, reviews business cases), <strong>Amara</strong> (Management Accountant — runs cost report reviews, prepares allocation spreadsheets, identifies miscoding), <strong>Themba</strong> (Section Engineer/Contracts Administrator — supposed goods receipt confirmer for contractors), <strong>Johan</strong> (Operations Manager — approves expenditure, reviews business cases).</p>
+<h3>Systems Landscape</h3>
+<p>| System | Function | Owner/Administrator | Integration Status |</p>
+<p>|--------|----------|--------------------|-----------------|</p>
+<p>| <strong>Ellipse</strong> (Hexagon) | Core ERP — GL, procurement, inventory, maintenance work orders | James Kipchoge (finance systems) | Central system; version not current |</p>
+<p>| <strong>MineRP</strong> | Mine technical system — survey data, development metres | Survey department | No live integration with Ellipse; manual CSV reconciliation |</p>
+<p>| <strong>Deswik</strong> | Mine planning and scheduling | Mine planning team | No live integration; manual reconciliation |</p>
+<p>| <strong>Microster</strong> (unconfirmed name) | Time and attendance | HR department | Weekly flat-file extract to finance; manual mapping and import to Ellipse |</p>
+<p>| <strong>Aspen</strong> | Plant processing system | Plant operations | No integration with Ellipse whatsoever |</p>
+<p>| <strong>Cognos</strong> | Reporting/BI layer over Ellipse | James Kipchoge | Used for cost centre reports; exports to Excel for analysis |</p>
+<p>| <strong>SAP</strong> | Referenced by David in context of cost centre reports | Unclear | May be informal name for Ellipse, or a module — requires clarification |</p>
+<p>| <strong>Excel</strong> | Pervasive — trackers, allocation models, mapping tables, reconciliations, journals, commentary | Multiple owners | Primary analytical and connective layer across all gaps |</p>
+<p>| <strong>Word</strong> | Variance commentary documents | David Motswari | Monthly; stored locally and in sent email |</p>
+<p>| <strong>Outlook</strong> | Email-based approvals, confirmations, invoice routing | All staff | De facto workflow and audit trail for many processes |</p>
+<p>| <strong>WhatsApp</strong> | Contractor daily activity reports | David Motswari / contractors | Informal; screenshots converted to PDF for filing |</p>
+<h3>Site Business Partner / Central Finance Interaction</h3>
+<p>David Motswari operates as the bridge between underground operations and central finance. He provides operational context (variance explanations, accrual judgments, contractor verification, business case analysis) that central finance staff rely on for accurate reporting and processing. The interaction is largely informal — phone calls, emails, in-person conversations — with no structured handoff protocol. Central finance (Priya, Amara, Margaret) depends heavily on David's judgment for cost validation, receipt confirmation, and expenditure context. James Kipchoge provides systems support to both sides, extracting data and troubleshooting reports, but has limited visibility into the business logic driving many processes.</p>
+<h2>Section 2: Process Domain Summaries</h2>
+<h3>Accounts Payable</h3>
+<p><strong>Coverage: Well-documented</strong> (Priya Desai — primary owner; David Motswari — contributor for verification)</p>
+<p>Invoices arrive via shared email inbox (digital and scanned paper). Priya sorts, identifies PO numbers, and initiates three-way matching (PO, goods receipt, invoice) in Ellipse. Matching is semi-manual: Ellipse checks header-level value tolerance (~2% or $50) but line-by-line comparison is performed manually across screens. Goods receipt confirmation is a frequent bottleneck — 2-3 day delays waiting for operational staff to enter receipts. Priya maintains a parallel tracking spreadsheet and physical paper pack process because ERP approval notifications are unreliable. Payment runs occur weekly (Thursday), prepared from Wednesday afternoon. Priya manually reviews the payment proposal, verifies bank details, resolves holds, and presents the batch to Margaret for authorization. Remittance advices are sent post-payment in vendor-specific formats.</p>
+<p><strong>Key vulnerabilities:</strong> No-PO invoices (~35% of problematic invoices require investigation); dual approval tracking (ERP + paper); receipt confirmation delays; bank detail verification is manual.</p>
+<p>---</p>
+<h3>Procurement and Purchase Order Management</h3>
+<p><strong>Coverage: Well-documented</strong> (Priya Desai — processing; James Kipchoge — system design; David Motswari — contractor context)</p>
+<p>Procurement is Ellipse's strongest area. Requisitions are raised by operational staff, routed through approval workflow, and converted to POs. However, <strong>cost coding happens at requisition stage by operational staff with no finance review before PO creation</strong>. Approval workflow validates authority and budget existence but not coding accuracy. Errors propagate through the full chain (PO → receipt → invoice → ledger) and are only caught at month-end review. Contractor procurement involves additional complexity: David Motswari informally verifies contractor work completion, creating a control concentration where the same person provides both cost estimates and receipt confirmations.</p>
+<p>---</p>
+<h3>Cost Accounting and Allocation</h3>
+<p><strong>Coverage: Well-documented</strong> (James Kipchoge — system mechanics; David Motswari — operational application)</p>
+<p>Cost structure in Ellipse uses three dimensions: cost centre (organisational unit), account code (nature of expenditure), and work order (specific job/project). Work order usage is inconsistent — maintenance uses it well; mining development does not, relying instead on cost centre alone. This limits the ability to track cost-per-end or cost-per-activity within Ellipse.</p>
+<p>Mining-to-processing cost allocation is performed monthly by Amara in a complex multi-tab spreadsheet. Inputs are Ellipse cost centre totals (which may carry unresolved coding errors). Allocation drivers and their currency (static vs. updated monthly) are unknown to James and need confirmation. Output feeds management accounts; whether it journals back into Ellipse is unconfirmed. This is a <strong>single-point-of-failure process</strong> — Amara is the sole maintainer.</p>
+<p>30-60 recode journals are processed monthly to correct upstream coding errors. Correction workflow: Amara identifies errors in Excel cost reviews → investigates source in Ellipse → chases originator → prepares journal in spreadsheet template → entry into Ellipse → approval by Margaret above a threshold (threshold unconfirmed). <strong>No feedback loop exists to originators</strong>, so errors recur.</p>
+<p>---</p>
+<h3>Management Reporting</h3>
+<p><strong>Coverage: Partially documented</strong> (David Motswari — variance commentary; James Kipchoge — data extraction)</p>
+<p>Cost centre reports are generated from Ellipse/Cognos, exported to Excel for analysis. David writes monthly variance commentary in Word documents covering all underground cost centres — explaining budget vs. actual, distinguishing timing variances from real overruns, and flagging accrual treatments. Commentary is distributed via email to Margaret and Johan. It is <strong>not stored in a shared system</strong> — it lives in David's sent folder, local machine, and a physical lever arch file. Commentary is the key to interpreting what is estimated vs. confirmed in cost reports, making it a critical key-person dependency.</p>
+<p>David maintains a comprehensive Excel tracker ("the tracker") with tabs for dashboard (RAG-rated summary per development end), cost detail, survey reconciliation, issues log, and contractor cost tracking. RAG status is set by manual judgment using an unformalized ~15% threshold rule. The tracker has four years of history and is the primary operational intelligence tool for underground cost management. It exists only on David's laptop.</p>
+<p>---</p>
+<h3>Business Partnering and Business Case Support</h3>
+<p><strong>Coverage: Partially documented</strong> (David Motswari — primary)</p>
+<p>David builds cost comparisons in Excel when engineers bring operational problems requiring expenditure decisions. For items under $250K, Johan and Themba approve via email; David documents and updates the budget. Over $250K or involving new contract scope, a formal memo is prepared, Margaret reviews the numbers, and the case goes to the Capex and Projects Committee. Approvals are stored in David's Outlook folder ("Approvals") — not in SAP, not on a shared drive. David's involvement is essential for credibility: <em>"If it doesn't have my fingerprints on it, they won't believe it."</em></p>
+<p>---</p>
+<h3>Payroll and Labour Cost Processing</h3>
+<p><strong>Coverage: Partially documented</strong> (James Kipchoge — system/data flow; operational process unclear)</p>
+<p>Microster captures employee ID, hours, shift type, gross amount, and HR department code (not a finance cost centre). A mapping table translates department codes to finance cost centres — this table exists as a <strong>shared spreadsheet with two versions</strong> (finance and HR), no authoritative system-of-record, and no formal protocol for updates when org structure changes. The extract is weekly, worked in Excel, then imported/journaled into Ellipse. <strong>No validation at import</strong> checks whether cost centre assignments are correct — if the mapping is wrong, the journal posts silently to the wrong cost centre. Detection relies entirely on human pattern recognition at month-end. Labour is the largest single cost category and the allocation with the weakest systemic controls.</p>
+<p>---</p>
+<h3>Budgeting and Forecasting</h3>
+<p><strong>Coverage: Minimally documented</strong></p>
+<p>David references updating budgets when business cases are approved, and his tracker contains budget metres and costs per development end. James references budget existence checks in the procurement approval workflow. The full budgeting cycle, forecast process, and tools were not described in detail by any interviewee.</p>
+<p>---</p>
+<h3>Month-End and Year-End Close</h3>
+<p><strong>Coverage: Partially documented</strong></p>
+<p>Elements described across interviews: accrual journals (David calls Margaret to agree treatment; Margaret's team posts), recode journals (Amara identifies and prepares; posted into Ellipse), cost allocation (Amara's spreadsheet), variance commentary (David's Word document). Wednesday ~3pm is an effective cut-off for AP items making the payment run. The full close checklist, timeline, reconciliation steps, and year-end specific procedures were not described.</p>
+<p>---</p>
+<h3>Fixed Assets and Capital Expenditure</h3>
+<p><strong>Coverage: Minimally documented</strong></p>
+<p>David described the business case approval process for capital items (threshold at $250K for committee approval). The Capex and Projects Committee was referenced. Fixed asset register maintenance, depreciation processing, asset transfers, and impairment processes were not covered.</p>
+<p>---</p>
+<h3>Consolidated: Lightly Covered Domains</h3>
+<p>| Domain | What Was Mentioned | Gaps |</p>
+<p>|--------|--------------------|------|</p>
+<p>| <strong>Accounts Receivable and Revenue</strong> | Not covered by any interviewee | Entire process undocumented |</p>
+<p>| <strong>Tax and Statutory Compliance</strong> | Not covered | Entire process undocumented |</p>
+<p>| <strong>Inventory and Stores Finance Interface</strong> | James mentioned inventory is in Ellipse; David noted explosives are consumed on issue from magazine | Stores reconciliation, obsolescence, physical counts not covered |</p>
+<p>| <strong>Cash Management (site-level)</strong> | Priya described payment runs and bank detail verification | Cash forecasting, bank reconciliation, cash position monitoring not covered |</p>
+<p>| <strong>Intercompany and Recharges</strong> | Not covered | Entire process undocumented — may not be applicable to single-site operation |</p>
+<h2>Section 3: Process Flow Descriptions</h2>
+<h3>Process 1: Accounts Payable — Invoice to Payment</h3>
+<p><strong>Trigger:</strong> Invoice arrives in shared AP email inbox (or is scanned from post)</p>
+<p><strong>Frequency:</strong> Continuous intake; weekly payment run (Thursday)</p>
+<p>| Step | Role/Swim Lane | Activity | System/Tool | Decision? | Output/Handoff |</p>
+<p>|------|---------------|----------|-------------|-----------|----------------|</p>
+<p>| 1 | Priya | Sort inbox: separate invoices from statements, quotes, queries | Outlook (shared inbox) | Yes — classify document type | Invoices moved to processing folder; non-invoices to query folder |</p>
+<p>| 2 | Priya | Identify PO number on invoice | Invoice PDF | Yes — PO present? | If yes → Step 3. If no → Step 2a |</p>
+<p>| 2a | Priya | Search Ellipse by vendor/date for matching PO; if none found, email originating department to identify owner | Ellipse, Outlook | Yes — can PO be located? | If found → Step 3. If not → invoice parked in 'Pending — Awaiting PO or Receipt' subfolder and logged in tracking spreadsheet |</p>
+<p>| 3 | Priya | Pull up PO in Ellipse; verify goods receipt exists | Ellipse | Yes — receipt confirmed? | If yes → Step 4. If no → chase operational staff by email/phone (2-3 day typical delay) |</p>
+<p>| 3a | Priya (or David informally) | For contractor invoices: Priya phones David to verify work completion if Themba unavailable | Phone, WhatsApp screenshots | Yes — David confirms? | David sends confirmation email to Priya; Priya receipts in Ellipse |</p>
+<p>| 4 | Priya | Three-way match: compare PO, receipt note, and invoice line by line | Ellipse (header tolerance check) + manual PDF/screen comparison | Yes — within tolerance? | If match → Step 5. If discrepancy → investigate with vendor or requester |</p>
+<p>| 5 | Priya | Code invoice (GL account, cost centre) and post in ERP | Ellipse | No | Invoice enters approval workflow; logged in Priya's tracking spreadsheet |</p>
+<p>| 6 | Priya | If ERP notification unreliable: print invoice + PO summary, walk to approver or place in tray | Paper pack, physical delivery | No | Parallel approval tracking initiated |</p>
+<p>| 7 | Approver (dept head / Johan / Margaret) | Review and approve invoice | Ellipse (if notification works) or physical signature on paper pack | Yes — approve? | Signed pack returned to Priya; or ERP approval recorded |</p>
+<p>| 8 | Priya | Wednesday PM: pull payment proposal from ERP; review completeness, verify bank details, resolve holds | Ellipse, Excel (vendor bank detail list) | Yes — all items ready? | Final payment batch prepared |</p>
+<p>| 9 | Margaret | Review and authorize payment batch | Ellipse | Yes — authorize? | Payment released |</p>
+<p>| 10 | Priya | Send remittance advices to vendors in vendor-specific formats | Ellipse / Email | No | Payment cycle complete |</p>
+<p>---</p>
+<h3>Process 2: Development Cost Tracking — Blast to Variance Report</h3>
+<p><strong>Trigger:</strong> Development blast occurs (or fails to occur) on a shift</p>
+<p><strong>Frequency:</strong> Continuous underground; weekly tracker update; monthly variance report</p>
+<p>| Step | Role/Swim Lane | Activity | System/Tool | Decision? | Output/Handoff |</p>
+<p>|------|---------------|----------|-------------|-----------|----------------|</p>
+<p>| 1 | Underground crew | Blast development end; costs incurred (drilling, explosives, labour, equipment) | Operational | No | Explosives issued from magazine = cost booked on issue |</p>
+<p>| 2 | Stores/Magazine | Explosives issued; system records consumption | Ellipse (inventory) | No | Cost hits cost centre immediately regardless of blast outcome |</p>
+<p>| 3 | Survey department | Surveyor measures advance after cleanup; records metres achieved | MineRP | No | Survey data in MineRP (typically ~1 week lag) |</p>
+<p>| 4 | Survey department | Monthly CSV extract of survey metres sent to David and mine planning | MineRP → CSV → Email | No | Handoff to David |</p>
+<p>| 5 | David | Manually enters survey metres into tracker; reconciles against Ellipse costs | Excel tracker (Survey Reconciliation tab) | Yes — do costs and metres align? | If aligned → update dashboard. If gap → Step 6 |</p>
+<p>| 6 | David | Investigate discrepancy: check survey report, visit underground, speak to shift boss | Physical inspection, phone, MineRP data | Yes — timing issue or real loss? | Judgment call using four inputs: system data, survey report, underground observation, shift boss knowledge |</p>
+<p>| 7 | David | Phone Margaret to agree accrual treatment | Phone call | Yes — agree treatment? | Margaret (or team) posts manual accrual journal in Ellipse |</p>
+<p>| 8 | Margaret's team | Post accrual journal: debit cost centre, credit accrual account | Ellipse (manual journal) | No | Ledger updated |</p>
+<p>| 9 | David | Update tracker dashboard: cost per metre, RAG status (manual judgment, ~15% threshold) | Excel tracker (Dashboard tab) | Yes — RAG classification | Tracker updated |</p>
+<p>| 10 | David | Write monthly variance commentary (Word doc) explaining each cost centre | Word | No | Email to Margaret and Johan; copy filed locally and in lever arch file |</p>
+<p>---</p>
+<h3>Process 3: Labour Cost Posting — Time &amp; Attendance to General Ledger</h3>
+<p><strong>Trigger:</strong> Weekly time and attendance extract from Microster</p>
+<p><strong>Frequency:</strong> Weekly extract; monthly reconciliation</p>
+<p>| Step | Role/Swim Lane | Activity | System/Tool | Decision? | Output/Handoff |</p>
+<p>|------|---------------|----------|-------------|-----------|----------------|</p>
+<p>| 1 | HR / T&amp;A system | Microster captures employee hours, shift type, department code (HR org unit) | Microster | No | Weekly flat-file extract generated |</p>
+<p>| 2 | Finance (unknown person) | Receive extract; apply mapping table to translate HR department codes to finance cost centres | Excel (mapping table spreadsheet) | Yes — do mappings exist for all codes? | If mapping exists → Step 3. If new/changed code → manual investigation |</p>
+<p>| 3 | Finance (unknown person) | Review extract for anomalies; apply judgment (extent unknown to James) | Excel | Yes — anomalies? | Cleaned file ready for import |</p>
+<p>| 4 | Finance (unknown person) | Import or manually journal labour costs into Ellipse by cost centre | Ellipse | No | <strong>No validation at import</strong> — incorrect mappings post silently to wrong cost centre |</p>
+<p>| 5 | Amara (month-end) | Review cost centre reports; detect anomalies in labour costs by pattern recognition | Excel (Cognos export) | Yes — costs look reasonable? | If anomaly detected → recode journal. If not detected → error persists |</p>
+<p><em>Note: Steps 2-4 are inferred by James Kipchoge from system observation. The person performing these steps and the degree of judgment applied were not directly documented in interviews.</em></p>
+<p>---</p>
+<h3>Process 4: Month-End Recode Journal Workflow</h3>
+<p><strong>Trigger:</strong> Amara identifies miscoded transactions during cost report review</p>
+<p><strong>Frequency:</strong> Monthly; 30-60 journals per month (estimated)</p>
+<p>| Step | Role/Swim Lane | Activity | System/Tool | Decision? | Output/Handoff |</p>
+<p>|------|---------------|----------|-------------|-----------|----------------|</p>
+<p>| 1 | Amara | Review cost centre reports exported from Ellipse/Cognos | Excel | Yes — anomalies identified? | List of suspected miscoded transactions |</p>
+<p>| 2 | Amara | Investigate source transaction in Ellipse (drill into PO, work order, original requisition) | Ellipse | Yes — confirm miscoding? | Confirmed error and correct cost centre/account identified |</p>
+<p>| 3 | Amara | Chase originator by email or conversation if additional context needed | Email/phone | No | Confirmation of correct coding |</p>
+<p>| 4 | Amara | Prepare recode journal in spreadsheet template (debit correct CC, credit incorrect CC) | Excel (journal template) | No | Completed journal template |</p>
+<p>| 5 | Amara / James (if needed) | Enter journal into Ellipse | Ellipse | No | Journal posted to ledger |</p>
+<p>| 6 | Margaret (if above threshold) | Review and approve journal | Ellipse | Yes — approve? | Journal finalized |</p>
+<p>| 7 | (Gap) | <strong>No notification sent to originator</strong> | None | N/A | Error likely to recur |</p>
+<p><em>Note: Journal narrative field is free-text and inconsistently populated, limiting subsequent analysis of error patterns.</em></p>
+<p>---</p>
+<h3>Process 5: Contractor Invoice Verification (Informal Control)</h3>
+<p><strong>Trigger:</strong> Contractor invoice received by Priya (typically 5th of month for Bohlokwa; fortnightly for Setlhare)</p>
+<p><strong>Frequency:</strong> Monthly/fortnightly per contractor</p>
+<p>| Step | Role/Swim Lane | Activity | System/Tool | Decision? | Output/Handoff |</p>
+<p>|------|---------------|----------|-------------|-----------|----------------|</p>
+<p>| 1 | Contractor | Submits invoice to AP | Email to shared inbox | No | Invoice in Priya's queue |</p>
+<p>| 2 | Priya | Sends goods receipt confirmation request to Themba (section engineer) | Email / Ellipse workflow | No | Request sent |</p>
+<p>| 3 | Priya | Themba does not respond in timely manner (underground, not always reachable) | N/A | Yes — response received? | If yes → standard 3-way match. If no → Step 4 |</p>
+<p>| 4 | Priya | Phones David to verify work was completed | Phone call | Yes — David confirms? | David confirms based on WhatsApp activity reports and personal knowledge |</p>
+<p>| 5 | David | Sends confirmation email to Priya (sometimes attaches WhatsApp screenshots as PDF) | Outlook | No | Priya receipts goods in Ellipse based on David's confirmation |</p>
+<p>| 6 | David | Updates tracker with actual contractor costs (truing up earlier estimates) | Excel tracker (Contractor tab) | No | Tracker aligned to actual invoiced amounts |</p>
+<p><strong>Control weakness identified by David:</strong> Steps 4-5 mean the person providing cost estimates in the tracker (David) is also the person confirming receipt of work. Two of three inputs to the three-way match effectively come from one person. <em>"It works because of who I am. That's the risk."</em></p>
+<h2>Section 4: Cross-Process Observations</h2>
+<h3>System Limitations &amp; Workarounds</h3>
+<ul>
+<li><strong>No integration between MineRP (survey/technical) and Ellipse (finance):</strong> Development metres — the key physical driver for cost-per-metre analysis — must be manually reconciled via CSV extracts and David's Excel tracker. This is the single largest system gap affecting underground cost management.</li>
+<li><strong>No integration between Aspen (plant) and Ellipse:</strong> Mining-to-processing cost allocation happens entirely outside the ERP in a spreadsheet maintained by one person (Amara).</li>
+<li><strong>Microster-to-Ellipse mapping maintained in parallel spreadsheets</strong> with no authoritative version, no change protocol, and no import validation. Labour costs — the largest single cost category — can post silently to wrong cost centres.</li>
+<li><strong>ERP approval notifications unreliable</strong>, forcing Priya to maintain a parallel paper-based approval process. <em>"The ERP workflow exists and I use it, but I can't rely on it alone if I have a deadline. So I have the parallel process as a backup."</em> — Priya Desai</li>
+<li><strong>Ellipse line-by-line matching is inadequate:</strong> Three-way match is effectively manual, with Priya comparing PDFs against screens. System tolerance check operates at header level only.</li>
+<li><strong>Cognos reporting requires Excel export for any analytical work</strong>, reinforcing spreadsheet dependency.</li>
+</ul>
+<h3>Handoff Friction Points</h3>
+<ul>
+<li><strong>Goods receipt confirmation delays</strong> (2-3 days typical) caused by operational staff not entering receipts promptly, cascading into missed payment runs and vendor relationship strain.</li>
+<li><strong>Survey data lag</strong> (~1 week) creates a persistent gap between costs booked and metres confirmed, requiring judgment-based accruals every month.</li>
+<li><strong>No-PO invoices</strong> require Priya to conduct detective work across departments — <em>"There's no consequence for not raising a PO... So the behaviour doesn't change."</em> — Priya Desai</li>
+<li><strong>Contractor receipt confirmation</strong> routes informally through David when Themba is unavailable, bypassing the intended control structure.</li>
+</ul>
+<h3>Data Quality &amp; Availability Issues</h3>
+<ul>
+<li><strong>Cost coding errors at requisition stage</strong> propagate uncorrected through the entire transaction chain. 30-60 recode journals monthly represent the correction effort. <em>"The correction fixes the ledger but it doesn't fix the process that caused the error."</em> — James Kipchoge</li>
+<li><strong>HR-to-finance cost centre mapping table</strong> has no single authoritative version; two teams maintain separate copies that drift out of sync on org changes.</li>
+<li><strong>Journal narrative fields</strong> are free-text and inconsistently populated, preventing systematic analysis of error patterns or root causes.</li>
+<li><strong>Variance commentary</strong> — the key to understanding what is estimated vs. confirmed in cost reports — lives only in David's email, local machine, and a physical file.</li>
+</ul>
+<h3>Key-Person Dependencies</h3>
+<ul>
+<li><strong>David Motswari</strong> holds the operational intelligence layer for underground cost management. His tracker (4 years of history), his variance commentary, his business case approvals, his contractor verifications, and his accrual judgments all reside in personal systems (laptop, Outlook, lever arch file). <em>"If I got hit by a truck tomorrow, they'd be in trouble. I know that."</em> — David Motswari</li>
+<li><strong>Amara</strong> is the sole maintainer of the mining-to-processing cost allocation spreadsheet — described by James as a single point of failure.</li>
+<li><strong>Priya Desai</strong> maintains compensating controls (tracking spreadsheet, vendor preference list, bank detail verification process, paper pack system) that exist nowhere else and are entirely undocumented.</li>
+</ul>
+<h3>High Manual Effort Areas</h3>
+<ul>
+<li>Invoice three-way matching: line-by-line manual comparison across screens/PDFs (50-70 invoices/week)</li>
+<li>Tracking spreadsheet maintenance: Priya's AP log and David's underground tracker both require continuous manual update from multiple sources</li>
+<li>Monthly recode journals: 30-60 correction entries requiring investigation, preparation, entry, and approval</li>
+<li>Survey-to-cost reconciliation: manual CSV import, tracker update, and discrepancy investigation</li>
+<li>Labour cost mapping: weekly manual translation of HR department codes to finance cost centres</li>
+<li>Payment run preparation: manual review of proposal, bank detail verification, hold resolution</li>
+</ul>
+<h3>Improvement Opportunities Identified by Staff</h3>
+<ul>
+<li><strong>Priya:</strong> Retrospective PO form with required explanation field to create friction and reduce no-PO invoices; fix ERP approval notifications to eliminate need for parallel paper process</li>
+<li><strong>James:</strong> Structured/enforced journal narrative field (low implementation cost) to enable miscoding pattern analysis; single authoritative mapping table for labour cost centre assignments with formal change protocol; validation rule at labour cost import to flag unknown or recently changed cost centres</li>
+<li><strong>David:</strong> Acknowledged need for knowledge documentation but no specific solution proposed; recognized his tracker should be shared or systematized</li>
+<li><strong>James (observation, not recommendation):</strong> Debit-credit patterns in recode journals are extractable and could be queried as a proxy for miscoding volume if narrative discipline were improved</li>
+</ul>
+<h2>Section 5: Process Coverage &amp; Gap Assessment</h2>
+<p>| Process Domain | Interview Coverage | Key Roles Documented | Gaps / Missing Perspectives |</p>
+<p>|---------------|-------------------|---------------------|--------------------------|</p>
+<p>| Accounts Payable | <strong>Well-documented</strong> | Priya (owner), David (informal verification), Margaret (authorization) | Vendor master maintenance; dispute resolution detail; AP close reconciliation |</p>
+<p>| Accounts Receivable and Revenue | <strong>Not covered</strong> | None | Entire process — gold doré sales, revenue recognition, refinery settlements |</p>
+<p>| Payroll and Labour Cost Processing | <strong>Partially documented</strong> | James (system/data flow observation) | Actual process operator unknown; payroll calculation; leave/overtime rules; payslip generation |</p>
+<p>| Procurement and Purchase Order Management | <strong>Well-documented</strong> | Priya (processing), James (system design), David (contractor context) | Vendor selection/sourcing; contract management; requisition training/compliance |</p>
+<p>| Cost Accounting and Allocation | <strong>Well-documented</strong> | James (system mechanics), David (operational application), Amara (referenced) | Amara's allocation methodology and driver sources; full allocation spreadsheet logic |</p>
+<p>| Management Reporting | <strong>Partially documented</strong> | David (variance commentary), James (data extraction) | Full reporting pack contents; board/executive reporting; KPI definitions |</p>
+<p>| Budgeting and Forecasting | <strong>Minimally documented</strong> | David (budget references in tracker and business cases) | Full budget cycle; forecasting process; tools; participants; timeline |</p>
+<p>| Fixed Assets and Capital Expenditure | <strong>Minimally documented</strong> | David (business case process, Capex Committee reference) | Asset register; depreciation; asset transfers; impairment; WIP capitalization |</p>
+<p>| Month-End and Year-End Close | <strong>Partially documented</strong> | David (accruals), Amara (recodes, allocations — referenced), Margaret (approvals — referenced) | Full close checklist; reconciliation procedures; timeline; year-end specifics |</p>
+<p>| Tax and Statutory Compliance | <strong>Not covered</strong> | None | Entire process — tax returns, statutory reporting, audit coordination |</p>
+<p>| Business Partnering and Business Case Support | <strong>Partially documented</strong> | David (primary), Margaret and Johan (approvers — referenced) | Formal business case template; committee process; post-implementation review |</p>
+<p>| Inventory and Stores Finance Interface | <strong>Minimally documented</strong> | David (explosives consumption on issue), James (inventory in Ellipse) | Stores reconciliation; physical counts; obsolescence; slow-moving stock |</p>
+<p>| Cash Management (site-level) | <strong>Minimally documented</strong> | Priya (payment runs, bank details) | Cash forecasting; bank reconciliation; cash position monitoring |</p>
+<p>| Intercompany and Recharges | <strong>Not covered</strong> | None | May not be applicable to single-site operation; needs confirmation |</p>
+<p><strong>Priority interviews recommended:</strong> Margaret (Finance Manager — close process, approvals, reporting pack, compliance), Amara (Management Accountant — cost allocation, recode journals, reporting), Payroll Administrator, Revenue/AR Accountant.</p>
+<h2>Section 6: Individual Interview Summaries (Appendix)</h2>
+<h3>David Motswari — Business Partner Finance, Underground Operations</h3>
+<p><strong>Role Profile:</strong> Senior on-site business partner (~12 years), embedded in underground development and production. Reports into finance but operates physically alongside mining operations. Primary interface between underground engineering/operations and central finance.</p>
+<p><strong>Process Participation Inventory:</strong></p>
+<p>| Process Domain | Role | Frequency |</p>
+<p>|---------------|------|-----------|</p>
+<p>| Cost Accounting and Allocation | Contributor — operational cost tracking, survey reconciliation | Daily/Weekly |</p>
+<p>| Management Reporting | Owner — variance commentary for underground cost centres | Monthly |</p>
+<p>| Business Partnering and Business Case Support | Owner — cost comparisons, business cases, expenditure approvals | Ad hoc |</p>
+<p>| Accounts Payable | Contributor — informal contractor invoice verification | Monthly/fortnightly |</p>
+<p>| Month-End and Year-End Close | Contributor — accrual judgments, calls to Margaret | Monthly |</p>
+<p>| Budgeting and Forecasting | Contributor — budget updates from approved business cases | Ad hoc |</p>
+<p>| Procurement and PO Management | Contributor — contractor work verification | Event-triggered |</p>
+<p><strong>Key Process Contributions:</strong> Maintains the primary underground cost tracker (Excel, 4 years of data); makes judgment-based accrual calls with Margaret; writes all underground variance commentary; verifies contractor work completion for AP; builds business cases for operational expenditure decisions.</p>
+<p><strong>Notable Observations:</strong> Strongest key-person dependency identified. Knowledge, tools, and records reside entirely in personal systems. RAG threshold rules are unformalized. Contractor verification creates segregation-of-duties concern. Fully aware of these risks but no structural solution in place.</p>
+<p>---</p>
+<h3>Priya Desai — Accounts Payable &amp; Procurement Coordinator</h3>
+<p><strong>Role Profile:</strong> Mid-level central finance, responsible for end-to-end AP processing and procurement coordination. Processes 50-70 invoices weekly with ~35% requiring investigation.</p>
+<p><strong>Process Participation Inventory:</strong></p>
+<p>| Process Domain | Role | Frequency |</p>
+<p>|---------------|------|-----------|</p>
+<p>| Accounts Payable | Owner — invoice receipt through payment | Daily |</p>
+<p>| Procurement and PO Management | Contributor — PO matching, no-PO investigation | Daily |</p>
+<p>| Cash Management (site-level) | Contributor — payment run preparation | Weekly |</p>
+<p>| Month-End and Year-End Close | Contributor — AP cut-off, aging report | Monthly |</p>
+<p><strong>Key Process Contributions:</strong> Runs the full AP cycle from inbox sorting through payment execution; maintains parallel tracking spreadsheet and paper pack approval process as compensating controls; manages vendor relationships and payment communications; handles no-PO invoice investigation and resolution.</p>
+<p><strong>Notable Observations:</strong> Has built disciplined workarounds for system gaps (unreliable ERP notifications, inadequate line-level matching). Identified no-PO invoices as a systemic behavioral problem and proposed a retrospective PO form solution. Reports having raised the approval notification issue previously without resolution.</p>
+<p>---</p>
+<h3>James Kipchoge — Finance Systems Administrator &amp; Analyst</h3>
+<p><strong>Role Profile:</strong> Mid-to-senior central finance, responsible for ERP (Ellipse) administration, Cognos reporting, data extraction, and systems troubleshooting. Cross-functional visibility into system usage and data flows.</p>
+<p><strong>Process Participation Inventory:</strong></p>
+<p>| Process Domain | Role | Frequency |</p>
+<p>|---------------|------|-----------|</p>
+<p>| Cost Accounting and Allocation | Contributor — data extraction for Amara, system observation | Ad hoc / monthly |</p>
+<p>| Payroll and Labour Cost Processing | Observer — understands data flow, does not operate process | Weekly (observation) |</p>
+<p>| Management Reporting | Contributor — Cognos report generation, custom queries | Ad hoc |</p>
+<p>| Procurement and PO Management | Owner — system configuration, approval routing | Ongoing |</p>
+<p>| Month-End and Year-End Close | Contributor — recode journal entry (sometimes) | Monthly |</p>
+<p><strong>Key Process Contributions:</strong> Maintains and supports Ellipse configuration; provides custom data extracts when standard Cognos reports are insufficient; understands system-level data architecture and can articulate where system design creates downstream process problems.</p>
+<p><strong>Notable Observations:</strong> Uniquely positioned to see the gap between intended system design and actual usage patterns. Clearly articulated the upstream coding error propagation problem, the mapping table governance gap, and the missing feedback loop on recode journals. Proposed practical low-cost improvements (structured narrative fields, mapping table governance, import validation). Disciplined about separating what he directly knows from what he infers.</p>
+
+</body>
+</html>

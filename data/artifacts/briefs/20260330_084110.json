@@ -1,0 +1,30 @@
+{
+  "id": "20260330_084110",
+  "label": "Uploaded",
+  "timestamp": "2026-03-30T08:41:10.057235+00:00",
+  "data": {
+    "context": {
+      "organization_name": "TestCorp",
+      "industry": "SaaS",
+      "description": "100-person startup"
+    },
+    "interview_objectives": {
+      "research_topic": "Employee satisfaction",
+      "key_questions": [
+        "What drives engagement?"
+      ]
+    },
+    "interview_output_structure": {
+      "required_topics": [
+        "satisfaction",
+        "growth"
+      ],
+      "depth_criteria": "3+ examples per topic"
+    },
+    "report_objectives": {
+      "report_type": "theme analysis",
+      "target_audience": "VP HR",
+      "focus": "actionable recommendations"
+    }
+  }
+}

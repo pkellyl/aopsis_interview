@@ -1,0 +1,227 @@
+{
+  "id": "20260330_152843",
+  "label": "Toyota Motor North America \u2013 Supply Chain & Procurement Divi",
+  "timestamp": "2026-03-30T15:28:43.503572+00:00",
+  "data": {
+    "context": {
+      "organization_name": "Toyota Motor North America \u2013 Supply Chain & Procurement Division (fictional/archetypal)",
+      "industry": "Automotive Manufacturing (OEM)",
+      "description": "A large-scale automotive OEM supply chain organization modeled on Toyota USA. The function covers direct and indirect procurement, supplier development, inbound and outbound logistics, production planning, inventory management, and S&OP. The organization operates across multiple manufacturing plants in the US (e.g., Kentucky, Texas, Indiana), with a central corporate supply chain office in Plano, TX. It interfaces heavily with global sourcing (Japan HQ), regional suppliers, third-party logistics providers, and internal functions including manufacturing, finance, and product engineering.",
+      "scale": "Large OEM. ~$50B+ in annual procurement spend. Thousands of active suppliers. Multiple plants producing passenger vehicles, SUVs, and trucks.",
+      "known_dynamics_and_tensions": [
+        "Tension between centralized corporate procurement strategy and plant-level operational autonomy \u2014 plants often make local decisions that conflict with enterprise supplier agreements.",
+        "Generational divide between tenured employees trained in the Toyota Production System (TPS) philosophy and newer hires with data science / digital supply chain backgrounds who push for algorithmic decision-making.",
+        "Geography-based tension between the Plano TX corporate hub and manufacturing plant teams in Kentucky, Indiana, and Texas \u2014 plant teams feel distant from corporate decisions.",
+        "Persistent tension between supply chain and product engineering over lead times: engineering changes are introduced late and disrupt supplier schedules.",
+        "Post-COVID and post-semiconductor-shortage legacy: some resilience investments (dual sourcing, safety stock) are now seen as cost inefficiencies by finance, creating cross-functional friction.",
+        "Japan HQ influence: certain strategic sourcing decisions are made in Japan with limited North American input, creating a perceived lack of ownership and accountability in the US team.",
+        "S&OP process is a known fault line \u2014 sales/commercial forecasts are often not trusted by supply chain planners, leading to informal shadow forecasting."
+      ]
+    },
+    "interview_objectives": {
+      "research_topic": "How decisions are made within the Toyota USA supply chain organization and its adjacent functions \u2014 mapping decision ownership, information flows, meeting structures, KPIs, and reporting relationships to produce an organizational decision graph.",
+      "key_questions": [
+        "What decisions does this person own, influence, or get consulted on?",
+        "What information do they rely on to make decisions, and where does it come from?",
+        "What meetings do they attend, and what is their role in each?",
+        "What are their KPIs and how do those KPIs shape their decision-making priorities?",
+        "Who do they report to, and who reports to them?",
+        "Where do they feel decisions are slow, unclear, or contested?",
+        "Where do they feel disconnected from decisions that affect their work?",
+        "How do they interact with adjacent functions (manufacturing, finance, engineering, commercial)?",
+        "What happens when something goes wrong \u2014 who decides, and how fast?"
+      ],
+      "themes_to_probe": [
+        "Decision ownership vs. decision influence \u2014 who formally decides vs. who really drives outcomes",
+        "Meeting culture \u2014 which meetings produce decisions vs. which are informational or performative",
+        "KPI conflicts \u2014 where one person's KPI works against another's",
+        "Information asymmetry \u2014 who has visibility and who is flying blind",
+        "Escalation paths \u2014 how problems travel up and across the organization",
+        "Informal power \u2014 whose opinion carries weight beyond their title",
+        "Speed and bottlenecks \u2014 where decisions get stuck",
+        "Plant vs. corporate divide",
+        "HQ (Japan) vs. North America decision rights"
+      ]
+    },
+    "interview_output_structure": {
+      "required_topics_per_interview": [
+        "Reporting line: who this person reports to (name/title of direct manager)",
+        "Direct reports: who reports to this person (titles and count)",
+        "KPIs: 3\u20136 specific KPIs this person is measured on, with a note on how each shapes behavior",
+        "Meetings: list of recurring meetings attended, with frequency, role in each (lead / participant / reviewer), and what decisions or outputs each meeting produces",
+        "Decision inventory: list of decisions this person owns or co-owns, categorized by type (strategic / operational / transactional) and frequency (daily / weekly / monthly / ad hoc)",
+        "Key interfaces: which other roles or functions this person interacts with most, and the nature of each interaction (provides input / receives input / joint decision / approval)",
+        "Pain points: where this person experiences friction, delay, confusion, or misalignment in decision-making",
+        "Workarounds: informal practices this person uses to get things done that bypass formal processes"
+      ],
+      "depth_criteria": [
+        "Each interview should be rich enough to place the person precisely in the organizational graph \u2014 their node, their edges, and the direction/weight of those edges",
+        "KPIs must be specific and realistic \u2014 not generic (e.g., not just 'cost savings' but 'year-over-year PPV reduction target of 3% on direct materials')",
+        "Meetings must be named and described specifically enough to identify overlaps and gaps across interviews",
+        "Decision inventory must distinguish between decisions this person believes they own and decisions where ownership is contested or unclear",
+        "Pain points should be expressed in the person's voice \u2014 specific, grounded, not abstract"
+      ],
+      "per_interview_deliverables": [
+        "Structured profile covering all required topics above",
+        "A short narrative (150\u2013200 words) describing how this person experiences decision-making in the organization \u2014 their perspective, frustrations, and workarounds",
+        "A node-and-edge summary: a simple list of connections (this person \u2192 meeting / KPI / decision / role) suitable for ingestion into a graph visualization tool"
+      ]
+    },
+    "report_objectives": {
+      "report_type": "Organizational decision-flow diagnostic \u2014 a synthesis of all interviews into a connected graph and interpretive analysis, designed for top management and external consultants.",
+      "target_audience": "Chief Supply Chain Officer, VP-level supply chain and operations leaders, and consulting team conducting organizational diagnostic.",
+      "output_sections": [
+        {
+          "section": "Executive Summary",
+          "description": "2\u20133 page summary of the most significant findings about how decisions are made, where the major fault lines are, and the highest-priority areas for diagnostic follow-up."
+        },
+        {
+          "section": "Organizational Decision Graph",
+          "description": "A visual and structured map showing: all roles as nodes; edges representing reporting lines, meeting co-attendance, shared KPIs, and decision interdependencies; annotated with decision types and frequency. Should be renderable in a graph tool (e.g., nodes/edges exported as structured data)."
+        },
+        {
+          "section": "Decision Inventory",
+          "description": "A consolidated table of all significant decisions identified across interviews, showing: decision name, primary owner, co-owners/influencers, frequency, meeting where it occurs (if any), and KPIs it affects."
+        },
+        {
+          "section": "Meeting Map",
+          "description": "A catalog of all recurring meetings identified, showing: attendees, frequency, decision outputs, and how each meeting connects to the broader decision flow. Identifies meetings that are overdense (too many decisions), underdense (no real decisions), or duplicative."
+        },
+        {
+          "section": "KPI Conflict Analysis",
+          "description": "An analysis of where KPIs across roles are in tension or contradiction \u2014 e.g., where a procurement KPI incentivizes behavior that damages a logistics or manufacturing KPI."
+        },
+        {
+          "section": "Fault Line Analysis",
+          "description": "Identification of the key organizational fault lines \u2014 plant vs. corporate, function vs. function, HQ vs. North America, formal vs. informal authority \u2014 with evidence from interviews and the decision graph."
+        },
+        {
+          "section": "Opportunity Zones",
+          "description": "Hypothesis-free summary of areas where the decision graph reveals structural gaps, bottlenecks, ownership ambiguity, or misalignment \u2014 framed as questions for further diagnosis rather than prescriptive recommendations."
+        },
+        {
+          "section": "Appendix: Individual Interview Profiles",
+          "description": "Full structured profiles for each of the 13 interviewees, including node-and-edge summaries."
+        }
+      ],
+      "focus_areas": [
+        "Decision ownership clarity vs. ambiguity",
+        "Speed and bottlenecks in the decision flow",
+        "KPI alignment and conflict across the organization",
+        "Formal vs. informal power and decision-making",
+        "Cross-functional and cross-geography disconnects",
+        "Meeting efficiency and decision-producing capacity",
+        "Resilience and responsiveness of the decision structure to disruption"
+      ]
+    },
+    "synthetic_audience": {
+      "total_interviews": 13,
+      "personas": [
+        {
+          "id": 1,
+          "title": "VP of Supply Chain \u2013 North America",
+          "function": "Supply Chain (Corporate)",
+          "location": "Plano, TX",
+          "role_summary": "Top of the North American supply chain function. Sets strategy, owns enterprise KPIs, and is the primary interface with Japan HQ. Attends executive S&OP and reports to the COO.",
+          "strategic_importance": "Anchor node \u2014 connects corporate strategy to operational execution and HQ to NA."
+        },
+        {
+          "id": 2,
+          "title": "Director of Procurement \u2013 Direct Materials",
+          "function": "Procurement",
+          "location": "Plano, TX",
+          "role_summary": "Owns sourcing strategy and supplier contracts for all direct materials (steel, semiconductors, sub-assemblies). Manages a team of commodity managers. Key tension point between cost targets and supply resilience.",
+          "strategic_importance": "High-volume decision node. KPI conflicts with logistics and manufacturing likely."
+        },
+        {
+          "id": 3,
+          "title": "Commodity Manager \u2013 Semiconductors & Electronics",
+          "function": "Procurement",
+          "location": "Plano, TX",
+          "role_summary": "Manages supplier relationships and sourcing decisions for semiconductor and electronics commodities. Post-shortage legacy creates tension between dual-sourcing resilience investments and cost pressure from finance.",
+          "strategic_importance": "Operational decision-maker with high strategic visibility post-COVID. Will surface HQ tension."
+        },
+        {
+          "id": 4,
+          "title": "Director of Supplier Development",
+          "function": "Procurement / Supplier Quality",
+          "location": "Plano, TX (with plant travel)",
+          "role_summary": "Owns supplier performance improvement programs. Bridges procurement and manufacturing. Has authority to place suppliers on watch lists or escalate to dual-sourcing decisions.",
+          "strategic_importance": "Cross-functional bridge. Will surface gaps between procurement decisions and manufacturing reality."
+        },
+        {
+          "id": 5,
+          "title": "Plant Supply Chain Manager \u2013 Georgetown, KY (Assembly Plant)",
+          "function": "Plant Operations / Supply Chain",
+          "location": "Georgetown, KY",
+          "role_summary": "Manages inbound logistics, line-side inventory, and production scheduling for the largest NA assembly plant. Represents the plant perspective \u2014 often at odds with corporate procurement decisions.",
+          "strategic_importance": "Critical plant-vs-corporate tension node. Will reveal how corporate decisions land in reality."
+        },
+        {
+          "id": 6,
+          "title": "Director of Logistics \u2013 Inbound",
+          "function": "Logistics",
+          "location": "Plano, TX",
+          "role_summary": "Owns inbound transportation network design and carrier relationships. KPIs around freight cost and on-time delivery. Frequent tension with procurement over supplier location decisions that increase freight complexity.",
+          "strategic_importance": "Will surface procurement-logistics KPI conflicts and decision sequencing problems."
+        },
+        {
+          "id": 7,
+          "title": "S&OP Process Lead",
+          "function": "Supply Chain Planning",
+          "location": "Plano, TX",
+          "role_summary": "Owns the Sales & Operations Planning process. Facilitates monthly S&OP cycle, manages demand-supply balancing decisions. Known pain point: commercial forecasts are distrusted by planners.",
+          "strategic_importance": "Meeting and process hub. Will map the S&OP decision flow and reveal where it breaks down."
+        },
+        {
+          "id": 8,
+          "title": "Director of Production Planning",
+          "function": "Manufacturing / Supply Chain Planning",
+          "location": "Plano, TX / Plant interface",
+          "role_summary": "Translates demand plan into production schedules across plants. Manages trade-offs between plant capacity, inventory targets, and customer delivery. Sits between supply chain and manufacturing.",
+          "strategic_importance": "Central coordination node. Will reveal how planning decisions cascade and where they break."
+        },
+        {
+          "id": 9,
+          "title": "VP of Manufacturing \u2013 North America (Adjacent)",
+          "function": "Manufacturing",
+          "location": "Plano, TX",
+          "role_summary": "Owns all NA plant operations. A major adjacent decision-maker whose priorities (uptime, throughput, labor efficiency) frequently conflict with supply chain's cost and inventory targets.",
+          "strategic_importance": "Powerful adjacent node. Will reveal how manufacturing and supply chain decision rights overlap and conflict."
+        },
+        {
+          "id": 10,
+          "title": "Director of Supply Chain Finance (Adjacent)",
+          "function": "Finance",
+          "location": "Plano, TX",
+          "role_summary": "Partners with supply chain to manage working capital, inventory investment, and procurement savings targets. Applies financial pressure that shapes supply chain decisions \u2014 particularly around safety stock and dual sourcing.",
+          "strategic_importance": "Will surface KPI conflicts between financial and operational objectives."
+        },
+        {
+          "id": 11,
+          "title": "Senior Manager, Supply Chain Digital & Analytics",
+          "function": "Supply Chain / IT",
+          "location": "Plano, TX",
+          "role_summary": "Leads supply chain data and analytics capabilities \u2014 dashboards, demand sensing, supplier risk tools. Represents the newer digital cohort. Tension with traditional TPS-trained leaders who distrust algorithmic recommendations.",
+          "strategic_importance": "Will surface generational and cultural tensions around data-driven vs. experience-based decision-making."
+        },
+        {
+          "id": 12,
+          "title": "Director of Engineering \u2013 Vehicle Programs (Adjacent)",
+          "function": "Product Engineering",
+          "location": "Plano, TX / Ann Arbor, MI",
+          "role_summary": "Owns vehicle program engineering decisions. Late engineering changes are a known source of supply chain disruption. Decision rights over component specifications create upstream ripple effects into procurement and logistics.",
+          "strategic_importance": "Will reveal engineering-supply chain interface gaps and the cost of late decisions."
+        },
+        {
+          "id": 13,
+          "title": "North America Liaison \u2013 Japan HQ Supply Chain",
+          "function": "Supply Chain (HQ Interface)",
+          "location": "Plano, TX (with frequent Japan travel)",
+          "role_summary": "Manages the flow of strategic direction from Toyota Japan HQ to the North American supply chain team. Sits in a structurally ambiguous position \u2014 not fully part of the NA team, not fully HQ. Carries significant informal influence.",
+          "strategic_importance": "Will surface HQ vs. NA decision rights tensions and where North American autonomy is real vs. illusory."
+        }
+      ]
+    }
+  }
+}

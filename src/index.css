@@ -13,21 +13,21 @@ body {
   font-family: 'JetBrains Mono', 'Fira Code', monospace;
 }
 
-/* Scrollbar styling for control-room aesthetic */
+/* Scrollbar styling for light theme */
 ::-webkit-scrollbar {
   width: 6px;
   height: 6px;
 }
 
 ::-webkit-scrollbar-track {
-  background: rgb(15 23 42);
+  background: rgb(249 250 251);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: rgb(51 65 85);
+  background: rgb(209 213 219);
   border-radius: 3px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: rgb(71 85 105);
+  background: rgb(156 163 175);
 }

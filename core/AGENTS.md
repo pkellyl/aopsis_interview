@@ -17,10 +17,10 @@ Core system modules: the hub (single source of truth for all state), the agent r
 
 | File | Purpose | Depends On |
 |------|---------|------------|
-| `hub.py` | System state: agents, events, logs, outputs, phase, transcripts. Single source of truth. | `pathlib`, `json`, `datetime` |
-| `agent_runtime.py` | The 5 runtime capabilities: create agent, send message, log, emit event, export. | `hub`, `model_selector`, `config`, `anthropic` |
-| `model_selector.py` | Resolves capability tiers (fast/balanced/smart/reasoning) to model IDs. | `config` |
-| `orchestrator.py` | Background worker: receives events, calls orchestrator agent, parses decisions, executes actions (CREATE_AGENT, SEND_MESSAGE, ADVANCE_PHASE, REQUEST_REVISION, RUN_INTERVIEW, COMPLETE_SYSTEM). | `hub`, `agent_runtime`, `config` |
+| `hub.py` | System state: agents, events, logs, outputs, phase, pending_phase (pipeline gate), transcripts. Single source of truth. Thread-safe via `threading.Lock`. | `pathlib`, `json`, `datetime`, `threading` |
+| `agent_runtime.py` | The 5 runtime capabilities: create agent, send message (with optional extended thinking via `use_thinking`), log, emit event, export. Semaphore-limited concurrent API calls with retry+backoff. Block-based response parsing supports thinking+text blocks. | `hub`, `model_selector`, `config`, `anthropic`, `threading`, `time` |
+| `model_selector.py` | Resolves capability tiers to model IDs. Supports config-driven mode presets (test/dev/production) and per-agent-type overrides. Suggests tiers for 11 agent types including visualizer. | `config` |
+| `orchestrator.py` | Deterministic pipeline runner. resume() clears pending_phase gate and spawns background thread that runs steps sequentially: persona_architect → interview_designer → parallel interviews (thread.join) → synthesis_designer + synthesis_agent. No LLM orchestrator — each step directly triggers the next. Public API: initialize(), start_worker(), stop_worker(), enqueue() are no-ops kept for compat; resume() is the single entry point. _do_synthesize() also called by /api/synthesize. | `hub`, `agent_runtime`, `config`, `artifact_store`, `threading` |
 
 ## Change Checklist
 

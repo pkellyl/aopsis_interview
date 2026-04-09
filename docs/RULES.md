@@ -106,6 +106,13 @@ _Add rules here as you learn them. Every phase teaches something. Capture it._
 49. **Hook extraction pattern (frontend).** Extract state + API logic into reusable hooks. Saves ~120-150 lines per component.
 50. **Backward-compat wrappers.** When replacing an API, keep old endpoint as thin wrapper over new one.
 51. **Industry/domain-agnostic from day one.** Externalize all domain context to config. Inject at runtime.
+52. **Threading over asyncio for sync codebases.** When adding concurrency to a synchronous codebase, use `threading.Thread` — not asyncio. Converting to async touches every file. Threading adds concurrency with surgical changes.
+53. **Single coarse lock beats fine-grained locks at small scale.** One `threading.Lock` in the hub is correct for ≤10 concurrent writers. Fine-grained locks (per-transcript, per-agent) add complexity without measurable benefit at this scale.
+54. **Separate validation from long-running work when threading.** Keep validation synchronous (fast, immediate error feedback) and spawn only the slow part as a thread. This keeps error handling clean and reduces thread lifecycle complexity.
+55. **Model presets over manual config editing.** Named presets (test/dev/production) with a UI toggle are worth the ~20 lines of code. They prevent config errors and make mode-switching instant.
+56. **Parse LLM responses by block type, not position.** API responses may contain multiple block types (thinking, text). Always iterate `response.content` and filter by `block.type == "text"` instead of assuming `response.content[0].text`. This is forward-compatible with extended thinking and other future block types.
+57. **Always strip markdown fences from LLM output.** Even when the prompt explicitly says "no markdown fencing," models will wrap code/HTML in ` ```lang ... ``` ` fences. Every output parser must strip fences before extracting content. This is not a prompt problem — it's an infrastructure requirement (see Rule 64).
+58. **Recreate single-shot agents that use extended thinking.** When `use_thinking=True`, the API requires previous assistant messages to include thinking blocks as a list. Our `send_message` stores responses as flattened strings, so reusing the agent on a second call causes a 400 error. Always `create_agent` fresh for single-shot thinking agents.
 
 ---
 
@@ -179,3 +186,9 @@ _These rules apply specifically when building multi-agent orchestrator systems. 
 ### Pub/Sub Backbone
 
 74. **Use subscribe + enqueue as the system glue.** Every agent action emits an event. Subscribers filter independently. Two lines wire the whole system: one for SSE broadcast, one for orchestrator. Adding a capability = adding a subscriber. This pattern is the right default for any multi-agent system.
+
+### UX Design
+
+75. **For every UI element, define the user's question or task.** Before building or modifying any UI component, state explicitly: "What question must the user answer here?" or "What task must they accomplish with ease?" Design for that question/task first. If you can't state the question, the element shouldn't exist. This applies to every panel, tab, button, label, and status indicator. No decorative elements that don't serve a user need.
+
+76. **No gray-on-white.** Minimum text color on white backgrounds is `text-gray-600` for labels, `text-gray-700` for secondary content, `text-gray-800` for body text. `text-gray-400` and `text-gray-500` are **never** used for text the user needs to read on a white background. Minimum font size for readable content is 11px (`text-[11px]`). Prefer 12px (`text-xs`) or larger.

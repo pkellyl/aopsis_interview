@@ -7,7 +7,6 @@ from dotenv import load_dotenv
 import config
 from core import hub
 from core import agent_runtime
-from core import orchestrator
 from api import config_routes, state_routes, chat_routes, events
 
 load_dotenv()
@@ -26,9 +25,8 @@ app.include_router(state_routes.router)
 app.include_router(chat_routes.router)
 app.include_router(events.router)
 
-# Wire SSE broadcast and orchestrator to agent runtime events
+# Wire SSE broadcast to agent runtime events
 agent_runtime.subscribe(events.broadcast)
-agent_runtime.subscribe(orchestrator.enqueue)
 
 
 @app.on_event("startup")
@@ -36,6 +34,7 @@ def startup():
     """Initialize config and state on server start."""
     config.load()
     hub.load()
+
 
 
 @app.get("/api/health")

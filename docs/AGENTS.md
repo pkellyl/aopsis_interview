@@ -16,7 +16,7 @@ Global documentation. RULES.md governs all development. ARCHITECTURE.md is the s
 
 | File | Purpose | Depends On |
 |------|---------|------------|
-| `RULES.md` | Global development rules (54 general + 20 agentic system rules) | — |
+| `RULES.md` | Global development rules (57 general + 20 agentic + 2 UX rules) | — |
 | `ARCHITECTURE.md` | System architecture map | — |
 | `scope.md` | Original POC specification v2 | — |
 | `AGENTS_TEMPLATE.md` | Template for per-directory AGENTS.md | — |

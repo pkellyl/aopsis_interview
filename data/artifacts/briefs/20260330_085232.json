@@ -1,0 +1,209 @@
+{
+  "id": "20260330_085232",
+  "label": "Brief",
+  "timestamp": "2026-03-30T08:52:32.043128+00:00",
+  "data": {
+    "context": {
+      "organisation_name": "Unnamed Mid-Sized Underground Mining Company",
+      "industry": "Mining \u2014 Underground Operations",
+      "company_size": "~600 employees",
+      "description": "A traditional underground mining operation with a 20-person finance department responsible for all operational finance functions. The company has been operating for a significant period with stable leadership and low turnover in mid-management and above. The organisation runs SAP as its core ERP system with no current migration or transformation initiatives underway.",
+      "department_in_scope": "Finance Department \u2014 Operational Finance only (excluding corporate finance, investor relations, capital markets)",
+      "systems": "SAP ERP",
+      "culture_and_dynamics": {
+        "culture": "Traditional, hierarchical, stable. Long-tenured employees in supervisory and management roles. Institutional knowledge concentrated in mid-management and above.",
+        "turnover": "Low at senior and mid levels; more typical turnover at junior/clerical levels",
+        "known_tensions": "None specifically flagged. This is a first-pass discovery exercise.",
+        "operational_context": "Underground mining creates distinctive finance demands: heavy procurement cycles for equipment and spares, contractor and subcontractor management, shift-based and hazard-adjusted payroll, ore stockpile and inventory valuation, rehabilitation and environmental provisioning, strict regulatory compliance costs, close interdependency between finance and operational departments (engineering, geology, safety, logistics)."
+      },
+      "synthetic_audience": {
+        "total_interviewees": 12,
+        "roles": [
+          {
+            "id": "FM01",
+            "title": "Finance Manager",
+            "seniority": "Senior Management",
+            "tenure": "15 years",
+            "age_range": "50s",
+            "scope": "Oversees entire operational finance function. Responsible for budgeting, cost control, management reporting, and finance team performance. Reports to Mine General Manager. Interfaces heavily with operations leadership.",
+            "personality_notes": "Cautious, detail-oriented, protective of established processes. Deep institutional knowledge. Likely to describe processes top-down and emphasize controls and governance."
+          },
+          {
+            "id": "FM02",
+            "title": "Management Accountant / FP&A Lead",
+            "seniority": "Mid-Management",
+            "tenure": "12 years",
+            "age_range": "40s",
+            "scope": "Budgeting, forecasting, variance analysis, cost centre reporting, management packs. Works closely with operational department heads to track costs against plan. Handles month-end and year-end management reporting.",
+            "personality_notes": "Analytical, methodical. Knows the numbers cold. Likely to describe reporting cycles in detail and flag where data quality from operations is an issue."
+          },
+          {
+            "id": "FM03",
+            "title": "Cost Accountant \u2014 Mining Operations",
+            "seniority": "Mid-level",
+            "tenure": "8 years",
+            "age_range": "30s",
+            "scope": "Tracks and allocates mining costs \u2014 drilling, blasting, hauling, development, support services. Manages cost centres for underground operations. Reconciles production data with financial data. Handles ore stockpile valuation.",
+            "personality_notes": "Pragmatic, operations-savvy. Sits at the boundary between finance and the mine. Likely to surface issues around data timing and reconciliation between physical and financial records."
+          },
+          {
+            "id": "FM04",
+            "title": "Cost Accountant \u2014 Plant and Processing",
+            "seniority": "Mid-level",
+            "tenure": "6 years",
+            "age_range": "30s",
+            "scope": "Tracks processing plant costs \u2014 milling, crushing, reagents, energy consumption, recovery rates. Allocates costs to production outputs. Works with plant management on efficiency metrics.",
+            "personality_notes": "Technical, quiet. Understands the plant side well. May describe processes that overlap with FM03 at the stockpile-to-plant handoff point."
+          },
+          {
+            "id": "FM05",
+            "title": "Accounts Payable Supervisor",
+            "seniority": "Supervisory",
+            "tenure": "14 years",
+            "age_range": "40s",
+            "scope": "Manages the AP team (2 clerks). Oversees invoice processing, three-way matching (PO, GRN, invoice), payment runs, supplier statement reconciliations, contractor payment certifications. Manages supplier master data in SAP.",
+            "personality_notes": "Experienced, process-driven, slightly resistant to change. Has seen multiple attempts to 'improve' AP. Knows every workaround and exception in the system."
+          },
+          {
+            "id": "FM06",
+            "title": "Accounts Payable Clerk \u2014 Trade and Services",
+            "seniority": "Junior",
+            "tenure": "3 years",
+            "age_range": "20s",
+            "scope": "Processes trade invoices, matches against purchase orders and goods received notes in SAP. Handles supplier queries, resolves matching exceptions, prepares payment batches.",
+            "personality_notes": "Diligent but sometimes frustrated by manual workarounds. Sees the day-to-day friction. Will describe the actual click-by-click reality."
+          },
+          {
+            "id": "FM07",
+            "title": "Accounts Payable Clerk \u2014 Contractors and Capital",
+            "seniority": "Junior",
+            "tenure": "2 years",
+            "age_range": "20s",
+            "scope": "Processes contractor invoices (often complex, with retention, variations, and certifications). Handles capital expenditure invoices and asset-related AP. Works with project managers and engineering on approvals.",
+            "personality_notes": "Still learning. Contractor invoices are complex and this person navigates ambiguity. Likely to describe processes with more uncertainty and flag where they rely on others for decisions."
+          },
+          {
+            "id": "FM08",
+            "title": "Payroll Supervisor",
+            "seniority": "Supervisory",
+            "tenure": "18 years",
+            "age_range": "50s",
+            "scope": "Manages payroll for ~600 employees including shift differentials, overtime, hazard pay, leave, union deductions, statutory deductions, and contractor payroll reconciliation. Runs payroll through SAP HR/Payroll module. Handles payroll tax submissions and compliance.",
+            "personality_notes": "Extremely detail-oriented and protective of payroll integrity. Long tenure means deep knowledge of every exception, every union agreement clause. Will describe a highly structured, compliance-driven process."
+          },
+          {
+            "id": "FM09",
+            "title": "Payroll Clerk",
+            "seniority": "Junior",
+            "tenure": "4 years",
+            "age_range": "20s",
+            "scope": "Captures timesheets, processes leave applications, inputs overtime and shift data into SAP. Handles employee payroll queries. Assists with payroll reconciliation.",
+            "personality_notes": "Methodical. Will describe the data capture and input side of payroll in detail, including manual steps and common errors."
+          },
+          {
+            "id": "FM10",
+            "title": "Accounts Receivable / Revenue Accountant",
+            "seniority": "Mid-level",
+            "tenure": "7 years",
+            "age_range": "30s",
+            "scope": "Manages revenue recognition from ore/concentrate sales. Handles customer invoicing (likely a small number of offtake customers or smelters), provisional pricing adjustments, assay reconciliations, and cash application. Also handles any miscellaneous receivables and intercompany if applicable.",
+            "personality_notes": "Knowledgeable about the commercial side. Revenue processes in mining are distinctive due to provisional pricing and quality adjustments. Will describe a process that is very different from typical AR."
+          },
+          {
+            "id": "FM11",
+            "title": "General Ledger / Financial Accountant",
+            "seniority": "Mid-Management",
+            "tenure": "10 years",
+            "age_range": "40s",
+            "scope": "Owns the general ledger, month-end close process, journal entries, balance sheet reconciliations, fixed asset register, depreciation, provisions (including environmental rehabilitation), intercompany accounting, statutory reporting preparation, and external audit coordination.",
+            "personality_notes": "Thorough, governance-minded. The backbone of the department. Will describe the month-end close as the central orchestrating process that everything else feeds into."
+          },
+          {
+            "id": "FM12",
+            "title": "Procurement / Stores Finance Liaison",
+            "seniority": "Mid-level",
+            "tenure": "9 years",
+            "age_range": "30s",
+            "scope": "Sits between finance and the procurement/warehouse function. Manages purchase order financial controls, goods received note processing, inventory valuation for spares and consumables, slow-moving and obsolete stock provisions. Ensures SAP MM and FI modules are aligned.",
+            "personality_notes": "Bridging role \u2014 understands both the physical supply chain and the financial representation. Likely to describe processes where the gap between physical reality and SAP records creates issues."
+          }
+        ]
+      }
+    },
+    "interview_objectives": {
+      "research_topic": "Comprehensive mapping of all operational finance processes as actually implemented in the organisation, captured from the perspective of the people who execute them.",
+      "key_questions": [
+        "What are the core processes you are involved in, end to end?",
+        "For each process: what triggers it, what are the key steps, who is involved at each step, what systems or tools are used, what are the inputs and outputs, and where do handoffs occur?",
+        "What is the timing and frequency of each process (daily, weekly, monthly, ad hoc)?",
+        "Where does information come from outside your team, and where does your output go?",
+        "What approvals or controls are embedded in the process?",
+        "Are there regular exceptions or workarounds that are part of how things actually work?",
+        "What documentation or records are produced at each stage?"
+      ],
+      "themes_to_probe": [
+        "Actual vs. theoretical process \u2014 how things really work day to day, including informal workarounds",
+        "Handoffs and dependencies between sub-teams within finance and between finance and operations",
+        "Manual steps, spreadsheet-based steps, and offline processes that exist alongside SAP",
+        "Decision points and approval gates \u2014 who decides what and how",
+        "Data flows \u2014 where data originates, how it moves, where it is transformed or re-keyed",
+        "Timing and sequencing \u2014 especially around month-end close and reporting cycles",
+        "Interfaces with non-finance departments (operations, procurement, HR, engineering, geology, safety)",
+        "Contractor and supplier management processes specific to mining operations",
+        "Inventory and stockpile processes \u2014 physical-to-financial reconciliation",
+        "Compliance and statutory processes \u2014 tax, regulatory, environmental provisions"
+      ]
+    },
+    "interview_output_structure": {
+      "per_interview_deliverables": {
+        "process_inventory": "A numbered list of all distinct processes the interviewee participates in, with a one-line description of each.",
+        "detailed_process_narratives": "For each process identified: a structured narrative covering trigger/initiation, step-by-step flow, actors involved at each step, systems and tools used (SAP transactions, spreadsheets, email, paper), inputs and outputs, decision points and approvals, frequency and timing, handoffs to/from other people or teams, and any known exceptions or workarounds.",
+        "process_flow_sketch": "For each significant process: a textual representation of the flow suitable for conversion into a visual flowchart, showing sequence, decision points, parallel paths, and handoffs.",
+        "cross_references": "Explicit notes on where this person's processes connect to, overlap with, or depend on processes described by other roles.",
+        "system_usage_notes": "Specific SAP modules, transactions, and reports mentioned, plus any non-SAP tools (Excel, email, paper forms) used as part of the process."
+      },
+      "depth_criteria": "Each process should be described at a level of detail sufficient to build a flowchart that a new employee could follow to understand how work actually gets done. Not click-level SAP navigation, but clear enough that every meaningful step, decision, and handoff is visible. Workarounds and exceptions should be captured as alternative paths, not footnotes."
+    },
+    "report_objectives": {
+      "report_type": "Comprehensive Operational Finance Process Map and Narrative \u2014 Working Document for Improvement and Digital Transformation Planning",
+      "target_audience": "A combined team of client finance members and external experts who will use this document as the basis for identifying pain points, inefficiencies, and opportunities to apply digital technologies.",
+      "output_sections": [
+        {
+          "section": "Executive Summary",
+          "description": "Overview of the finance department structure, the scope of processes mapped, and a high-level view of how the major process areas interconnect."
+        },
+        {
+          "section": "Department Structure and Role Map",
+          "description": "Visual representation of the finance team structure, showing roles, reporting lines, and which process areas each role owns or contributes to."
+        },
+        {
+          "section": "Process Architecture Overview",
+          "description": "A master diagram showing all major end-to-end process areas and their interconnections. This is the top-level map that shows how everything fits together \u2014 e.g., how Procure-to-Pay feeds into Month-End Close, how Production Costing feeds into Management Reporting, etc."
+        },
+        {
+          "section": "End-to-End Process Maps by Domain",
+          "description": "The core of the report. Organized by major process domain, each containing: (1) Procure-to-Pay (requisition through payment, including contractor payments and capital expenditure), (2) Production Costing and Inventory (ore tracking, stockpile valuation, cost allocation \u2014 mining and plant), (3) Payroll and Employee Costs (timesheet capture through payroll execution and posting), (4) Revenue and Accounts Receivable (sales, provisional pricing, invoicing, cash application), (5) Month-End Close and General Ledger (journals, reconciliations, provisions, fixed assets, close sequence), (6) Management Reporting and Budgeting (cost centre reporting, variance analysis, forecasting, management packs), (7) Procurement and Stores Finance (PO controls, GRN processing, inventory valuation, obsolescence). Each domain section includes: a visual flowchart showing the end-to-end flow with swim lanes for different actors, detailed process narratives for each sub-process, decision points and approval gates clearly marked, system and tool annotations (SAP transactions, spreadsheets, manual steps), exception paths and workarounds, and cross-references to connected processes in other domains."
+        },
+        {
+          "section": "Cross-Functional Handoff Map",
+          "description": "A dedicated view showing all the points where finance processes interact with non-finance departments (operations, procurement, HR, engineering, geology, safety, mine management) \u2014 these are often where friction and data quality issues live."
+        },
+        {
+          "section": "Systems and Tools Landscape",
+          "description": "A summary of all systems, SAP modules, and offline tools (spreadsheets, paper forms, email-based approvals) used across finance processes. This directly supports digital transformation scoping."
+        },
+        {
+          "section": "Process Glossary and Definitions",
+          "description": "Definitions of key terms, cost centres, SAP transaction codes, and mining-specific financial concepts referenced throughout the report."
+        }
+      ],
+      "design_decisions": {
+        "flowchart_level": "Visual flowcharts will be produced for each end-to-end process domain and for significant sub-processes within each domain (e.g., three-way matching within Procure-to-Pay, month-end close sequencing within GL). Minor or purely clerical sub-steps will be captured in narratives only.",
+        "swim_lanes": "Flowcharts will use swim lanes to show which role or team performs each step, making handoffs visually explicit.",
+        "cross-domain_connections": "The Process Architecture Overview will show connections between domains. Within each domain section, cross-references will be annotated but not fully redrawn \u2014 to avoid duplication while keeping traceability.",
+        "exception_handling": "Workarounds and exception paths will be shown as branching paths in flowcharts where they represent a significant or frequent alternative flow. Minor exceptions will be noted in narratives."
+      },
+      "intended_use": "This report is Phase 1 output. It will be used directly as the input for Phase 2 workshops focused on pain point identification, process improvement opportunities, and digital technology application. The level of detail must be sufficient for workshop participants to review, validate, challenge, and annotate."
+    }
+  }
+}

@@ -22,6 +22,10 @@ Base system prompts for each agent type. These are first-class engineering artif
 | `persona_architect.md` | Base prompt for the persona architect agent | — |
 | `interview_designer.md` | Base prompt for the interview designer agent | — |
 | `quality_reviewer.md` | Base prompt for the quality reviewer agent | — |
+| `synthesis_designer.md` | Base prompt for the synthesis designer agent (reads brief, crafts synthesis prompt) | — |
+| `synthesis_agent.md` | Fallback prompt for synthesis agent (used when designer fails) | — |
+| `synthesis_refiner.md` | Base prompt for the synthesis refinement/editing agent | — |
+| `visualizer.md` | Base prompt for the visualizer agent (UX expert, generates self-contained HTML) | — |
 
 ## Change Checklist
 

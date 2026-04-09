@@ -1,0 +1,1147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Finance Process Documentation Report — Underground Gold Mining Operation</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: system-ui, -apple-system, sans-serif;
+    background: #f1f5f9;
+    color: #1e293b;
+    font-size: 14px;
+    line-height: 1.5;
+  }
+
+  .page-header {
+    background: linear-gradient(135deg, #1e3a5f 0%, #2563eb 60%, #7c3aed 100%);
+    color: #fff;
+    padding: 36px 24px 32px;
+    text-align: center;
+  }
+
+  .page-header .badge {
+    display: inline-block;
+    background: rgba(255,255,255,0.18);
+    border: 1px solid rgba(255,255,255,0.3);
+    border-radius: 20px;
+    padding: 4px 14px;
+    font-size: 11px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+
+  .page-header h1 {
+    font-size: 26px;
+    font-weight: 700;
+    margin-bottom: 8px;
+    line-height: 1.3;
+  }
+
+  .page-header p {
+    font-size: 14px;
+    opacity: 0.82;
+    max-width: 680px;
+    margin: 0 auto;
+  }
+
+  .container {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 24px 16px 48px;
+  }
+
+  /* KPI Cards */
+  .kpi-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 12px;
+    margin-bottom: 28px;
+  }
+
+  .kpi-card {
+    background: #fff;
+    border-radius: 8px;
+    padding: 18px 16px;
+    border: 1px solid #e2e8f0;
+    text-align: center;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+  }
+
+  .kpi-card .kpi-value {
+    font-size: 32px;
+    font-weight: 700;
+    line-height: 1.1;
+    margin-bottom: 4px;
+  }
+
+  .kpi-card .kpi-label {
+    font-size: 12px;
+    color: #64748b;
+    font-weight: 500;
+  }
+
+  .kpi-card.blue .kpi-value { color: #2563eb; }
+  .kpi-card.violet .kpi-value { color: #7c3aed; }
+  .kpi-card.emerald .kpi-value { color: #059669; }
+  .kpi-card.amber .kpi-value { color: #d97706; }
+  .kpi-card.red .kpi-value { color: #dc2626; }
+
+  /* Section wrapper */
+  .section {
+    background: #fff;
+    border-radius: 8px;
+    border: 1px solid #e2e8f0;
+    padding: 24px;
+    margin-bottom: 20px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+  }
+
+  .section-title {
+    font-size: 17px;
+    font-weight: 600;
+    color: #1e293b;
+    margin-bottom: 6px;
+    padding-bottom: 12px;
+    border-bottom: 2px solid #e2e8f0;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .section-title .icon {
+    width: 28px;
+    height: 28px;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    flex-shrink: 0;
+  }
+
+  .section-title .icon.blue { background: #eff6ff; }
+  .section-title .icon.violet { background: #f5f3ff; }
+  .section-title .icon.emerald { background: #ecfdf5; }
+  .section-title .icon.amber { background: #fffbeb; }
+  .section-title .icon.red { background: #fef2f2; }
+
+  .section-sub {
+    font-size: 12px;
+    color: #64748b;
+    margin-bottom: 18px;
+    margin-top: 4px;
+  }
+
+  .caption {
+    font-size: 12px;
+    color: #64748b;
+    margin-top: 12px;
+    padding: 10px 14px;
+    background: #f8fafc;
+    border-radius: 6px;
+    border-left: 3px solid #e2e8f0;
+  }
+
+  /* Two column layout */
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin-bottom: 20px;
+  }
+
+  @media (max-width: 680px) {
+    .two-col { grid-template-columns: 1fr; }
+  }
+
+  /* Mermaid wrapper */
+  .mermaid-wrap {
+    overflow-x: auto;
+    padding: 12px 0;
+  }
+
+  .mermaid { min-width: 0; }
+
+  /* Process Matrix */
+  .matrix-scroll { overflow-x: auto; }
+
+  .matrix-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 12px;
+    min-width: 620px;
+  }
+
+  .matrix-table th {
+    background: #f8fafc;
+    padding: 8px 10px;
+    text-align: left;
+    border: 1px solid #e2e8f0;
+    font-weight: 600;
+    font-size: 11px;
+    color: #475569;
+    white-space: nowrap;
+  }
+
+  .matrix-table th.role-header {
+    background: #1e3a5f;
+    color: #fff;
+    text-align: center;
+    font-size: 11px;
+    width: 90px;
+  }
+
+  .matrix-table td {
+    padding: 7px 10px;
+    border: 1px solid #e2e8f0;
+    vertical-align: middle;
+  }
+
+  .matrix-table tr:nth-child(even) td:first-child,
+  .matrix-table tr:nth-child(even) { background: #fafbfc; }
+
+  .matrix-table tr:hover td { background: #eff6ff; }
+
+  .role-cell {
+    text-align: center;
+    font-size: 11px;
+    font-weight: 600;
+    border-radius: 4px;
+    padding: 3px 6px;
+    display: inline-block;
+    min-width: 26px;
+  }
+
+  .role-O { background: #dbeafe; color: #1d4ed8; }
+  .role-C { background: #dcfce7; color: #15803d; }
+  .role-A { background: #fef3c7; color: #b45309; }
+  .role-R { background: #f3e8ff; color: #7e22ce; }
+  .role-empty { color: #cbd5e1; font-size: 13px; }
+
+  .domain-badge {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    padding: 2px 7px;
+    border-radius: 10px;
+    margin-left: 6px;
+    text-transform: uppercase;
+    vertical-align: middle;
+  }
+
+  .badge-transactional { background: #dbeafe; color: #1d4ed8; }
+  .badge-reporting { background: #dcfce7; color: #15803d; }
+  .badge-specialist { background: #fef3c7; color: #92400e; }
+
+  /* Matrix legend */
+  .matrix-legend {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-top: 10px;
+    font-size: 11px;
+  }
+
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+
+  /* Observations list */
+  .obs-list { list-style: none; }
+
+  .obs-item {
+    padding: 12px 14px;
+    border-radius: 6px;
+    margin-bottom: 8px;
+    border-left: 4px solid;
+    font-size: 13px;
+  }
+
+  .obs-item .obs-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    margin-bottom: 3px;
+  }
+
+  .obs-num {
+    font-size: 10px;
+    font-weight: 700;
+    background: rgba(0,0,0,0.08);
+    border-radius: 3px;
+    padding: 1px 5px;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  .obs-item strong { font-weight: 600; font-size: 13px; }
+
+  .obs-item .obs-meta {
+    font-size: 11px;
+    color: #475569;
+    margin-top: 2px;
+    padding-left: 28px;
+  }
+
+  .obs-keyperson { background: #fef2f2; border-color: #dc2626; }
+  .obs-manual { background: #fffbeb; border-color: #d97706; }
+  .obs-workaround { background: #eff6ff; border-color: #2563eb; }
+  .obs-data { background: #f0fdf4; border-color: #059669; }
+  .obs-control { background: #fdf4ff; border-color: #7c3aed; }
+
+  /* Risk cards */
+  .risk-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 14px;
+  }
+
+  .risk-card {
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 16px;
+    background: #fff;
+    border-top: 4px solid;
+  }
+
+  .risk-card.critical { border-top-color: #dc2626; }
+  .risk-card.high { border-top-color: #d97706; }
+  .risk-card.medium { border-top-color: #2563eb; }
+
+  .risk-card h4 {
+    font-size: 13px;
+    font-weight: 700;
+    margin-bottom: 4px;
+  }
+
+  .risk-card .risk-level {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+    padding: 2px 8px;
+    border-radius: 10px;
+    display: inline-block;
+  }
+
+  .risk-level.critical { background: #fee2e2; color: #dc2626; }
+  .risk-level.high { background: #fef3c7; color: #b45309; }
+  .risk-level.medium { background: #dbeafe; color: #1d4ed8; }
+
+  .risk-card p { font-size: 12px; color: #475569; line-height: 1.5; }
+
+  .risk-card .risk-processes {
+    margin-top: 8px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+  }
+
+  .risk-tag {
+    font-size: 10px;
+    background: #f1f5f9;
+    color: #64748b;
+    padding: 2px 7px;
+    border-radius: 10px;
+    border: 1px solid #e2e8f0;
+  }
+
+  /* Systems landscape */
+  .systems-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+
+  @media (max-width: 500px) {
+    .systems-grid { grid-template-columns: 1fr; }
+  }
+
+  .system-card {
+    border: 1px solid #e2e8f0;
+    border-radius: 6px;
+    padding: 12px;
+    background: #f8fafc;
+  }
+
+  .system-card h4 {
+    font-size: 13px;
+    font-weight: 700;
+    margin-bottom: 4px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .system-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .system-card ul {
+    list-style: none;
+    font-size: 11px;
+    color: #475569;
+    padding-left: 14px;
+  }
+
+  .system-card ul li::before {
+    content: '→ ';
+    color: #94a3b8;
+  }
+
+  /* Automation table */
+  .auto-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 12px;
+  }
+
+  .auto-table th {
+    background: #1e3a5f;
+    color: #fff;
+    padding: 9px 12px;
+    text-align: left;
+    font-size: 11px;
+    font-weight: 600;
+  }
+
+  .auto-table td {
+    padding: 9px 12px;
+    border-bottom: 1px solid #e2e8f0;
+    vertical-align: top;
+  }
+
+  .auto-table tr:last-child td { border-bottom: none; }
+  .auto-table tr:nth-child(even) td { background: #f8fafc; }
+
+  .priority-pill {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 10px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  .priority-H { background: #fee2e2; color: #dc2626; }
+  .priority-M { background: #fef3c7; color: #b45309; }
+  .priority-L { background: #dcfce7; color: #15803d; }
+
+  .type-pill {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 600;
+    padding: 2px 8px;
+    border-radius: 10px;
+  }
+
+  .type-rpa { background: #dbeafe; color: #1d4ed8; }
+  .type-ai { background: #f3e8ff; color: #7e22ce; }
+  .type-workflow { background: #dcfce7; color: #15803d; }
+
+  /* Quote */
+  .pull-quote {
+    background: #f5f3ff;
+    border-left: 4px solid #7c3aed;
+    padding: 14px 18px;
+    border-radius: 0 6px 6px 0;
+    font-style: italic;
+    font-size: 13px;
+    color: #4c1d95;
+    margin: 16px 0;
+  }
+
+  .pull-quote cite {
+    display: block;
+    font-style: normal;
+    font-size: 11px;
+    color: #6d28d9;
+    margin-top: 6px;
+    font-weight: 600;
+  }
+
+  /* Canvas containers */
+  .canvas-wrap {
+    position: relative;
+    width: 100%;
+  }
+
+  canvas {
+    width: 100% !important;
+    display: block;
+  }
+
+  /* Interview coverage */
+  .coverage-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-top: 4px;
+  }
+
+  @media (max-width: 580px) {
+    .coverage-grid { grid-template-columns: 1fr; }
+  }
+
+  .interviewee-card {
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 14px;
+    background: #f8fafc;
+  }
+
+  .interviewee-card .name {
+    font-size: 14px;
+    font-weight: 700;
+    color: #1e293b;
+    margin-bottom: 2px;
+  }
+
+  .interviewee-card .role {
+    font-size: 11px;
+    color: #64748b;
+    margin-bottom: 8px;
+  }
+
+  .interviewee-card .team-badge {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 600;
+    padding: 2px 8px;
+    border-radius: 10px;
+    margin-bottom: 6px;
+  }
+
+  .team-onsite { background: #dcfce7; color: #15803d; }
+  .team-central { background: #dbeafe; color: #1d4ed8; }
+
+  .interviewee-card .processes-count {
+    font-size: 20px;
+    font-weight: 700;
+    color: #2563eb;
+    display: flex;
+    align-items: baseline;
+    gap: 4px;
+  }
+
+  .interviewee-card .processes-count span {
+    font-size: 11px;
+    font-weight: 500;
+    color: #64748b;
+  }
+
+  .process-tags { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 6px; }
+
+  .ptag {
+    font-size: 10px;
+    background: #e2e8f0;
+    color: #475569;
+    padding: 2px 7px;
+    border-radius: 8px;
+  }
+
+  hr.divider {
+    border: none;
+    border-top: 1px solid #e2e8f0;
+    margin: 16px 0;
+  }
+</style>
+</head>
+<body>
+
+<div class="page-header">
+  <div class="badge">Process Documentation &amp; Flow Synthesis Report</div>
+  <h1>Finance Function — Single-Site Underground Gold Mining Operation</h1>
+  <p>Consolidated findings from structured interviews across all 14 process domains, spanning on-site business partners and central finance roles. Prepared for use by process improvement leads and automation/AI consultants.</p>
+</div>
+
+<div class="container">
+
+  <!-- KPI Cards -->
+  <div class="kpi-grid">
+    <div class="kpi-card blue">
+      <div class="kpi-value">5</div>
+      <div class="kpi-label">Interviews Conducted</div>
+    </div>
+    <div class="kpi-card emerald">
+      <div class="kpi-value">14</div>
+      <div class="kpi-label">Process Domains Covered</div>
+    </div>
+    <div class="kpi-card red">
+      <div class="kpi-value">15</div>
+      <div class="kpi-label">Cross-Process Observations</div>
+    </div>
+    <div class="kpi-card amber">
+      <div class="kpi-value">7</div>
+      <div class="kpi-label">Key-Person Risk Points</div>
+    </div>
+    <div class="kpi-card violet">
+      <div class="kpi-value">5</div>
+      <div class="kpi-label">Uninterviewed Roles</div>
+    </div>
+    <div class="kpi-card blue">
+      <div class="kpi-value">~20</div>
+      <div class="kpi-label">Finance Staff Total</div>
+    </div>
+  </div>
+
+  <!-- Finance Team Structure -->
+  <div class="section">
+    <div class="section-title"><span class="icon blue">🏗</span> Finance Function Structure</div>
+    <p class="section-sub">Two-layer structure: on-site business partners embedded in operations, and a central finance team. Five roles were interviewed; five additional roles referenced but not captured.</p>
+
+    <div class="mermaid-wrap">
+      <div class="mermaid">
+graph TD
+    GM["🏔 Mine Manager\n(Finance Report Recipient)"] --> GFM
+
+    GFM["Graham Fettes\nFinance Manager\n[Central Finance · 9 yrs]"]
+
+    GFM --> SA["Sarah Okonkwo\nManagement Accountant\n[Central Finance]"]
+    GFM --> BC["Bree Callahan\nAP Clerk\n[Central Finance]"]
+    GFM --> DALE["Dale Hutchinson\nBP — Underground Production\n[On-Site · 14 yrs]"]
+    GFM --> KOBUS["Kobus van der Merwe\nBP — Plant Processing\n[On-Site · Long-tenured]"]
+
+    GFM -.->|"references"| PA["⚠ Payroll Administrator\n[Not interviewed]"]
+    GFM -.->|"references"| PO["⚠ Procurement/PO Admin\n[Not interviewed]"]
+    GFM -.->|"references"| BA["⚠ Budget Analyst\n[Not interviewed]"]
+    GFM -.->|"references"| ERP["⚠ ERP/Systems Admin\n[Not interviewed]"]
+    KOBUS -.->|"references"| MET["⚠ Senior Metallurgist\n[Not interviewed — owns production data]"]
+
+    GCFO["Group CFO\n(Group Reporting Recipient)"] -.->|"receives Group Dashboard"| GFM
+
+    style GFM fill:#1e3a5f,color:#fff,stroke:#1e3a5f
+    style SA fill:#2563eb,color:#fff,stroke:#2563eb
+    style BC fill:#2563eb,color:#fff,stroke:#2563eb
+    style DALE fill:#059669,color:#fff,stroke:#059669
+    style KOBUS fill:#059669,color:#fff,stroke:#059669
+    style PA fill:#fef3c7,stroke:#d97706,color:#92400e
+    style PO fill:#fef3c7,stroke:#d97706,color:#92400e
+    style BA fill:#fef3c7,stroke:#d97706,color:#92400e
+    style ERP fill:#fef3c7,stroke:#d97706,color:#92400e
+    style MET fill:#fee2e2,stroke:#dc2626,color:#7f1d1d
+    style GM fill:#475569,color:#fff,stroke:#475569
+    style GCFO fill:#475569,color:#fff,stroke:#475569
+      </div>
+    </div>
+    <div class="caption">🟢 Green = on-site business partner &nbsp;|&nbsp; 🔵 Blue = central finance &nbsp;|&nbsp; 🟡 Yellow = referenced but not interviewed &nbsp;|&nbsp; 🔴 Red = critical uninterviewed dependency (revenue accrual input)</div>
+  </div>
+
+  <!-- Interviewee Profiles -->
+  <div class="section">
+    <div class="section-title"><span class="icon violet">👥</span> Interviewee Profiles &amp; Process Coverage</div>
+    <p class="section-sub">Summary of each interviewee's role, team, and the processes they own or participate in. Numbers reflect distinct process areas captured per interview.</p>
+
+    <div class="coverage-grid">
+
+      <div class="interviewee-card">
+        <div class="name">Dale Hutchinson</div>
+        <div class="role">Business Partner — Underground Production</div>
+        <span class="team-badge team-onsite">On-Site BP</span>
+        <div class="processes-count">6 <span>process areas</span></div>
+        <div class="process-tags">
+          <span class="ptag">Cost Accounting</span>
+          <span class="ptag">Management Reporting</span>
+          <span class="ptag">Budgeting</span>
+          <span class="ptag">Business Partnering</span>
+          <span class="ptag">Month-End Close</span>
+          <span class="ptag">Forecasting</span>
+        </div>
+        <div style="margin-top:8px; font-size:11px; color:#64748b;">~14 years on site · Senior · Deep undocumented institutional knowledge</div>
+      </div>
+
+      <div class="interviewee-card">
+        <div class="name">Sarah Okonkwo</div>
+        <div class="role">Management Accountant</div>
+        <span class="team-badge team-central">Central Finance</span>
+        <div class="processes-count">10 <span>process areas</span></div>
+        <div class="process-tags">
+          <span class="ptag">Month-End Close</span>
+          <span class="ptag">Mgmt Reporting</span>
+          <span class="ptag">Fixed Assets</span>
+          <span class="ptag">Intercompany</span>
+          <span class="ptag">Payroll GL</span>
+          <span class="ptag">Tax Support</span>
+          <span class="ptag">Cost Allocation</span>
+          <span class="ptag">Year-End</span>
+          <span class="ptag">Audit Support</span>
+          <span class="ptag">BS Recs</span>
+        </div>
+        <div style="margin-top:8px; font-size:11px; color:#64748b;">Mid–Senior · Close owner/coordinator · Highest process concentration of any interviewee</div>
+      </div>
+
+      <div class="interviewee-card">
+        <div class="name">Bree Callahan</div>
+        <div class="role">Accounts Payable Clerk</div>
+        <span class="team-badge team-central">Central Finance</span>
+        <div class="processes-count">7 <span>process areas</span></div>
+        <div class="process-tags">
+          <span class="ptag">Accounts Payable</span>
+          <span class="ptag">PO Matching</span>
+          <span class="ptag">Payment Runs</span>
+          <span class="ptag">Remittances</span>
+          <span class="ptag">Vendor Setup</span>
+          <span class="ptag">Statement Recs</span>
+          <span class="ptag">Year-End Accruals</span>
+        </div>
+        <div style="margin-top:8px; font-size:11px; color:#64748b;">Mid-level · Strong process ownership · Candid about control gaps</div>
+      </div>
+
+      <div class="interviewee-card">
+        <div class="name">Graham Fettes</div>
+        <div class="role">Finance Manager</div>
+        <span class="team-badge team-central">Central Finance</span>
+        <div class="processes-count">11 <span>process areas</span></div>
+        <div class="process-tags">
+          <span class="ptag">Close Governance</span>
+          <span class="ptag">Reporting Sign-off</span>
+          <span class="ptag">Group Dashboard</span>
+          <span class="ptag">Reforecast</span>
+          <span class="ptag">Budget</span>
+          <span class="ptag">CapEx Approval</span>
+          <span class="ptag">Business Cases</span>
+          <span class="ptag">Payment Auth</span>
+          <span class="ptag">Audit Mgmt</span>
+          <span class="ptag">Tax</span>
+          <span class="ptag">Journal Sign-off</span>
+        </div>
+        <div style="margin-top:8px; font-size:11px; color:#64748b;">Senior · 9 years in role · Deep institutional and relationship capital · Sole banking authoriser</div>
+      </div>
+
+      <div class="interviewee-card" style="grid-column: span 2;">
+        <div class="name">Kobus van der Merwe</div>
+        <div class="role">Business Partner — Plant Processing</div>
+        <span class="team-badge team-onsite">On-Site BP</span>
+        <div class="processes-count">8 <span>process areas</span></div>
+        <div class="process-tags">
+          <span class="ptag">Cost Accounting (Plant)</span>
+          <span class="ptag">Revenue Accrual</span>
+          <span class="ptag">Plant Cost Accruals</span>
+          <span class="ptag">CapEx Tracker</span>
+          <span class="ptag">Plant Budget</span>
+          <span class="ptag">Business Cases</span>
+          <span class="ptag">Ad Hoc Modelling</span>
+          <span class="ptag">Inventory Interface</span>
+        </div>
+        <div style="margin-top:8px; font-size:11px; color:#dc2626;">⚠ Long-tenured · Highest key-person risk on site · Revenue accrual methodology entirely undocumented · Self-aware: <em>"Work has calcified around how I do it, not how it should be done."</em></div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Process Participation Matrix -->
+  <div class="section">
+    <div class="section-title"><span class="icon emerald">📋</span> Process Participation Matrix</div>
+    <p class="section-sub">Role of each interviewee across the 14 defined process domains. Domains not fully covered are flagged. Use this matrix to identify coverage gaps and consolidation points for end-to-end flow construction.</p>
+
+    <div class="matrix-scroll">
+      <table class="matrix-table">
+        <thead>
+          <tr>
+            <th style="min-width:200px;">Process Domain</th>
+            <th>Category</th>
+            <th class="role-header">Dale<br><span style="font-weight:400;font-size:10px;">BP Undrgnd</span></th>
+            <th class="role-header">Sarah<br><span style="font-weight:400;font-size:10px;">Mgmt Acct</span></th>
+            <th class="role-header">Bree<br><span style="font-weight:400;font-size:10px;">AP Clerk</span></th>
+            <th class="role-header">Graham<br><span style="font-weight:400;font-size:10px;">Fin. Mgr</span></th>
+            <th class="role-header">Kobus<br><span style="font-weight:400;font-size:10px;">BP Plant</span></th>
+            <th style="min-width:80px; font-size:10px; font-weight:600; color:#64748b;">Coverage</th>
+          </tr>
+        </thead>
+        <tbody id="matrixBody">
+        </tbody>
+      </table>
+    </div>
+
+    <div class="matrix-legend">
+      <div class="legend-item"><span class="role-cell role-O">O</span> Owner / Primary</div>
+      <div class="legend-item"><span class="role-cell role-C">C</span> Contributor</div>
+      <div class="legend-item"><span class="role-cell role-A">A</span> Approver</div>
+      <div class="legend-item"><span class="role-cell role-R">R</span> Recipient</div>
+      <div class="legend-item"><span style="color:#cbd5e1; font-size:14px;">—</span> Not involved</div>
+    </div>
+    <div class="caption">⚠ Domains flagged as "Partial" or "Gap" require follow-up interviews with uninterviewed roles (Payroll Admin, Procurement/PO Admin, Stores/Warehouse) before end-to-end flow diagrams can be drawn. The Accounts Payable, Month-End Close, Revenue Accrual, and Cost Accounting domains have the most complete capture across interviewees.</div>
+  </div>
+
+  <!-- Charts Row -->
+  <div class="two-col">
+
+    <!-- Observations by Nature Chart -->
+    <div class="section" style="margin-bottom:0;">
+      <div class="section-title"><span class="icon red">📊</span> Observations by Nature</div>
+      <p class="section-sub">15 cross-process observations classified by primary nature. Multiple tags possible per observation.</p>
+      <div class="canvas-wrap">
+        <canvas id="obsChart" height="220"></canvas>
+      </div>
+      <div class="caption">Key-person risk is the most prevalent observation type, appearing in 7 of 15 cross-process findings — including the revenue accrual (most material journal) and the reforecast consolidation model.</div>
+    </div>
+
+    <!-- Process Completeness -->
+    <div class="section" style="margin-bottom:0;">
+      <div class="section-title"><span class="icon emerald">🎯</span> Interview Coverage by Domain</div>
+      <p class="section-sub">Estimated documentation completeness per domain based on interview depth and role coverage.</p>
+      <div class="canvas-wrap">
+        <canvas id="coverageChart" height="220"></canvas>
+      </div>
+      <div class="caption">Accounts Payable, Month-End Close, and Revenue/Cost Accounting have the richest capture. Inventory, Payroll, Tax, and Procurement have significant gaps requiring further investigation.</div>
+    </div>
+
+  </div>
+
+  <!-- Gap after two-col -->
+  <div style="margin-bottom:20px;"></div>
+
+  <!-- Systems Landscape -->
+  <div class="section">
+    <div class="section-title"><span class="icon blue">💻</span> Systems Landscape</div>
+    <p class="section-sub">Technology environment as described across all five interviews. Pronto (ERP) is the system of record; Excel is the de facto operating system for planning, reporting, and accruals.</p>
+
+    <div class="systems-grid">
+
+      <div class="system-card">
+        <h4><span class="system-dot" style="background:#dc2626;"></span> Pronto (Primary ERP)</h4>
+        <ul>
+          <li>AP invoice entry &amp; payment batch processing</li>
+          <li>Cost centre / GL reporting module</li>
+          <li>Fixed asset register &amp; depreciation module</li>
+          <li>Payroll GL posting</li>
+          <li>Vendor master &amp; bank details</li>
+          <li>PO management &amp; goods receipting</li>
+        </ul>
+        <div style="margin-top:8px; font-size:11px; color:#dc2626;">⚠ Cost centre structure does not align to operational reporting needs — both BPs maintain Excel remapping layers to compensate.</div>
+      </div>
+
+      <div class="system-card">
+        <h4><span class="system-dot" style="background:#d97706;"></span> Microsoft Excel (Pervasive)</h4>
+        <ul>
+          <li>Weekly scorecards (Dale, Kobus)</li>
+          <li>Management reporting pack assembly (Sarah)</li>
+          <li>Reforecast &amp; budget consolidation (Graham)</li>
+          <li>Revenue &amp; cost accrual calculations (Kobus)</li>
+          <li>Journal tracking log (Sarah)</li>
+          <li>AP Exceptions Tracker (Bree)</li>
+          <li>Capex tracker (Kobus)</li>
+          <li>Standing data file (Kobus)</li>
+          <li>Close coordination calendar (Sarah)</li>
+        </ul>
+        <div style="margin-top:8px; font-size:11px; color:#d97706;">⚠ No version control, access management, or audit trail. Multiple files are single points of failure.</div>
+      </div>
+
+      <div class="system-card">
+        <h4><span class="system-dot" style="background:#2563eb;"></span> Microsoft Word</h4>
+        <ul>
+          <li>Management pack narrative sections</li>
+          <li>Business case documents</li>
+          <li>Weekly operational summary (Dale)</li>
+        </ul>
+        <div style="margin-top:8px; font-size:11px; color:#64748b;">Excel tables and charts copy-pasted into Word; no live data links.</div>
+      </div>
+
+      <div class="system-card">
+        <h4><span class="system-dot" style="background:#7c3aed;"></span> Online Banking Platform</h4>
+        <ul>
+          <li>Payment file upload (Bree prepares CSV/Excel)</li>
+          <li>Payment release authorisation (Graham — sole authoriser)</li>
+        </ul>
+        <div style="margin-top:8px; font-size:11px; color:#7c3aed;">⚠ Single authoriser — no second approval before payment release.</div>
+      </div>
+
+      <div class="system-card">
+        <h4><span class="system-dot" style="background:#059669;"></span> Shared Network Drive</h4>
+        <ul>
+          <li>AP invoice archive (by vendor/month)</li>
+          <li>Audit working papers (Sarah)</li>
+          <li>Met team production tracking file</li>
+          <li>Kobus's standing data file</li>
+          <li>Graham's master budget/reforecast model</li>
+        </ul>
+        <div style="margin-top:8px; font-size:11px; color:#64748b;">No formal document management system in use. No backup regime confirmed for critical files.</div>
+      </div>
+
+      <div class="system-card">
+        <h4><span class="system-dot" style="background:#64748b;"></span> Email (Primary Workflow Channel)</h4>
+        <ul>
+          <li>Invoice receipt: apinvoices@[site].com.au</li>
+          <li>Journal submission from BPs to Sarah</li>
+          <li>Close calendar distribution</li>
+          <li>Business case and capex approval routing</li>
+          <li>Group finance recharge schedule delivery</li>
+          <li>Gold price &amp; assay data from group/refinery</li>
+        </ul>
+        <div style="margin-top:8px; font-size:11px; color:#64748b;">Email is the sole workflow management mechanism for many critical handoffs. No ticketing or document management system.</div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Key Person Risk -->
+  <div class="section">
+    <div class="section-title"><span class="icon red">⚠</span> Key-Person Risk Summary</div>
+    <p class="section-sub">Seven distinct key-person dependencies were identified across five interviews. These represent processes that would be significantly impaired or halted if the relevant individual were absent without transition.</p>
+
+    <div class="pull-quote">
+      "Work has calcified around how I do it, not how it should be done."
+      <cite>— Kobus van der Merwe, Business Partner — Plant Processing</cite>
+    </div>
+
+    <div class="risk-grid">
+
+      <div class="risk-card critical">
+        <h4>Kobus van der Merwe — Revenue Accrual</h4>
+        <span class="risk-level critical">Critical</span>
+        <p>The site's most material journal entry. Full calculation methodology (dor&eacute; assay application, silver credit, treatment charge deductions, provisional estimate approach, reversal logic) exists only in Kobus's head and partially in his standing data file. No second person could execute this process without him.</p>
+        <div class="risk-processes">
+          <span class="risk-tag">Revenue Accrual</span>
+          <span class="risk-tag">Month-End Close</span>
+          <span class="risk-tag">Management Reporting</span>
+        </div>
+      </div>
+
+      <div class="risk-card critical">
+        <h4>Kobus van der Merwe — Standing Data File</h4>
+        <span class="risk-level critical">Critical</span>
+        <p>A single Excel file containing all cost centre mappings, contracted unit rates, and consumption rates that underpins the weekly scorecard, revenue accrual, cost accruals, and the entire plant budget build. No formal backup, no second maintainer, no documentation.</p>
+        <div class="risk-processes">
+          <span class="risk-tag">All Plant Processes</span>
+          <span class="risk-tag">Cost Accounting</span>
+          <span class="risk-tag">Budgeting</span>
+        </div>
+      </div>
+
+      <div class="risk-card critical">
+        <h4>Graham Fettes — Reforecast Consolidation Model</h4>
+        <span class="risk-level critical">Critical</span>
+        <p>Undocumented master Excel model. Internal consistency checks rely entirely on Graham's 9 years of operational memory. Some forecast numbers represent his interpretation of BP narrative submissions — assumption ownership is ambiguous. Risk registered; mitigation not executed.</p>
+        <div class="risk-processes">
+          <span class="risk-tag">Budgeting &amp; Forecasting</span>
+          <span class="risk-tag">Management Reporting</span>
+        </div>
+      </div>
+
+      <div class="risk-card high">
+        <h4>Sarah Okonkwo — Depreciation &amp; Close Management</h4>
+        <span class="risk-level high">High</span>
+        <p>Sole operator of Pronto's depreciation module with no documentation of its configuration. The month-end close sequencing, task dependencies, and exception handling logic exists in Sarah's memory, with the Excel calendar as the only partial external record.</p>
+        <div class="risk-processes">
+          <span class="risk-tag">Month-End Close</span>
+          <span class="risk-tag">Fixed Assets</span>
+          <span class="risk-tag">Year-End</span>
+        </div>
+      </div>
+
+      <div class="risk-card high">
+        <h4>Dale Hutchinson — Scorecard Remapping Layer</h4>
+        <span class="risk-level high">High</span>
+        <p>The SUMIF/INDEX-MATCH cost centre remapping logic in Dale's scorecard has been built up over 14 years and is undocumented. No other person maintains or fully understands the lookup table structure. Loss of this file would break weekly and month-end underground production reporting.</p>
+        <div class="risk-processes">
+          <span class="risk-tag">Cost Accounting</span>
+          <span class="risk-tag">Weekly Scorecard</span>
+          <span class="risk-tag">Month-End</span>
+        </div>
+      </div>
+
+      <div class="risk-card high">
+        <h4>Graham Fettes — Sole Payment Authoriser</h4>
+        <span class="risk-level high">High</span>
+        <p>Graham is the only authoriser on the online banking platform. No second approval is required before payments are released. His review depth varies with workload — explicitly acknowledged as less thorough during close week. Constitutes both a key-person risk and a financial control gap.</p>
+        <div class="risk-processes">
+          <span class="risk-tag">Cash Management</span>
+          <span class="risk-tag">Accounts Payable</span>
+        </div>
+      </div>
+
+      <div class="risk-card medium">
+        <h4>Bree Callahan — AP Exceptions Tracker</h4>
+        <span class="risk-level medium">Medium</span>
+        <p>Bree maintains a parallel AP Exceptions Tracker (Excel) because Pronto's status field does not support exception workflow tracking. If the spreadsheet is lost or falls behind, all exception visibility is lost. No second person understands the full state of outstanding AP exceptions.</p>
+        <div class="risk-processes">
+          <span class="risk-tag">Accounts Payable</span>
+          <span class="risk-tag">Procurement Interface</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Control Gaps -->
+  <div class="section">
+    <div class="section-title"><span class="icon violet">🔐</span> Internal Control Observations</div>
+    <p class="section-sub">Control weaknesses identified incidentally during process documentation interviews. These are not the result of a formal internal controls review.</p>
+
+    <ul class="obs-list">
+      <li class="obs-item obs-control">
+        <div class="obs-header">
+          <span class="obs-num">#10</span>
+          <strong>No segregation of duties — AP non-PO invoice approval</strong>
+        </div>
+        <div class="obs-meta">Bree performs both invoice keying and approval status-setting for non-PO invoices. Graham's payment file review is a spot-check, not line-by-line. Affected: Accounts Payable · Nature: Control gap</div>
+      </li>
+      <li class="obs-item obs-control">
+        <div class="obs-header">
+          <span class="obs-num">#11</span>
+          <strong>Single payment authoriser on banking platform</strong>
+        </div>
+        <div class="obs-meta">Graham is sole authoriser; no second approval required. Volume-dependent review depth, acknowledged by Graham as a residual risk. Affected: Cash Management · Nature: Key-person risk / Control gap</div>
+      </li>
+      <li class="obs-item obs-control">
+        <div class="obs-header">
+          <span class="obs-num">+</span>
+          <strong>Invoice back-dating without escalation (Bree's observation)</strong>
+        </div>
+        <div class="obs-meta">Invoices discovered during vendor statement reconciliation are back-dated and posted without escalation to Sarah or Graham unless material. Correctness of this approach uncertain. Affected: Accounts Payable / Month-End · Nature: Workaround / Control gap</div>
+      </li>
+      <li class="obs-item obs-control">
+        <div class="obs-header">
+          <span class="obs-num">+</span>
+          <strong>No formal invoice receipt log</strong>
+        </div>
+        <div class="obs-meta">No formal log exists at point of invoice receipt. Network folder and Bree's memory are the safety net. Unprocessed invoices could sit unnoticed. Affected: Accounts Payable · Nature: Workaround / Control gap</div>
+      </li>
+    </ul>
+  </div>
+
+  <!-- All Cross-Process Observations -->
+  <div class="section">
+    <div class="section-title"><span class="icon amber">🔍</span> Cross-Process Observations (Full List)</div>
+    <p class="section-sub">All 15 observations surfaced naturally during interviews, categorised by nature. These inform subsequent automation opportunity identification.</p>
+
+    <ul class="obs-list" id="obsList">
+    </ul>
+  </div>
+
+  <!-- Automation Opportunities -->
+  <div class="section">
+    <div class="section-title"><span class="icon violet">🤖</span> Automation &amp; AI Opportunity Signals</div>
+    <p class="section-sub">High-signal opportunities for RPA, workflow automation, or agentic AI, derived from cross-process observations. Prioritised by effort, frequency, and value impact.</p>
+
+    <table class="auto-table">
+      <thead>
+        <tr>
+          <th>Opportunity</th>
+          <th>Process</th>
+          <th>Type</th>
+          <th>Priority</th>
+          <th>Rationale</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Automated remittance advice generation &amp; distribution</strong></td>
+          <td>Accounts Payable</td>
+          <td><span class="type-pill type-rpa">RPA</span></td>
+          <td><span class="priority-pill priority-H">High</span></td>
+          <td>~100 hrs/year; zero judgement required; vendor email data fragmentation solvable with master contact list. Highest effort-to-value RPA candidate.</td>
+        </tr>
+        <tr>
+          <td><strong>Standard journal template + automated completeness check</strong></td>
+          <td>Month-End Close</td>
+          <td><span class="type-pill type-workflow">Workflow</span></td>
+          <td><span class="priority-pill priority-H">High</span></td>
+          <td>30–40% of journals returned for rework; structured template + validation rules could eliminate a full day of close delay with minimal cost.</td>
+        </tr>
+        <tr>
+          <td><strong>Automated management reporting pack assembly</strong></td>
+          <td>Management Reporting</td>
+          <td><span class="type-pill type-rpa">RPA</span></td>
+          <td><span class="priority-pill priority-H">High</span></td>
+          <td>Data extraction → Excel formatting → Word assembly is fully rules-based and repeatable monthly. Live Pronto-to-report pipeline eliminates manual correction chain.</td>
+        </tr>
+        <tr>
+          <td><strong>Revenue accrual calculation engine (agentic)</strong></td>
+          <td>AR &amp; Revenue</td>
+          <td><span class="type-pill type-ai">Agentic AI</span></td>
+          <td><span class="priority-pill priority-H">High</span></td>
+          <td>Multi-input calculation (production data, assay, gold price, treatment charges) with provisional fallback logic. High value, undocumented, critical concentration risk. AI agent could execute calculation, apply provisional rules, prepare journal, flag variances, and manage reversal cycle.</td>
+        </tr>
+        <tr>
+          <td><strong>AP three-way matching &amp; exception routing automation</strong></td>
+          <td>Accounts Payable</td>
+          <td><span class="type-pill type-rpa">RPA</span></td>
+          <td><span class="priority-pill priority-H">High</span></td>
+          <td>Invoice receipt → Pronto keying → PO match → exception flagging → routing is rules-based at ~60–90 invoices/week. Automation removes manual keying, eliminates AP Exceptions Tracker spreadsheet dependency, and enforces SOD.</td>
+        </tr>
+        <tr>
+          <td><strong>Budget/reforecast submission consolidation &amp; consistency checking</strong></td>
+          <td>Budgeting &amp; Forecasting</td>
+          <td><span class="type-pill type-ai">Agentic AI</span></td>
+          <td><span class="priority-pill priority-M">Medium</span></td>
+          <td>Graham spends 20–30% of reforecast cycle on stakeholder engagement to secure quality inputs. An AI agent could validate submissions against historical actuals, flag outliers, translate narrative to structured numbers, and surface inconsistencies before Graham's review.</td>
+        </tr>
+        <tr>
+          <td><strong>Depreciation run automation with configuration documentation</strong></td>
+          <td>Fixed Assets &amp; CapEx</td>
+          <td><span class="type-pill type-rpa">RPA</span></td>
+          <td><span class="priority-pill priority-M">Medium</span></td>
+          <td>First step is documenting Sarah's depreciation module configuration (eliminates key-person risk). Then automation of monthly depreciation run, reconciliation, and journal posting is straightforward.</td>
+        </tr>
+        <tr>
+          <td><strong>Pronto cost centre structure realignment + automated remapping</strong></td>
+          <td>Cost Accounting</td>
+          <td><span class="type-pill type-workflow">Workflow</span></td>
+          <td><span class="priority-pill priority-M">Medium</span></td>
+          <td>Root-cause fix for both BPs' Excel remapping layers. Realigning Pronto cost centres to operational reporting needs removes the weekly manual remap step and eliminates the structural debt in multiple spreadsheet models.</td>
+        </tr>
+        <tr>
+          <td><strong>Capex approval workflow with document repository</strong></td>
+          <td>Fixed Assets &amp; CapEx</td>
+          <td><span class="type-pill type-workflow">Workflow</span></td>
+          <td><span class="priority-pill priority-M">Medium</span></td>
+          <td>Currently entirely email-based with no audit trail. A lightweight workflow tool could route business cases, capture approvals, store versions, and link to Pronto asset records — eliminating email-inbox dependency.</td>
+        </tr>
+        <tr>
+          <td><strong>Weekly scorecard automation (data pull + format)</strong></td>
+          <td>Cost Accounting / Reporting</td>
+          <td><span class="type-pill type-rpa">RPA</span></td>
+          <td><span class="priority-pill priority-L">Lower</span></td>
+          <td>Both BPs perform identical Monday-morning Pronto pull → paste → remap cycles. Automation of the data extraction and remapping step is straightforward once cost centre structure is resolved or the lookup tables are formalised.</td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="caption">⚡ The revenue accrual (agentic AI) and AP matching automation (RPA) represent the highest value opportunities. The journal template / workflow fix is lowest cost with highest close-cycle impact. Pronto cost centre realignment is a prerequisite for scorecard automation and should be treated as infrastructure work.</div>
+  </div>
+
+  <!-- Footer -->
+  <div style="text-align:center; padding:20px 0 8px; font-size:11px; color:#94a3b8;">
+    Process Documentation &amp; Flow Synthesis Report &nbsp;·&nbsp; Single-Site Underground Gold Mining Operation &nbsp;·&nbsp; Finance Function &nbsp;·&nbsp; Confidential
+  </div>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+<script>
+mermaid.initialize({ startOnLoad: true, theme: 'default', flowchart: { htmlLabels: true, curve: 'basis' } });
+
+// ── Process Participation Matrix ──────────────────────────────────────────────
+const matrixData = [
+  // [domain, category, Dale, Sarah, Bree, Graham, Kobus, coverage]
+  // category: T=Transactional, R=Reporting, S=Specialist
+  ["Accounts Payable", "T", "", "", "O", "A", "", "Full"],
+  ["Accounts Receivable & Revenue", "T", "", "", "", "", "O", "Full"],
+  ["Payroll & Labour Cost Processing", "T", "", "C", "", "", "", "Partial"],
+  ["Procurement & PO Management", "T", "", "", "O", "A", "", "Partial"],
+  ["Cost Accounting & Allocation", "R", "O", "C", "", "", "O", "Full"],
+  ["Management Reporting", "R", "C", "O", "", "A", "C", "Full"],
+  ["Budgeting & Forecasting", "R", "O", "", "", "O", "O", "Full"],
+  ["Fixed Assets & CapEx", "S", "", "O", "", "A", "O", "Full"],
+  ["Month-End & Year-End Close", "R", "C", "O", "C", "A", "C", "Full"],
+  ["Tax & Statutory Compliance", "S", "", "C", "", "O", "", "Partial"],
+  ["Business Partnering & Bus. Case", "S", "O", "", "", "A", "O", "Full"],
+  ["Inventory & Stores Finance Interface", "S", "", "", "", "", "C", "Gap"],
+  ["Cash Management (Site-Level)", "T", "", "C", "C", "O", "", "Full"],
+  ["Intercompany & Recharges", "R", "", "O", "", "A", "", "Full"],
+];
+
+const catLabels = { T: "Transactional", R: "Reporting/Planning", S: "Specialist/Operational" };
+const catClass  = { T: "badge-

@@ -1,0 +1,20 @@
+{
+  "id": "20260330_084110",
+  "label": "Uploaded",
+  "timestamp": "2026-03-30T08:41:10.122715+00:00",
+  "data": {
+    "design_rationale": "Test personas",
+    "personas": [
+      {
+        "name": "Alice",
+        "role": "Engineer",
+        "department": "Eng",
+        "traits": [
+          "analytical"
+        ],
+        "description": "Senior dev",
+        "system_prompt": "You are Alice."
+      }
+    ]
+  }
+}

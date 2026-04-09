@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="UTF-8"><title>Process Documentation and Flow Synthesis Report — Finance Function, Single-Site Underground Gold Mining Operation</title><style>
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; max-width: 800px; margin: 40px auto; padding: 0 20px; color: #1a1a1a; line-height: 1.6; }
+h1 { border-bottom: 2px solid #2563eb; padding-bottom: 8px; color: #1e3a5f; }
+h2 { color: #2563eb; margin-top: 32px; }
+h3 { color: #374151; }
+.card { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 16px; margin: 12px 0; }
+.label { font-size: 12px; color: #6b7280; text-transform: uppercase; letter-spacing: 0.05em; }
+.tag { display: inline-block; background: #dbeafe; color: #1e40af; padding: 2px 8px; border-radius: 4px; font-size: 12px; margin: 2px; }
+blockquote { border-left: 3px solid #2563eb; margin: 12px 0; padding: 8px 16px; background: #f0f9ff; }
+pre { background: #f1f5f9; padding: 12px; border-radius: 6px; overflow-x: auto; font-size: 13px; }
+table { border-collapse: collapse; width: 100%; } th, td { border: 1px solid #e2e8f0; padding: 8px 12px; text-align: left; } th { background: #f8fafc; }
+.meta { color: #6b7280; font-size: 13px; }
+@media print { body { margin: 20px; } .card { break-inside: avoid; } }
+</style></head>
+<body>
+<h1>Process Documentation and Flow Synthesis Report — Finance Function, Single-Site Underground Gold Mining Operation</h1>
+<h2>Executive Summary</h2><div class='card' style='background:#eff6ff;border-color:#bfdbfe'><p>This report consolidates findings from five structured interviews conducted across the finance function of a single-site underground gold mining operation, covering all 14 defined process domains and spanning both on-site business partner and central finance roles. The finance function operates as a split team: two embedded business partners (underground production and plant processing) supported by a central team responsible for transactional processing, close management, reporting, compliance, and planning. Process maturity is highly variable — transactional processes are well-structured but control-light, while planning, forecasting, and specialist accrual processes carry significant undocumented complexity and concentrated key-person dependency. This report is intended to provide the evidential base for subsequent pain point mapping and identification of RPA, workflow automation, and agentic AI opportunities.</p></div>
+<h2>Section 1: Finance Function Overview</h2>
+<p>## Finance Function Overview</p>
+<h3>Team Structure</h3>
+<p>The finance function operates across two distinct structural layers: **on-site business partners** embedded in operational departments, and a **central finance team** handling transactional, reporting, compliance, and planning processes. Five interviews were conducted, representing four roles across both layers.</p>
+<p>| Interviewee | Role | Team | Primary Areas Covered | Seniority Signal |</p>
+<p>|---|---|---|---|---|</p>
+<p>| Dale Hutchinson | Business Partner — Underground Production | On-site | Cost Accounting &amp; Allocation, Management Reporting, Budgeting &amp; Forecasting, Business Partnering | Senior; ~14 years on site |</p>
+<p>| Sarah Okonkwo | Management Accountant | Central Finance | Month-End Close, Management Reporting, Fixed Assets, Intercompany &amp; Recharges, Tax &amp; Compliance (support), Payroll (GL posting) | Mid–Senior; experienced in role |</p>
+<p>| Bree Callahan | Accounts Payable Clerk | Central Finance | Accounts Payable, Procurement &amp; PO Management (matching) | Mid-level; strong process ownership |</p>
+<p>| Graham Fettes | Finance Manager | Central Finance | Month-End Close (governance), Management Reporting, Budgeting &amp; Forecasting, Fixed Assets &amp; CapEx, Business Partnering, Tax &amp; Statutory Compliance, Cash Management | Senior; 9 years in role |</p>
+<p>| Kobus van der Merwe | Business Partner — Plant Processing | On-site | Cost Accounting &amp; Allocation, Accounts Receivable &amp; Revenue, Budgeting &amp; Forecasting, Fixed Assets &amp; CapEx, Business Partnering, Inventory &amp; Stores Finance Interface | Senior; long-tenured |</p>
+<h3>Roles Not Interviewed</h3>
+<p>The following roles were referenced by interviewees but not directly interviewed: **Payroll Administrator** (referenced by Sarah — processes the payroll run and submits a summary to central finance), **Procurement / PO Administrator** (referenced by Bree — raises and manages POs; AP depends on PO data for invoice matching), **Budget Analyst** (referenced by Dale and Graham — coordinates reforecast submissions and consolidates budget inputs), **Systems / ERP Administrator** (referenced by Bree — sole authority for vendor creation and bank detail changes in Pronto), and the **Met(allurgy) Team Senior Metallurgist** (referenced by Kobus — owns the production tracking file that feeds revenue accrual).</p>
+<h3>Systems Landscape</h3>
+<li>**Pronto** — Primary ERP system. Used across AP (invoice entry, payment batch processing), cost centre reporting, fixed asset register, depreciation module, payroll GL posting, and financial reporting. Multiple interviewees noted that Pronto's cost centre structure does not align with operational reporting needs, requiring manual remapping workarounds.</li>
+<li>**Microsoft Excel** — Pervasive across all planning, reporting, and accrual processes. Serves as the primary tool for weekly scorecards (Dale, Kobus), management reporting pack assembly (Sarah), reforecast and budget models (Graham), revenue and cost accrual calculations (Kobus), close coordination calendar (Sarah), and journal tracking (Sarah, Bree).</li>
+<li>**Microsoft Word** — Used for management pack narrative sections and business case documents.</li>
+<li>**Online Banking Platform** — Used by Graham exclusively for payment file upload and authorisation; AP team prepares the file, Graham releases it.</li>
+<li>**Shared Network Drive** — Used for audit working papers, AP invoice filing, the Met team's production tracking file, and Kobus's standing data file. No document management system is in use.</li>
+<li>**Email (shared AP mailbox: apinvoices@[site].com.au)** — Primary invoice receipt channel; also the main communication mechanism for close coordination, journal submission, and business case routing.</li>
+<h2>Section 2: Process Domain Summaries — Transactional Processes</h2>
+<p>## Process Domain Summaries — Transactional Processes</p>
+<h3>Accounts Payable</h3>
+<p>**Roles:** Bree Callahan (AP Clerk — primary owner); Graham Fettes (payment authorisation); Procurement team (PO management, exception resolution)</p>
+<p>**Trigger:** Invoice receipt via shared AP mailbox (apinvoices@[site].com.au), occasional paper delivery.</p>
+<p>**End-to-End Flow:**</p>
+<p>1. Bree receives invoice (PDF standard; occasionally Excel/Word), performs validity check (invoice number, vendor, amount, GST, date present), downloads and files to network folder by vendor/month.</p>
+<p>2. Invoice keyed into Pronto AP module: vendor code, invoice number, date, amount, GST, description.</p>
+<p>3. **PO-matched invoices:** PO number looked up in Pronto; three-way match performed (PO quantity/price vs. invoice vs. goods receipt). Tolerances: minor quantity/price variances accepted with notation; material variances or fully-consumed POs flagged in the **AP Exceptions Tracker spreadsheet** and chased with procurement.</p>
+<p>4. **Non-PO invoices:** Keyed in pending state; Bree emails relevant cost centre owner for coding approval. No formal owner directory — judgement-based routing.</p>
+<p>5. Clean-matched or approved invoices set to 'approved/ready for payment' status by Bree. *Note: Bree performs both keying and approval — no segregation of duties on non-PO invoices.*</p>
+<p>6. **Payment runs** (Tuesday and Thursday mornings): Bree pulls 'approved + due' invoice list from Pronto, performs sanity check, generates bank payment file (CSV/Excel), emails to Graham with total value and exception notes.</p>
+<p>7. Graham reviews file, logs into online banking platform, uploads file, and releases payment. Single authoriser — no second approver.</p>
+<p>8. Bree manually composes and sends remittance advices to vendors by email (~1 hour per run). Vendor email addresses sourced from Pronto contacts field (incomplete) plus Bree's personal contact list.</p>
+<p>**Frequency:** Invoice processing daily; payment runs twice weekly (Tue/Thu); volume ~60–90 invoices per week.</p>
+<p>**Key decision points:** PO match tolerances (Bree's judgement); non-PO coding approval (cost centre owner); payment file review (Graham).</p>
+<p>**Systems:** Pronto AP module, AP Exceptions Tracker (Excel), email, online banking platform.</p>
+<p>---</p>
+<h3>Accounts Receivable and Revenue</h3>
+<p>*Covered in depth under Kobus van der Merwe's process — see Section 4 (Specialist Processes) for the revenue accrual detail, as this site generates revenue through a single gold doré stream rather than a traditional AR/invoicing process. No separate AR or customer invoicing function was identified.*</p>
+<p>---</p>
+<h3>Payroll and Labour Cost Processing</h3>
+<p>**Roles:** Payroll Administrator (payroll run — not interviewed); Sarah Okonkwo (GL posting); Dale Hutchinson (accrual estimation at month-end)</p>
+<p>**Trigger:** Payroll Administrator processes monthly payroll in first few days of new month (e.g., January payroll processed in early February). Sends summary to Sarah by email.</p>
+<p>**End-to-End Flow (GL side):**</p>
+<p>1. Payroll Administrator completes payroll run; emails Excel summary to Sarah showing gross pay by cost centre, PAYG tax, superannuation, and one-off adjustments.</p>
+<p>2. Sarah posts three journals in Pronto: (a) payroll expense by cost centre (P&amp;L), (b) payroll liabilities (balance sheet — tax, super payable), (c) net pay clearing entry.</p>
+<p>3. Sarah reconciles payroll liability accounts as part of monthly balance sheet reconciliation cycle.</p>
+<p>4. Dale uses contractor timesheet data independently to estimate labour accruals for production cost centres at month-end (parallel, informal).</p>
+<p>**Frequency:** Monthly.</p>
+<p>**Coverage note:** The payroll run itself (Payroll Administrator's process) was not directly captured — only the downstream GL posting step. Key inputs, systems used by the Payroll Administrator, and any exception handling in payroll processing are not documented.</p>
+<p>---</p>
+<h3>Procurement and PO Management</h3>
+<p>**Roles:** Procurement team (PO creation — not interviewed); Bree Callahan (PO matching in AP); Graham Fettes (escalation on consumed POs)</p>
+<p>**Trigger:** Operational request for goods or services triggers PO creation by the procurement team in Pronto.</p>
+<p>**End-to-End Flow (finance interface):**</p>
+<p>1. PO created in Pronto by procurement; goods receipt recorded on delivery.</p>
+<p>2. Bree matches vendor invoice to PO and goods receipt at point of AP processing (see Accounts Payable above).</p>
+<p>3. Discrepancies (quantity, price, consumed PO) escalated to procurement for PO amendment or new PO creation.</p>
+<p>4. New vendor setup: Bree completes vendor setup form, collects ABN and bank details (written confirmation required for bank details — fraud risk protocol); submits to Systems Admin for Pronto vendor record creation. Bank detail changes follow same written-confirmation protocol.</p>
+<p>**Coverage note:** The procurement team's PO creation and goods receipting process was not directly interviewed. Finance visibility into procurement is primarily through the AP matching interface.</p>
+<h2>Section 3: Process Domain Summaries — Reporting and Planning Processes</h2>
+<p>## Process Domain Summaries — Reporting and Planning Processes</p>
+<h3>Cost Accounting and Allocation</h3>
+<p>**Roles:** Dale Hutchinson (underground production cost centres); Kobus van der Merwe (plant processing cost centres); Sarah Okonkwo (intercompany recharge journals, allocation postings)</p>
+<p>**Key characteristic:** Both business partners operate Excel-based remapping layers between Pronto's cost centre structure and their operational reporting structures. Pronto cost centres reflect a historical GL design that does not align with current operational reporting needs (stoping areas, development groups, plant circuits). Both models use lookup tables in Excel (Dale's in his scorecard; Kobus's in a standalone **standing data file**) to remap GL/cost centre codes into operationally meaningful categories.</p>
+<p>**Weekly rhythm (both BPs):** Monday morning Pronto actuals pull → paste into Excel model → remapping via VLOOKUP/SUMIF against lookup tables → variance vs. phased budget → one-page summary to respective operational manager before 9–10 AM.</p>
+<p>**Month-end:** Full month actuals pulled; accruals added; complete variance pack prepared for management reporting.</p>
+<p>**Intercompany recharges (Sarah):** Group finance sends a monthly schedule (~25th of month) listing management fees and shared service recharges. Sarah validates against prior month and annual schedule, queries anomalies, and posts journal in Pronto.</p>
+<p>---</p>
+<h3>Management Reporting</h3>
+<p>**Roles:** Sarah Okonkwo (pack preparation); Graham Fettes (review, narrative, group dashboard); Dale/Kobus (variance commentary input); Mine Manager (recipient)</p>
+<p>**Trigger:** Sarah's close calendar; pack due to Graham by day 3 of close cycle.</p>
+<p>**End-to-End Flow:**</p>
+<p>1. Sarah pulls P&amp;L and cost centre reports from Pronto reporting module (saved reports); exports to Excel.</p>
+<p>2. Formats in Excel: adds budget vs. actual columns, calculates variances. Budget data manually maintained in Excel alongside Pronto data.</p>
+<p>3. Business partners (Dale, Kobus) submit variance commentary — due day 2 to Sarah. In practice, timing is variable; Graham sometimes does bilateral follow-up on day 4.</p>
+<p>4. Sarah assembles 20–25 page pack: Word document with embedded Excel tables and charts (copy-paste from Excel; no live links). Includes P&amp;L, balance sheet summary, cash flow, cost centre schedules, production metrics, capex tracking, headcount/labour, and variance commentary.</p>
+<p>5. Sarah emails pack to Graham (Excel/Word file attachment) by day 3–4.</p>
+<p>6. Graham reviews; writes management commentary at front of pack; signs off; Sarah converts to PDF for Mine Manager.</p>
+<p>7. Graham presents at management meeting (day 7); Mine Manager is recipient.</p>
+<p>8. Graham separately prepares **Group CFO dashboard** (one page, Excel, group-prescribed template) from finalised pack numbers — built on day 6, emailed to Group CFO by end of day 6.</p>
+<p>**Timing:** Monthly; 5–6 working day close window. Group dashboard due day 6.</p>
+<p>**Systems:** Pronto (reporting module), Excel, Word, email.</p>
+<p>**Notable risk:** Saved Pronto reports were set up years ago and have not been verified against the current cost centre structure (Sarah's observation).</p>
+<p>---</p>
+<h3>Budgeting and Forecasting</h3>
+<p>**Roles:** Graham Fettes (coordination, consolidation, challenge, Group submission); Dale Hutchinson (underground production budget); Kobus van der Merwe (plant processing budget); Budget Analyst (coordination support — not interviewed)</p>
+<p>**Annual Budget (Oct–Nov):**</p>
+<li>Triggered by group budget cycle (~August, 12 weeks' notice for site submission).</li>
+<li>BPs build departmental budgets with respective operational managers: activity-based (development metres, tonnes, equipment utilisation for Dale; tonnes milled, head grade, recovery, plant cost build-up for Kobus).</li>
+<li>Phased weekly/monthly — not flat annual ÷ 12.</li>
+<li>Submitted to Graham via Budget Analyst coordination; Graham consolidates in a **master Excel reforecast/budget model** (sits on shared drive, Graham-maintained).</li>
+<li>Graham reviews for internal consistency (knowledge-based, not systematised); pushes back on BPs for narrative support.</li>
+<li>Submitted to group; loaded into Pronto after approval.</li>
+<li>BPs manually transcribe approved budget into their own scorecard models (no automated feed from Pronto).</li>
+<p>**Quarterly Reforecast:**</p>
+<li>Triggered by Graham setting timeline; BPs submit updated forecasts using a standardised Excel template.</li>
+<li>Quality variable — Graham describes spending 20–30% of reforecast time on stakeholder engagement to secure quality inputs.</li>
+<li>Some narrative submissions translated to numbers by Graham or Sarah (ownership of resulting assumptions is ambiguous).</li>
+<li>Consolidated in Graham's master model; no structural reforecast process documented for mid-year operational changes (handled ad hoc by BPs in separate models).</li>
+<p>---</p>
+<h3>Month-End and Year-End Close</h3>
+<p>**Roles:** Sarah Okonkwo (close owner/coordinator); Graham Fettes (governance, review, sign-off); Dale Hutchinson, Kobus van der Merwe (journal/accrual submission); Payroll Administrator (payroll summary submission); Bree Callahan (AP support — accrual invoice identification)</p>
+<p>**Month-End Trigger:** ~Day 25, Sarah circulates close calendar (Excel file on shared drive) with task list, owners, and deadlines.</p>
+<p>**Close Sequence (5-day window post-month-end):**</p>
+<li>**Day 0 (month-end):** Sarah pulls trial balance from Pronto — sanity check for obvious anomalies.</li>
+<li>**Day 1:** Sarah chases business partners (Dale, Kobus, Engineering) for month-end journal submissions by CoB. Journals arrive by email with Excel attachments — no standard template. Sarah manually reviews each for completeness (GL account, cost centre, amount, description, period). Incomplete journals (estimated 30–40% of submissions) returned for rework — can consume a full day of delay.</li>
+<li>**Day 1–2:** Sarah posts complete journals in Pronto. Maintains **journal tracking log** (Excel) with receipt date, BP name, description, amount, GL accounts, completeness status, posting date, and notes. This log is the only workflow tracking mechanism; Pronto records postings but not workflow.</li>
+<li>**Day 2–3:** Sarah runs **depreciation** in Pronto (reviews fixed asset register for new/disposed assets, checks rates, runs module, posts journal, reconciles charge to accumulated depreciation movement). Kobus submits **revenue accrual** journal; Sarah posts.</li>
+<li>**Day 3:** Sarah finalises trial balance, completes **balance sheet reconciliations** (~30 accounts, categorised as straightforward/cash-type, dependency-heavy/accruals, and complex/estimation-based). Intercompany recharge journal posted. Draft management pack sent to Graham.</li>
+<li>**Day 3–4:** Graham reviews pack; bilateral follow-up on outstanding variance commentary.</li>
+<li>**Day 4–5:** Sarah incorporates Graham's commentary; finalises pack as PDF.</li>
+<li>**Day 5:** Close deadline — books locked. Management pack to Mine Manager.</li>
+<li>**Day 6:** Graham prepares and submits Group CFO dashboard.</li>
+<p>**Year-End (Dec–Feb):** Overlaps with audit. Additional complexity: full annual leave provision, impairment reviews, fair value adjustments, extended accruals. Audit fieldwork October–November; signed accounts targeted by end of November (calendar year-end). Sarah prepares audit working papers (Excel workbooks in shared drive subfolder structure; auditors access directly). Graham manages audit relationship, materiality, and accounting treatment negotiations.</p>
+<blockquote>"It's like doing two close cycles at the same time except one of them is much more detailed." — Sarah Okonkwo, on year-end close</blockquote>
+<h2>Section 4: Process Domain Summaries — Specialist and Operational Finance Processes</h2>
+<p>## Process Domain Summaries — Specialist and Operational Finance Processes</p>
+<h3>Fixed Assets and CapEx</h3>
+<p>**Roles:** Kobus van der Merwe (capex tracking, monthly reconciliation with fixed asset register); Sarah Okonkwo (depreciation, fixed asset register maintenance in Pronto); Graham Fettes (capex approval gate ≥$100k; business case sign-off ≥$50k)</p>
+<p>**CapEx approval flow:** Business case originated by operational manager or BP → Graham endorsement (site gate) → Mine Manager approval → Group finance final sign-off. No centralised document repository; approval trail lives in email inboxes. Graham reviews payback/NPV, cost reasonableness, operational rationale.</p>
+<p>**Kobus's capex-to-asset reconciliation (monthly, ~2–3 hours):** Kobus maintains a plant-specific capex tracker (Excel) showing approved projects, committed costs, and expected capitalisation dates. At month-end, he reconciles this against Pronto's fixed asset register to confirm that capitalised items match what he expects. Discrepancies investigated and resolved with Sarah. Critical control — asset register drift identified as a specific risk.</p>
+<p>**Depreciation (Sarah, monthly):** Full detail in Section 3 (Month-End Close).</p>
+<p>---</p>
+<h3>Tax and Statutory Compliance</h3>
+<p>**Roles:** Graham Fettes (oversight, sign-off, external adviser relationship); Sarah Okonkwo (data preparation, compliance report preparation)</p>
+<p>Sarah prepares the monthly compliance report (BAS/GST and similar) from Pronto data and submits to Graham for sign-off. Graham reviews at judgment level — not line-by-line verification. Annual tax return managed through external advisers; Graham coordinates, provides financials, reviews before lodgement. Sarah prepares supporting schedules. Statutory accounts prepared by Sarah (drafting) and Graham (review/sign-off), aligned to audit completion.</p>
+<p>**Coverage note:** This domain had relatively thin interview coverage. The detailed mechanics of BAS preparation, tax provision calculations, and statutory account preparation were not fully explored.</p>
+<p>---</p>
+<h3>Business Partnering and Business Case Support</h3>
+<p>**Roles:** Dale Hutchinson (underground production); Kobus van der Merwe (plant processing); Graham Fettes (approval gate and quality review)</p>
+<p>Both BPs perform ad hoc cost modelling, budget tracking, and variance analysis for their operational managers throughout the month. Business cases (equipment, contractors, operational spend ≥$50k) are built by the relevant BP in Excel (NPV, payback, cost-benefit), reviewed by the operational manager, submitted to Graham for endorsement, then to the Mine Manager. 4–6 per year for underground; frequency varies for plant. No standard business case template across the group.</p>
+<p>---</p>
+<h3>Inventory and Stores Finance Interface</h3>
+<p>**Coverage note:** This domain was not meaningfully covered across any of the five interviews. References to consumable inventory (reagents, materials) appeared in the context of Kobus's accrual calculations (consumption data from plant systems) and Bree's AP processing (spare parts invoices). No interviewee described a formal inventory finance reconciliation process or a stores/warehouse finance interface role. This domain should be investigated further.</p>
+<p>---</p>
+<h3>Cash Management (Site-Level)</h3>
+<p>**Roles:** Graham Fettes (payment release — sole authoriser on banking platform); Bree Callahan (payment file preparation); Sarah Okonkwo (bank reconciliation as part of balance sheet recs)</p>
+<p>Site-level cash management is effectively the payment run process (described in Section 2 under Accounts Payable) plus Sarah's monthly bank reconciliation (Pronto cash balance vs. bank statement, timing differences identified). No separate treasury or cash forecasting function was described at site level. Petty cash reconciliation also sits with Sarah.</p>
+<p>---</p>
+<h3>Intercompany and Recharges</h3>
+<p>**Roles:** Sarah Okonkwo (validation and posting); Graham Fettes (escalation for disputes)</p>
+<p>Group finance sends a monthly recharge schedule to Sarah (~25th of month) by email (Excel spreadsheet). Sarah validates: (1) total reasonableness vs. prior month; (2) line items vs. annual agreed schedule; (3) GL account coding correctness. Queries raised directly with group finance contact. Once validated, Sarah posts the recharge journal in Pronto. Matching intercompany account confirmed as nil balance before close. If group finance cannot resolve a query before close deadline, Sarah posts based on the schedule and flags the discrepancy for next month.</p>
+<h2>Section 5: Process Flow Diagrams</h2>
+<p>## Process Flow Diagrams</p>
+<p>Diagrams are provided for the six process domains with the richest interview coverage. For domains not diagrammed, a coverage note is included at the end of this section.</p>
+<p>---</p>
+<h3>Diagram 1: Accounts Payable — Invoice Processing and Payment Run</h3>
+<p>*Depicts the end-to-end AP process from invoice receipt through to payment release and remittance. Sources: Bree Callahan (primary), Graham Fettes (payment authorisation).*</p>
+<p>mermaid</p>
+<p>flowchart TD</p>
+<p>subgraph Bree_AP["Bree Callahan — AP Clerk"]</p>
+<p>A([Invoice Received]) --&gt; B["Check shared mailbox\n[apinvoices@site.com.au]"]</p>
+<p>B --&gt; C["Validity check: invoice no., vendor,\namount, GST, date"]</p>
+<p>C --&gt; D{"Valid?"}</p>
+<p>D -- No --&gt; E["Contact vendor for corrected invoice"]</p>
+<p>E --&gt; C</p>
+<p>D -- Yes --&gt; F["Save to network folder\n[by vendor/month]"]</p>
+<p>F --&gt; G["Key invoice into Pronto AP module\n[vendor, inv no., date, amount, GST]"]</p>
+<p>G --&gt; H{"PO number\non invoice?"}</p>
+<p>H -- Yes --&gt; I["Look up PO in Pronto;\nperform 3-way match"]</p>
+<p>I --&gt; J{"Match within\ntolerance?"}</p>
+<p>J -- Yes --&gt; K["Set status: Approved\n[Pronto AP module]"]</p>
+<p>J -- No --&gt; L["Log in AP Exceptions Tracker [Excel];\nemail procurement for resolution"]</p>
+<p>L --&gt; M{"PO consumed\nor price error?"}</p>
+<p>M -- "Amend PO" --&gt; I</p>
+<p>M -- "Reject invoice" --&gt; N([Invoice Rejected / Vendor notified])</p>
+<p>H -- No --&gt; O["Set status: Pending;\nemail cost centre owner for approval"]</p>
+<p>O --&gt; P{"Approval\nreceived?"}</p>
+<p>P -- Yes --&gt; K</p>
+<p>P -- No --&gt; Q["Chase via email;\nlog in AP Exceptions Tracker"]</p>
+<p>Q --&gt; P</p>
+<p>K --&gt; R["Tue/Thu: Pull 'approved + due'\nbatch from Pronto"]</p>
+<p>R --&gt; S["Sanity check batch;\ngenerate bank file [CSV/Excel]"]</p>
+<p>S --&gt; T["Email bank file + summary to Graham"]</p>
+<p>end</p>
+<p>subgraph Graham_FM["Graham Fettes — Finance Manager"]</p>
+<p>T --&gt; U["Review bank file\n(spot-check; volume-dependent)"]</p>
+<p>U --&gt; V{"Approved?"}</p>
+<p>V -- Yes --&gt; W["Upload to online banking platform;\nrelease payment"]</p>
+<p>V -- No --&gt; X["Return to Bree for correction"]</p>
+<p>X --&gt; S</p>
+<p>W --&gt; Y([Payments executed])</p>
+<p>end</p>
+<p>subgraph Bree_Rem["Bree Callahan — Post-Payment"]</p>
+<p>Y --&gt; Z["Manually compose remittance advices;\nemail to vendors (~1hr per run)\n[Vendor email list: Pronto + personal file]"]</p>
+<p>Z --&gt; AA([Remittances sent — Tue/Thu])</p>
+<p>end</p>
+<p>---</p>
+<h3>Diagram 2: Month-End Close — Core Sequence</h3>
+<p>*Depicts the 5-day close cycle from Sarah's close calendar distribution through to final pack delivery. Sources: Sarah Okonkwo (primary), Graham Fettes, Dale Hutchinson, Kobus van der Merwe.*</p>
+<p>mermaid</p>
+<p>flowchart TD</p>
+<p>subgraph Sarah_C["Sarah Okonkwo — Management Accountant"]</p>
+<p>A([Day ~25: Circulate close calendar]) --&gt; B["Day 0: Pull trial balance [Pronto];\nsanity check"]</p>
+<p>B --&gt; C["Day 1: Chase journal submissions\nfrom BPs by CoB [email]"]</p>
+<p>C --&gt; D["Receive journal submissions\n[email + Excel attachments]"]</p>
+<p>D --&gt; E{"Journal\ncomplete?"]</p>
+<p>E -- No --&gt; F["Mark incomplete in journal log [Excel];\nreturn to BP for rework"]</p>
+<p>F --&gt; D</p>
+<p>E -- Yes --&gt; G["Post journal in Pronto;\nupdate journal log [Excel]"]</p>
+<p>G --&gt; H["Run depreciation in Pronto\n[Day 2-3]: review register,\ncheck rates, post, reconcile"]</p>
+<p>H --&gt; I["Balance sheet reconciliations\n[~30 accounts, Excel workbooks]"]</p>
+<p>I --&gt; J["Post intercompany recharge journal\n[Pronto] — validated vs group schedule"]</p>
+<p>J --&gt; K["Assemble management pack\n[Excel + Word; copy-paste from Pronto exports]"]</p>
+<p>K --&gt; L["Email draft pack to Graham [Day 3-4]"]</p>
+<p>end</p>
+<p>subgraph BPs["Business Partners (Dale / Kobus)"]</p>
+<p>C2([Day 1-2: Submit accrual journals]) --&gt; D</p>
+<p>C3([Day 1-2: Submit variance commentary]) --&gt; L2</p>
+<p>end</p>
+<p>subgraph Kobus_Rev["Kobus van der Merwe"]</p>
+<p>C4([Day 2-3: Submit revenue accrual journal]) --&gt; G</p>
+<p>end</p>
+<p>subgraph Graham_FM["Graham Fettes — Finance Manager"]</p>
+<p>L --&gt; M["Review draft pack;\nchallenge variances;\nwrite management commentary"]</p>
+<p>L2 --&gt; M</p>
+<p>M --&gt; N{"Pack\nready?"}</p>
+<p>N -- No --&gt; O["Bilateral follow-up with BPs [Day 4]"]</p>
+<p>O --&gt; M</p>
+<p>N -- Yes --&gt; P["Sign off pack;\nSarah converts to PDF"]</p>
+<p>P --&gt; Q["Present to Mine Manager [Day 7]"]</p>
+<p>P --&gt; R["Build Group CFO dashboard [Excel, Day 6];\nemail to Group CFO"]</p>
+<p>R --&gt; S([Day 6: Group dashboard submitted])</p>
+<p>Q --&gt; T([Day 5-7: Close complete])</p>
+<p>end</p>
+<p>---</p>
+<h3>Diagram 3: Revenue Accrual (Plant Processing — Kobus van der Merwe)</h3>
+<p>*Depicts the end-to-end gold revenue accrual process from data collection through to provisional posting and reversal cycle. Source: Kobus van der Merwe (primary), Sarah Okonkwo (posting).*</p>
+<p>mermaid</p>
+<p>flowchart TD</p>
+<p>subgraph Kobus_RA["Kobus van der Merwe — Plant BP"]</p>
+<p>A([Month-end: start early in week 2]) --&gt; B["Obtain monthly production data from\nMet team tracking file [shared drive Excel]:\ntonnes milled, head grade, recovery"]</p>
+<p>B --&gt; C["Obtain vault custodian monthly report [email]:\nopening inventory, production received,\npours completed, closing inventory"]</p>
+<p>C --&gt; D["Obtain gold price from Group Finance [email]"]</p>
+<p>D --&gt; E{"All three\ninputs received?"}</p>
+<p>E -- No --&gt; F["Use prior month gold price or\nspot price as provisional estimate"]</p>
+<p>F --&gt; G</p>
+<p>E -- Yes --&gt; G["Step 1: Calculate gold ounces produced\n[Excel / standing data file]:\ntonnes × head grade × recovery ÷ 31.1035"]</p>
+<p>G --&gt; H["Step 2: Apply doré assay [refinery email]\nto derive gold ounces in poured doré"]</p>
+<p>H --&gt; I["Step 3: Apply silver credit and\ntreatment/refining charge deductions"]</p>
+<p>I --&gt; J["Step 4: Apply group-confirmed gold price\nto arrive at net revenue accrual [ZAR]"]</p>
+<p>J --&gt; K["Prepare journal entry [Excel];\nemail to Sarah with description"]</p>
+<p>end</p>
+<p>subgraph Sarah_Post["Sarah Okonkwo — Management Accountant"]</p>
+<p>K --&gt; L["Review and post revenue accrual journal [Pronto]"]</p>
+<p>L --&gt; M([Accrual in management accounts])</p>
+<p>end</p>
+<p>subgraph Kobus_Rev["Kobus — Following Month"]</p>
+<p>M --&gt; N{"Final data\nconfirmed?"}</p>
+<p>N -- "Provisional used" --&gt; O["Prepare reversal + correcting entry [Excel];\nemail to Sarah"]</p>
+<p>O --&gt; P["Sarah posts reversal and new entry [Pronto]"]</p>
+<p>P --&gt; Q([Revenue line restated])</p>
+<p>N -- "Final confirmed" --&gt; R([No adjustment needed])</p>
+<p>end</p>
+<p>---</p>
+<h3>Diagram 4: Weekly Cost Actuals and Operational Scorecard (Underground Production — Dale Hutchinson)</h3>
+<p>*Depicts Dale's Monday weekly reporting cycle. Source: Dale Hutchinson (primary).*</p>
+<p>mermaid</p>
+<p>flowchart TD</p>
+<p>subgraph Dale_Weekly["Dale Hutchinson — Underground Production BP"]</p>
+<p>A([Monday ~7:15 AM]) --&gt; B["Manual scan of prior week postings\nin Pronto — sniff test for anomalies\n(~10-15 min; pattern recognition)"]</p>
+<p>B --&gt; C{"Anomalies\ndetected?"}</p>
+<p>C -- Yes --&gt; D["Investigate coding error / glitch\nbefore proceeding"]</p>
+<p>D --&gt; E</p>
+<p>C -- No --&gt; E["Run saved Pronto query:\n15 production cost centres,\nlabour/materials/contractors/equipment\n[Pronto reporting module]"]</p>
+<p>E --&gt; F["Export as CSV/Excel"]</p>
+<p>F --&gt; G["Paste into raw data tab of\nmaster scorecard [Excel]"]</p>
+<p>G --&gt; H["Calculation tab applies:\nGL code + cost centre remapping via\nlookup tables → operational categories\n[SUMIF / INDEX-MATCH logic]"]</p>
+<p>H --&gt; I["Compare vs. phased weekly budget tab\n[built in annual budget process, static]"]</p>
+<p>I --&gt; J["Review variance picture;\nbuild one-page Word summary:\ncommentary + charts (copy-pasted from scorecard)"]</p>
+<p>J --&gt; K["Email to Superintendent + Mine Manager\n(cc Finance Manager if unusual)\n[~10:00 AM]"]</p>
+<p>K --&gt; L([Superintendent uses in 10:30 huddle])</p>
+<p>end</p>
+<p>---</p>
+<h3>Diagram 5: Annual Budget Build</h3>
+<p>*Depicts the budget process from group trigger through to Pronto load. Sources: Graham Fettes, Dale Hutchinson, Kobus van der Merwe.*</p>
+<p>mermaid</p>
+<p>flowchart TD</p>
+<p>subgraph Group["Group Finance"]</p>
+<p>A([August: issue budget timeline\nwith site submission deadline]) --&gt; B</p>
+<p>end</p>
+<p>subgraph BPs["Business Partners (Dale / Kobus)"]</p>
+<p>B["BPs consult operational managers:\nproduction assumptions (metres, tonnes,\nhead grade, recovery, equipment plan)"] --&gt; C["Build departmental budget models [Excel]:\nactivity-based, phased weekly/monthly"]</p>
+<p>C --&gt; D["Submit to Graham via\nBudget Analyst coordination [Excel templates]"]</p>
+<p>end</p>
+<p>subgraph Graham_Budget["Graham Fettes — Finance Manager"]</p>
+<p>D --&gt; E["Input submissions into\nmaster consolidation model [Excel, shared drive]"]</p>
+<p>E --&gt; F["Sense-check internal consistency\n(knowledge-based, not systematised)"]</p>
+<p>F --&gt; G{"Quality\nacceptable?"}</p>
+<p>G -- No --&gt; H["Push back to BP for narrative support\nor revised assumptions"]</p>
+<p>H --&gt; D</p>
+<p>G -- Yes --&gt; I["Consolidate to site-level P&amp;L forecast;\nwrite submission narrative"]</p>
+<p>I --&gt; J["Submit to Group Finance [email]"]</p>
+<p>J --&gt; K{"Group\napproval?"}</p>
+<p>K -- "Revision required" --&gt; I</p>
+<p>K -- Yes --&gt; L["Budget loaded into Pronto by\nSystems Admin / Finance Manager"]</p>
+<p>end</p>
+<p>subgraph BPs2["Business Partners — Post-Approval"]</p>
+<p>L --&gt; M["Manually transcribe approved budget\ninto own scorecard models [Excel]\n(no automated feed from Pronto)"]</p>
+<p>M --&gt; N([Weekly scorecard operational])</p>
+<p>end</p>
+<p>---</p>
+<h3>Coverage Notes — Domains Not Diagrammed</h3>
+<li>**Payroll and Labour Cost Processing:** Only the GL posting step (Sarah) was captured. Payroll run mechanics not documented — insufficient for a complete diagram.</li>
+<li>**Procurement and PO Management:** The PO creation and goods receipting process was not interviewed. A partial diagram showing only the AP-procurement interface would not be useful.</li>
+<li>**Tax and Statutory Compliance:** Insufficient detail on BAS preparation mechanics and tax provision calculations.</li>
+<li>**Inventory and Stores Finance Interface:** No meaningful coverage — see Section 4 note.</li>
+<li>**Intercompany and Recharges:** Process is straightforward and well described in narrative form (Section 4); diagram would add limited value over the text description.</li>
+<h2>Section 6: Cross-Process Observations</h2>
+<p>## Cross-Process Observations</p>
+<p>The following observations cut across multiple process domains. They are drawn from interview captures and analyst synthesis. Each observation is tagged by nature to guide subsequent automation and improvement analysis.</p>
+<p>| # | Theme | Affected Processes | Description | Nature | Source Roles |</p>
+<p>|---|---|---|---|---|---|</p>
+<p>| 1 | **Pronto cost centre structure misalignment** | Cost Accounting, Management Reporting, Budgeting, Month-End Close | Pronto's GL cost centre design does not reflect current operational reporting needs. Both BPs maintain independent Excel remapping layers (lookup tables) to bridge the gap. Any structural change to the cost centre hierarchy requires manual rework of multiple models. | Workaround / System limitation | Dale Hutchinson, Kobus van der Merwe |</p>
+<p>| 2 | **Spreadsheet-as-system dependency** | All planning, reporting, and accrual processes | Critical finance processes — weekly scorecards, revenue accrual, budget consolidation, close tracking calendar, journal log, AP exceptions tracker, capex tracker — all rely on individually maintained Excel files with no version control, no access management, and no audit trail beyond the files themselves. | Workaround / Key-person risk | All interviewees |</p>
+<p>| 3 | **Key-person risk — Kobus van der Merwe (revenue accrual)** | Accounts Receivable &amp; Revenue, Month-End Close, Management Reporting | The revenue accrual is the most material journal entry on site. The full calculation methodology — including doré assay application, silver credit, treatment charge deductions, provisional estimate approach, and reversal logic — exists only in Kobus's head and partially in the standing data file. No documentation exists that would allow another person to execute this process. | Key-person risk | Kobus van der Merwe, Graham Fettes |</p>
+<p>| 4 | **Key-person risk — Graham Fettes (reforecast model and internal consistency check)** | Budgeting &amp; Forecasting, Management Reporting | Graham's master reforecast/budget consolidation model is undocumented and not transferable. The internal consistency check across submissions relies entirely on his 9 years of operational familiarity. Some forecast numbers represent his interpretation of narrative submissions — ownership of those assumptions is ambiguous. Risk is registered but mitigation has not been executed; a business case to fix the architecture was declined. | Key-person risk | Graham Fettes |</p>
+<p>| 5 | **Key-person risk — Sarah Okonkwo (depreciation and close management)** | Month-End Close, Fixed Assets | Sarah is the only person who understands Pronto's depreciation module configuration. The close management process — sequencing, dependencies, exception handling — runs in her head, with the Excel calendar and scattered emails as the only external record. | Key-person risk | Sarah Okonkwo |</p>
+<p>| 6 | **Journal submission quality and rework** | Month-End Close | Approximately 30–40% of month-end journal submissions from business partners are incomplete on first receipt (missing GL account, cost centre, description, or incorrect period). No standard template is in use despite Sarah having recommended one. Rework can consume a full day's delay in a 5-day close window. | Manual effort / Delay | Sarah Okonkwo |</p>
+<p>| 7 | **Static copy-paste management reporting assembly** | Management Reporting | The management reporting pack is assembled by manually exporting Pronto data into Excel, formatting it, then copy-pasting into Word. No live links exist between source data and final document. Any correction to a posted number after pack assembly requires manually repeating the entire extraction-formatting-assembly chain. | Manual effort / Workaround | Sarah Okonkwo, Graham Fettes |</p>
+<p>| 8 | **Provisional revenue accruals and reversal noise** | Accounts Receivable &amp; Revenue, Month-End Close, Management Reporting | Provisional revenue accruals (posted when gold price or refinery assay is unavailable by the Day 5 deadline) are reversed and re-accrued 4–5 times per year. The reversal logic is undocumented. This creates legitimate but unexplained volatility in the reported revenue line visible to the Group CFO. | Manual effort / Data issue / Key-person risk | Kobus van der Merwe, Sarah Okonkwo |</p>
+<p>| 9 | **Unannounced cost reallocation between cost centres** | Cost Accounting, Management Reporting, Business Partnering | Central finance (Sarah) sometimes reallocates costs between production cost centres without notifying the relevant BP. BPs discover this during month-end reconciliation when their scorecard totals do not match Pronto. Creates downstream noise in variance analysis and erodes BP trust in the accuracy of their own reporting. | Data issue / Delay | Dale Hutchinson |</p>
+<p>| 10 | **No segregation of duties — AP invoice approval** | Accounts Payable | Bree performs both invoice keying and approval status setting for non-PO invoices. There is no second reviewer before invoices enter the payment-eligible queue. Graham's payment file review is a spot-check, not a line-by-line verification. | Manual effort / System limitation (control gap) | Bree Callahan, Graham Fettes |</p>
+<p>| 11 | **Single payment authoriser** | Cash Management (site-level) | Graham is the sole authoriser on the online banking platform. No second approval is required before payments are released. His review of the payment file is volume-dependent and less thorough during close week. | Key-person risk (control gap) | Graham Fettes, Bree Callahan |</p>
+<p>| 12 | **AP exceptions tracking outside Pronto** | Accounts Payable, Procurement &amp; PO Management | Bree maintains a parallel AP Exceptions Tracker spreadsheet because Pronto's status field does not support exception workflow tracking. Two records of the same information are maintained simultaneously. If the spreadsheet is lost or falls behind, exception visibility is lost entirely. | Workaround / Key-person risk | Bree Callahan |</p>
+<p>| 13 | **No centralised capex document repository** | Fixed Assets &amp; CapEx, Business Partnering | Business case and capex approval trails exist only in email inboxes. No single source of truth for submission status, approval version, or post-approval tracking. Sarah's capex tracking spreadsheet begins after approval — the approval process itself is untraceable without inbox access. | Workaround / Data issue | Graham Fettes, Kobus van der Merwe |</p>
+<p>| 14 | **Standing data file — single point of failure (Kobus)** | Cost Accounting, Accounts Receivable &amp; Revenue, Budgeting &amp; Forecasting | Kobus's standing data file (cost centre mappings, unit rates, consumption rates, contract prices) underpins the weekly scorecard, revenue accrual, cost accrual calculations, and budget build for the entire plant processing operation. It has no formal backup regime and no second person who maintains or understands it. | Key-person risk | Kobus van der Merwe |</p>
+<p>| 15 | **Manual remittance advice distribution** | Accounts Payable | Bree manually composes and emails remittance advices to vendors after each payment run (~1 hour per run, twice weekly = ~2 hours/week, ~100 hours/year). Vendor email addresses are fragmented across Pronto and a personal contact file. This is a high-volume, low-judgement task with no evident reason to remain manual. | Manual effort | Bree Callahan |</p>
+<h2>Section 7: Appendix — Individual Interview Summaries</h2>
+<p>## Appendix — Individual Interview Summaries</p>
+<p>---</p>
+<h3>Dale Hutchinson</h3>
+<p>#### Role Profile</p>
+<li>**Role title:** Business Partner — Underground Production</li>
+<li>**Team:** On-site business partner</li>
+<li>**Area supported:** Underground production (stoping and development cost centres)</li>
+<li>**Seniority:** Senior; ~14 years on site; deep institutional knowledge</li>
+<p>#### Process Participation Inventory</p>
+<p>| Process Name | Domain | Role in Process | Frequency |</p>
+<p>|---|---|---|---|</p>
+<p>| Weekly cost actuals and production scorecard | Cost Accounting &amp; Allocation | Owner | Weekly (Monday) |</p>
+<p>| Month-end accruals and variance report | Month-End Close | Contributor | Monthly |</p>
+<p>| Annual budget build | Budgeting &amp; Forecasting | Owner (dept level) | Annual (Oct–Nov) |</p>
+<p>| Ad hoc business case modelling | Business Partnering | Owner | 4–6 times/year |</p>
+<p>| Cost centre remapping (ongoing maintenance) | Cost Accounting &amp; Allocation | Owner | Continuous |</p>
+<p>| Reforecast input submission | Budgeting &amp; Forecasting | Contributor | Quarterly (ad hoc) |</p>
+<p>#### Key Process Detail Records</p>
+<p>**Weekly Cost Actuals and Production Scorecard**</p>
+<li>**Trigger:** Monday morning (~7:15 AM), habit-driven; no system trigger</li>
+<li>**Inputs:** Pronto saved query output (CSV/Excel) — 15 underground cost centres, prior week postings (labour, materials, contractors, equipment); phased budget tab in scorecard</li>
+<li>**Steps:** (1) Manual scan of postings in Pronto (~15 min sanity check); (2) run saved query, export CSV; (3) paste into raw data tab of master scorecard [Excel]; (4) calculation tab remaps via GL/cost centre lookup tables into operational categories; (5) variance vs. phased weekly budget; (6) build one-page Word summary with commentary and charts (copy-pasted from scorecard); (7) email to Superintendent and Mine Manager</li>
+<li>**Systems:** Pronto (reporting module), Excel (master scorecard with raw data, calculation, budget, and chart tabs), Word (summary template)</li>
+<li>**Decision points:** Anomaly judgement (step 1 — Dale's pattern recognition); variance commentary narrative</li>
+<li>**Outputs:** One-page Word summary + scorecard attachment; emailed by ~10 AM</li>
+<li>**Handoffs:** Superintendent uses summary in 10:30 AM operations huddle</li>
+<li>**Timing:** Every Monday; ~45 minutes total</li>
+<p>**Month-End Accruals**</p>
+<li>**Trigger:** Availability of actuals in Pronto (day 1 of new month); Sarah's close calendar circulation</li>
+<li>**Inputs:** Full month Pronto posting report; contractor timesheets (from shift supervisors); knowledge of scheduled but uninvoiced work</li>
+<li>**Steps:** (1) Pull full month report, compare to scorecard running total; (2) identify missing invoices/accruals required; (3) build accrual journal (Excel); (4) email journal to Sarah for posting</li>
+<li>**Decision points:** Accrual estimation — judgement on contractor hours, uninvoiced materials</li>
+<li>**Outputs:** Month-end journal (Excel, emailed to Sarah); variance report for management pack</li>
+<li>**Timing:** Days 1–2 of close cycle</li>
+<p>#### Noted Observations</p>
+<li>**Unannounced cost reallocations** (Cost Accounting): Central finance reallocates costs between Dale's cost centres without notification. Discovered at month-end reconciliation; throws off variance analysis. *Nature: data issue / delay.*</li>
+<li>**Manual accrual submission format** (Month-End Close): Accruals submitted by email with Excel attachment — no standard format or system workflow. *Nature: manual effort / workaround.*</li>
+<li>**Scorecard remapping layer undocumented** (Cost Accounting): The SUMIF/INDEX-MATCH remapping logic in the scorecard calculation tab is complex, layered over 14 years, and not documented. *Nature: key-person risk.*</li>
+<li>**No live budget link** (Budgeting): Budget is manually transcribed from the November budget build model into the scorecard — no automated feed. *Nature: manual effort / data issue.*</li>
+<p>---</p>
+<h3>Sarah Okonkwo</h3>
+<p>#### Role Profile</p>
+<li>**Role title:** Management Accountant</li>
+<li>**Team:** Central finance</li>
+<li>**Area supported:** Whole of site (close coordinator, reporting, compliance support)</li>
+<li>**Seniority:** Mid–Senior; experienced; process maturity is high but knowledge concentration is significant</li>
+<p>#### Process Participation Inventory</p>
+<p>| Process Name | Domain | Role in Process | Frequency |</p>
+<p>|---|---|---|---|</p>
+<p>| Month-end close coordination | Month-End Close | Owner / Coordinator | Monthly |</p>
+<p>| Balance sheet reconciliations (~30 accounts) | Month-End Close | Owner | Monthly |</p>
+<p>| Journal management and posting | Month-End Close | Owner | Monthly |</p>
+<p>| Depreciation run | Fixed Assets &amp; CapEx | Owner | Monthly |</p>
+<p>| Management reporting pack preparation | Management Reporting | Owner | Monthly |</p>
+<p>| Intercompany recharge journal | Intercompany &amp; Recharges | Owner | Monthly |</p>
+<p>| Payroll GL posting | Payroll &amp; Labour Cost | Contributor | Monthly |</p>
+<p>| Year-end close and audit support | Month-End / Tax &amp; Statutory | Owner (close); Contributor (audit) | Annual |</p>
+<p>| Ad hoc BP accounting support | Business Partnering | Contributor | Ad hoc |</p>
+<p>| Compliance report (BAS/GST) | Tax &amp; Statutory Compliance | Contributor | Monthly |</p>
+<p>#### Key Process Detail Records</p>
+<p>**Journal Management (Month-End)**</p>
+<li>**Trigger:** Day 1 reminder email to BPs; journals due CoB Day 1</li>
+<li>**Inputs:** Email submissions from BPs (Excel attachments, no standard template)</li>
+<li>**Steps:** (1) Receive journal; (2) manual completeness check (GL account, cost centre, amount, description, period); (3) if incomplete, mark in journal log and return; (4) if complete, post in Pronto; (5) update journal tracking log [Excel]</li>
+<li>**Systems:** Pronto (GL posting), Excel (journal tracking log), email</li>
+<li>**Decision points:** Completeness judgement; period correctness; GL account appropriateness</li>
+<li>**Outputs:** Posted journals in Pronto; updated journal tracking log</li>
+<li>**Exception:** ~30–40% of journals returned for rework; can delay close by a full day</li>
+<p>**Management Reporting Pack Assembly**</p>
+<li>**Trigger:** Trial balance finalised (~Day 3); all journals posted</li>
+<li>**Steps:** (1) Export P&amp;L and cost centre reports from Pronto reporting module to Excel; (2) format in Excel — add budget vs. actual columns, variance calculations; (3) copy-paste tables and charts into Word document; (4) add narrative commentary; (5) email to Graham</li>
+<li>**Systems:** Pronto (reporting module), Excel, Word, email</li>
+<li>**Outputs:** 20–25 page Word/Excel pack; emailed to Graham by Day 3–4</li>
+<li>**Notable:** No live data links — any correction requires full re-extraction and reassembly</li>
+<p>#### Noted Observations</p>
+<li>**Depreciation key-person risk** (Fixed Assets): Sarah is sole operator of Pronto's depreciation module; no documentation of configuration or process. *Nature: key-person risk.*</li>
+<li>**No journal template** (Month-End): Absence of standard journal template causes ~30–40% rework rate. *Nature: manual effort / delay.*</li>
+<li>**Saved Pronto reports unverified** (Management Reporting): Cost centre reports in Pronto set up years ago, not verified against current structure. *Nature: data issue.*</li>
+<li>**Close process in her head** (Month-End): Sequencing, dependencies, and exception handling exist in Sarah's memory; Excel calendar is the only external record. *Nature: key-person risk.*</li>
+<p>---</p>
+<h3>Bree Callahan</h3>
+<p>#### Role Profile</p>
+<li>**Role title:** Accounts Payable Clerk</li>
+<li>**Team:** Central finance</li>
+<li>**Area supported:** Whole of site (all vendor payments)</li>
+<li>**Seniority:** Mid-level; strong process ownership; candid about control gaps</li>
+<p>#### Process Participation Inventory</p>
+<p>| Process Name | Domain | Role in Process | Frequency |</p>
+<p>|---|---|---|---|</p>
+<p>| Invoice receipt, validation, and keying | Accounts Payable | Owner | Daily |</p>
+<p>| PO matching and exception tracking | Accounts Payable / Procurement | Owner | Daily |</p>
+<p>| Payment run preparation | Accounts Payable | Owner | Twice weekly (Tue/Thu) |</p>
+<p>| Remittance advice distribution | Accounts Payable | Owner | Twice weekly |</p>
+<p>| Vendor statement reconciliation | Accounts Payable | Owner | Monthly |</p>
+<p>| Vendor setup and bank detail changes | Accounts Payable | Owner (initiation) | Ad hoc |</p>
+<p>| Year-end accrual invoice support | Month-End Close | Contributor | Annual |</p>
+<p>#### Key Process Detail Records</p>
+<p>**Daily Invoice Processing**</p>
+<li>**Trigger:** Shared mailbox (apinvoices@site.com.au) checked each morning; no formal trigger</li>
+<li>**Inputs:** PDF invoices (standard), occasional Excel/Word; paper invoices from procurement</li>
+<li>**Steps:** (1) Validity check (invoice no., vendor, amount, GST, date); (2) save to network folder [vendor/month]; (3) key into Pronto AP module; (4) PO match if applicable; (5) set status; (6) log exceptions in AP Exceptions Tracker [Excel]</li>
+<li>**No formal receipt log** at point of receipt — network folder is the only record; unprocessed invoices could sit unnoticed</li>
+<p>**AP Exceptions Tracker**</p>
+<li>Excel spreadsheet: Date Received, Vendor, Invoice Number, PO Number, Amount, Issue Type, Who Emailed, Date Emailed, Follow-up Status, Notes</li>
+<li>~5–15 live rows at any time; updated throughout day</li>
+<li>Primary control mechanism for exception management; not integrated with Pronto</li>
+<p>#### Noted Observations</p>
+<li>**No receipt log** (AP): No formal log at point of receipt; network folder and memory are the safety net. *Nature: workaround / control gap.*</li>
+<li>**No segregation of duties on non-PO approval** (AP): Bree keys and approves non-PO invoices without second reviewer. *Nature: control gap.*</li>
+<li>**Single payment authoriser** (Cash Management): Graham is sole banking authoriser; no second signatory. *Nature: key-person risk / control gap.*</li>
+<li>**Vendor email list fragmentation** (AP): Remittance email addresses split across Pronto, personal contact file, and memory. *Nature: data issue / manual effort.*</li>
+<li>**Back-dating invoices** (AP / Month-End): Invoices discovered during vendor statement reconciliation are back-dated and posted without escalation to Sarah or Graham unless material. Correctness of this approach uncertain. *Nature: workaround / control gap.*</li>
+<li>**Remittance manual composition** (AP): ~1 hour per run, twice weekly; repetitive low-judgement task. *Nature: manual effort.*</li>
+<p>---</p>
+<h3>Graham Fettes</h3>
+<p>#### Role Profile</p>
+<li>**Role title:** Finance Manager</li>
+<li>**Team:** Central finance (site-level head)</li>
+<li>**Area supported:** Whole of site; reports to Mine Manager (operationally) and Group CFO (functionally)</li>
+<li>**Seniority:** Senior; 9 years in role; deep institutional and relationship capital</li>
+<p>#### Process Participation Inventory</p>
+<p>| Process Name | Domain | Role in Process | Frequency |</p>
+<p>|---|---|---|---|</p>
+<p>| Month-end close governance and pack review | Month-End Close | Approver / Governance | Monthly |</p>
+<p>| Management reporting pack sign-off | Management Reporting | Approver | Monthly |</p>
+<p>| Group CFO dashboard | Management Reporting | Owner | Monthly |</p>
+<p>| Quarterly reforecast coordination | Budgeting &amp; Forecasting | Owner | Quarterly |</p>
+<p>| Annual budget governance | Budgeting &amp; Forecasting | Owner (site consolidation) | Annual |</p>
+<p>| CapEx approval (≥$100k) | Fixed Assets &amp; CapEx | Approver | Ad hoc |</p>
+<p>| Business case sign-off (≥$50k) | Business Partnering | Approver | Ad hoc |</p>
+<p>| Payment run authorisation | Cash Management | Approver / Authoriser | Daily (Tue/Thu peak) |</p>
+<p>| External audit management | Tax &amp; Statutory Compliance | Owner (relationship) | Annual |</p>
+<p>| Journal sign-offs (high value / judgement) | Month-End Close | Approver | Monthly |</p>
+<p>| Tax return management | Tax &amp; Statutory Compliance | Owner | Annual |</p>
+<p>#### Key Process Detail Records</p>
+<p>**Reforecast Consolidation**</p>
+<li>**Trigger:** Graham sets timeline and distributes to BPs; quarterly cadence</li>
+<li>**Inputs:** BP submissions (Excel templates or narratives); prior quarter actuals</li>
+<li>**Steps:** (1) Distribute timeline and templates; (2) receive BP submissions; (3) input into master consolidation model [Excel]; (4) sense-check internal consistency (knowledge-based); (5) push back on low-quality submissions; (6) translate narrative submissions to numbers where needed; (7) consolidate to site P&amp;L forecast; (8) present back to BPs; (9) submit to group</li>
+<li>**Key vulnerability:** Internal consistency check is undocumented and non-transferable; some numbers represent Graham's interpretation of BP intent — ownership ambiguous</li>
+<p>**Payment Authorisation**</p>
+<li>**Trigger:** AP email with payment file (mid-morning, Tue/Thu primarily)</li>
+<li>**Steps:** (1) Review bank file (spot-check by total value and vendor scan; depth varies by volume); (2) log into online banking platform; (3) upload file; (4) release payment</li>
+<li>**Note:** No second authoriser; review depth is volume-dependent and acknowledged as less thorough during close week</li>
+<p>#### Noted Observations</p>
+<li>**Reforecast model undocumented and non-transferable** (Budgeting): Risk is formally registered; mitigation not executed. *Nature: key-person risk.*</li>
+<li>**Variable quality of BP reforecast inputs** (Budgeting): 20–30% of Graham's reforecast time spent on stakeholder engagement to secure quality inputs. *Nature: manual effort / delay.*</li>
+<li>**No centralised capex repository** (Fixed Assets &amp; CapEx): Approval trail in email inboxes only. *Nature: data issue / workaround.*</li>
+<li>**Implicit payment authorisation control** (Cash Management): Relies on upstream AP controls and team track record; explicitly acknowledged as a residual risk. *Nature: key-person risk / control gap.*</li>
+<p>---</p>
+<h3>Kobus van der Merwe</h3>
+<p>#### Role Profile</p>
+<li>**Role title:** Business Partner — Plant Processing</li>
+<li>**Team:** On-site business partner</li>
+<li>**Area supported:** Surface plant processing (ore receipt through doré production)</li>
+<li>**Seniority:** Senior; long-tenured; highly self-aware about key-person risk</li>
+<p>#### Process Participation Inventory</p>
+<p>| Process Name | Domain | Role in Process | Frequency |</p>
+<p>|---|---|---|---|</p>
+<p>| Weekly cost actuals and Plant Manager one-pager | Cost Accounting &amp; Allocation | Owner | Weekly (Monday) |</p>
+<p>| Revenue accrual (gold doré) | Accounts Receivable &amp; Revenue | Owner | Monthly |</p>
+<p>| Plant cost accruals (reagents, energy, maintenance) | Cost Accounting &amp; Allocation | Owner | Monthly |</p>
+<p>| CapEx tracker and asset reconciliation | Fixed Assets &amp; CapEx | Owner | Monthly |</p>
+<p>| Annual plant cost budget build | Budgeting &amp; Forecasting | Owner (dept level) | Annual |</p>
+<p>| Business cases for plant investments | Business Partnering | Owner | Ad hoc |</p>
+<p>| Ad hoc cost modelling and query work | Business Partnering | Owner | Ad hoc (multiple/week) |</p>
+<p>#### Key Process Detail Records</p>
+<p>**Revenue Accrual**</p>
+<li>**Trigger:** Month-end close; starts early in week 2 of new month when production data is complete</li>
+<li>**Inputs:** Met team monthly production data (tonnes, head grade, recovery) [shared drive Excel]; vault custodian monthly report [email — by ~3rd of month]; group-confirmed gold price [email]; refinery doré assay [email]</li>
+<li>**Steps:** (1) Calculate gold ounces produced (tonnes × head grade × recovery ÷ 31.1035); (2) apply doré assay to derive gold ounces in poured doré; (3) apply silver credit; (4) deduct treatment/refining charges; (5) apply gold price → net revenue accrual [ZAR]; (6) prepare journal [Excel]; (7) email to Sarah</li>
+<li>**Provisional accrual:** When gold price or assay unavailable, provisional accrual posted using prior month price or spot; reversed and re-accrued 4–5 times/year</li>
+<li>**Hard deadline:** By Day 5 of close cycle</li>
+<p>**Standing Data File**</p>
+<li>Central Excel file maintained by Kobus containing: cost centre mapping sheet, unit cost sheet (contracted rates for reagents, energy, consumables), consumption rate sheet</li>
+<li>Used as lookup source by weekly tracking model, revenue accrual, cost accrual, and budget build</li>
+<li>No formal backup; no second person maintains or understands it</li>
+<li>Cross-cutting dependency for all Kobus-owned processes</li>
+<p>#### Noted Observations</p>
+<li>**Standing data file — sole maintainer** (all processes): No backup, no documentation. *Nature: key-person risk.*</li>
+<li>**Revenue accrual methodology undocumented** (Revenue): Calculation logic, provisional approach, and reversal logic exist only in Kobus's head. *Nature: key-person risk.*</li>
+<li>**Provisional reversal noise** (Revenue / Management Reporting): 4–5 reversals/year create unexplained volatility in reported revenue. *Nature: data issue / manual effort.*</li>
+<li>**Pronto cost centre misalignment** (Cost Accounting): Remapping layer in Excel carries structural debt from historical cost centre design. *Nature: system limitation / workaround.*</li>
+<li>**'Work has calcified around how I do it, not how it should be done'** — Kobus's self-description of key-person risk; captured as direct observation. *Nature: key-person risk.*</li>
+</body>
+</html>

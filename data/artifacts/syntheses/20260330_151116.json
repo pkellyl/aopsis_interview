@@ -1,0 +1,544 @@
+{
+  "id": "20260330_151116",
+  "label": "Synthesis",
+  "timestamp": "2026-03-30T15:11:16.495205+00:00",
+  "data": {
+    "report_title": "Supply Chain Decision-Making Topology: Diagnostic Brief \u2014 US Automotive OEM (Anonymized)",
+    "executive_summary": "This diagnostic brief synthesizes five interviews spanning VP, Director, Senior Manager, and Manager seniority levels across Overall Supply Chain Leadership, Direct Materials Procurement, Production Planning, Metals Commodity Purchasing, and Plant-Level Supply Chain execution. The interviews reveal a function with coherent formal governance architecture \u2014 tiered meetings, defined KPIs, and broadly understood escalation thresholds \u2014 but with material gaps in cross-functional decision authority, inconsistent follow-through on escalated decisions, and a monthly S&OP working session that structurally underperforms its intended role. The top priority for further investigation is the ambiguous ownership and chronic underperformance of the mid-level cross-functional S&OP forum, which is the intended load-bearing mechanism for demand-supply alignment but is currently functioning as an ad hoc bilateral workaround network.",
+    "sections": {
+      "section_1_interviewee_role_profiles": {
+        "title": "Section 1: Interviewee Role Profiles",
+        "table": [
+          {
+            "name": "Patricia Chen",
+            "role": "VP, Supply Chain",
+            "sub_function": "Overall Supply Chain Leadership",
+            "reports_to": "COO (Marcus Webb)",
+            "direct_reports": "6 Directors (Procurement, Supplier Quality, Logistics, Production Planning, Inventory Management, Strategy & Analytics)",
+            "scope_summary": "End-to-end supply chain accountability from upstream sourcing through plant-floor delivery; owns top-level KPIs and chairs monthly Supply Chain Leadership Meeting and quarterly Executive S&OP."
+          },
+          {
+            "name": "David Okonkwo",
+            "role": "Director, Direct Materials Procurement",
+            "sub_function": "Procurement",
+            "reports_to": "Patricia Chen (VP, Supply Chain)",
+            "direct_reports": "8 buyers, 4 analysts",
+            "scope_summary": "Owns ~$2B annual production materials spend across ~200 suppliers; accountable for landed cost, supplier OTD, and first-pass quality rate."
+          },
+          {
+            "name": "Sarah Martinez",
+            "role": "Director, Production Planning & Scheduling",
+            "sub_function": "Production Planning",
+            "reports_to": "Patricia Chen (VP, Supply Chain)",
+            "direct_reports": "6 planners (master scheduling, materials planning, demand planning)",
+            "scope_summary": "Owns master production schedule, MRP process, and S&OP facilitation; accountable for schedule attainment, shortage incidents, and inventory days on hand."
+          },
+          {
+            "name": "Marcus Thompson",
+            "role": "Senior Manager, Commodity Purchasing (Metals)",
+            "sub_function": "Procurement",
+            "reports_to": "David Okonkwo (Director, Direct Materials Procurement)",
+            "direct_reports": "Not stated",
+            "scope_summary": "Manages ~$600M annual metals spend (steel, aluminum) across 35 suppliers; accountable for unit cost, supplier on-time delivery, and scrap/waste minimization."
+          },
+          {
+            "name": "James Patel",
+            "role": "Plant Supply Chain Manager (Lead Assembly Plant)",
+            "sub_function": "Cross-functional / Plant-Level",
+            "reports_to": "Director of Operations (plant-side); functional dotted line to central Supply Chain implied",
+            "direct_reports": "Team of 8 (inbound receipt, inventory control, local supplier coordination, shortage escalation)",
+            "scope_summary": "Owns plant-floor materials execution including on-time staging, inventory accuracy, and shortage escalation; operates at the interface between central supply chain decisions and local manufacturing reality."
+          }
+        ]
+      },
+      "section_2_kpi_ownership_matrix": {
+        "title": "Section 2: KPI Ownership Matrix",
+        "sub_functions": {
+          "overall_supply_chain_leadership": {
+            "label": "Overall Supply Chain Leadership",
+            "kpis": [
+              {
+                "canonical_kpi_name": "Landed Cost (Total)",
+                "owners": "Patricia Chen; Finance (measurement & reporting)",
+                "sole_or_shared": "\u26a0\ufe0f Shared \u2014 Patricia owns the levers; Finance owns measurement. Allocation methodology creates recurring tension.",
+                "review_frequency": "Monthly",
+                "meeting_where_reviewed": "Supply Chain Leadership Meeting; Executive S&OP (quarterly)",
+                "decision_it_drives": "Sourcing strategy adjustments, contract renegotiation triggers, cost-reduction program prioritization"
+              },
+              {
+                "canonical_kpi_name": "Supplier Quality Index",
+                "owners": "Patricia Chen (accountable); Director, Supplier Quality (operational owner \u2014 not interviewed)",
+                "sole_or_shared": "Sole (supply chain side); clearest KPI Patricia named as cleanly owned",
+                "review_frequency": "Monthly",
+                "meeting_where_reviewed": "Supply Chain Leadership Meeting",
+                "decision_it_drives": "Supplier corrective action, controlled shipping authorization, disqualification escalation"
+              },
+              {
+                "canonical_kpi_name": "On-Time Delivery to Plants (OTD)",
+                "owners": "Patricia Chen; Manufacturing VP (plant schedule side)",
+                "sole_or_shared": "\u26a0\ufe0f Shared \u2014 Patricia owns inbound logistics and planning side; Manufacturing owns plant schedule changes that can cause misses",
+                "review_frequency": "Monthly (Leadership Meeting); Quarterly (Executive S&OP)",
+                "meeting_where_reviewed": "Supply Chain Leadership Meeting; Executive S&OP",
+                "decision_it_drives": "Logistics network adjustments, carrier escalation, schedule recovery actions"
+              },
+              {
+                "canonical_kpi_name": "Inventory Turns",
+                "owners": "Patricia Chen; Sales (demand signal); Manufacturing (schedule stability)",
+                "sole_or_shared": "\u26a0\ufe0f Shared \u2014 Patricia owns supply-side levers only; corrective action requires cross-functional alignment with Sales and Manufacturing",
+                "review_frequency": "Monthly (Leadership Meeting); Quarterly (Executive S&OP)",
+                "meeting_where_reviewed": "Supply Chain Leadership Meeting; Executive S&OP",
+                "decision_it_drives": "Safety stock policy changes, demand plan adjustments, supply-side buffer reductions"
+              }
+            ]
+          },
+          "procurement": {
+            "label": "Procurement \u2014 Direct Materials",
+            "kpis": [
+              {
+                "canonical_kpi_name": "Landed Cost per Unit",
+                "owners": "David Okonkwo",
+                "sole_or_shared": "Sole",
+                "review_frequency": "Monthly",
+                "meeting_where_reviewed": "Supply Chain Leadership Meeting; Monthly Supplier Performance Review",
+                "decision_it_drives": "Contract negotiation, sourcing award decisions, cost-reduction program initiation"
+              },
+              {
+                "canonical_kpi_name": "Cost Avoidance",
+                "owners": "David Okonkwo",
+                "sole_or_shared": "Sole",
+                "review_frequency": "Monthly",
+                "meeting_where_reviewed": "Supply Chain Leadership Meeting",
+                "decision_it_drives": "Sourcing strategy; benchmark-driven renegotiation triggers"
+              },
+              {
+                "canonical_kpi_name": "Supplier On-Time Delivery (OTD \u2014 Procurement)",
+                "owners": "David Okonkwo (supplier side); Sarah Martinez (planning/forecast side)",
+                "sole_or_shared": "\u26a0\ufe0f Shared \u2014 root cause attribution between supplier execution and forecast quality is a recurring contested point",
+                "review_frequency": "Bi-weekly (Materials Planning Sync); Monthly (Supplier Performance Review)",
+                "meeting_where_reviewed": "Bi-weekly Materials Planning Sync; Monthly Supplier Performance Review",
+                "decision_it_drives": "Corrective action plans, incoming inspection level changes, dual-sourcing authorization"
+              },
+              {
+                "canonical_kpi_name": "First-Pass Quality Rate",
+                "owners": "David Okonkwo (supplier side); Supplier Quality Director (standards & audits)",
+                "sole_or_shared": "\u26a0\ufe0f Shared \u2014 Procurement owns supplier selection and contract terms; Supplier Quality owns measurement and disposition",
+                "review_frequency": "Monthly",
+                "meeting_where_reviewed": "Monthly Supplier Performance Review",
+                "decision_it_drives": "Supplier corrective action, PPAP holds, incoming inspection adjustments"
+              },
+              {
+                "canonical_kpi_name": "Unit Cost (Metals)",
+                "owners": "Marcus Thompson",
+                "sole_or_shared": "Sole",
+                "review_frequency": "Bi-weekly (Supplier Performance Review)",
+                "meeting_where_reviewed": "Bi-weekly Supplier Performance Review; Weekly Procurement Team Meeting (escalated items)",
+                "decision_it_drives": "Spot buy decisions, quarterly price adjustments, contract renewal positioning"
+              },
+              {
+                "canonical_kpi_name": "Scrap & Waste Minimization (Metals)",
+                "owners": "Marcus Thompson (material spec compliance); Quality Engineer (measurement & disposition)",
+                "sole_or_shared": "\u26a0\ufe0f Shared \u2014 Marcus influences through supplier selection and spec compliance; Quality owns measurement and formal disposition",
+                "review_frequency": "Bi-weekly",
+                "meeting_where_reviewed": "Bi-weekly Supplier Performance Review",
+                "decision_it_drives": "Incoming inspection adjustments, supplier corrective action, material deviation dispositions"
+              }
+            ]
+          },
+          "production_planning": {
+            "label": "Production Planning & Scheduling",
+            "kpis": [
+              {
+                "canonical_kpi_name": "Schedule Attainment",
+                "owners": "Sarah Martinez (nominally sole); Manufacturing (equipment/labor side); Procurement (material delivery side)",
+                "sole_or_shared": "\u26a0\ufe0f Shared in practice \u2014 Sarah owns the number on paper but levers are distributed across Manufacturing and Procurement",
+                "review_frequency": "Daily (Production Stand-Up); Monthly (S&OP)",
+                "meeting_where_reviewed": "Daily Production Stand-Up; Monthly S&OP",
+                "decision_it_drives": "Sequence changes, line balancing, short-term expedite authorizations"
+              },
+              {
+                "canonical_kpi_name": "Shortage Incidents",
+                "owners": "Sarah Martinez (plant-level count); James Patel (plant execution); central Supply Chain (aggregate)",
+                "sole_or_shared": "\u26a0\ufe0f Shared across three levels \u2014 plant, planning, and central \u2014 with no single named accountable owner for aggregate trend management",
+                "review_frequency": "Daily (Stand-Up); Bi-weekly (Materials Planning Sync); Monthly (S&OP)",
+                "meeting_where_reviewed": "Daily Production Stand-Up; Bi-weekly Materials Planning Sync; Monthly S&OP",
+                "decision_it_drives": "Expedite authorization, safety stock adjustments, shortage escalation to VP"
+              },
+              {
+                "canonical_kpi_name": "Inventory Days on Hand",
+                "owners": "Sarah Martinez (primary); Sales (demand signal); Manufacturing (schedule stability)",
+                "sole_or_shared": "\u26a0\ufe0f Shared \u2014 Sarah has most genuine control via safety stock and release decisions, but Sales-driven demand swings can override",
+                "review_frequency": "Monthly (S&OP)",
+                "meeting_where_reviewed": "Monthly S&OP; Supply Chain Leadership Meeting",
+                "decision_it_drives": "Safety stock policy, material release cadence, inventory positioning decisions"
+              }
+            ]
+          },
+          "plant_level": {
+            "label": "Plant-Level Supply Chain",
+            "kpis": [
+              {
+                "canonical_kpi_name": "On-Time Material Delivery to Production (Plant)",
+                "owners": "James Patel (execution); Sarah Martinez (demand signal/plan changes)",
+                "sole_or_shared": "\u26a0\ufe0f Shared \u2014 James owns physical execution; late plan changes from central Planning cause misses that appear on James's scorecard",
+                "review_frequency": "Daily (7am Stand-Up); Bi-weekly (Materials Planning Sync)",
+                "meeting_where_reviewed": "Daily 7am Production Stand-Up; Bi-weekly Materials Planning Sync",
+                "decision_it_drives": "Local expedite requests, staging resequencing, shortage escalation"
+              },
+              {
+                "canonical_kpi_name": "Inventory Accuracy (Plant)",
+                "owners": "James Patel",
+                "sole_or_shared": "Sole \u2014 measured via cycle counts, locally controlled",
+                "review_frequency": "Ongoing cycle counts; reviewed at weekly Plant Operations Meeting",
+                "meeting_where_reviewed": "Weekly Plant Operations Meeting",
+                "decision_it_drives": "Cycle count frequency adjustments, warehouse process corrections"
+              }
+            ]
+          }
+        },
+        "kpi_deduplication_notes": "OTD appears across three sub-functions under different labels: 'On-Time Delivery to Plants' (Patricia/central), 'Supplier On-Time Delivery' (David/Procurement), and 'On-Time Material Delivery to Production' (James/Plant). These are related but distinct metrics measuring different points in the delivery chain \u2014 they have not been consolidated as they represent genuinely different measurement points and owners. 'Shortage Incidents' is tracked at both plant level (James) and aggregate central level (Sarah/Patricia) \u2014 flagged as having no single named owner for the aggregate trend."
+      },
+      "section_3_meeting_architecture": {
+        "title": "Section 3: Meeting Architecture",
+        "note": "Meetings are deduplicated and canonically named. The 'Bi-weekly Materials Planning Sync' is confirmed as the same forum referenced by David Okonkwo ('twice-weekly Materials Planning sync'), Sarah Martinez ('bi-weekly Materials Planning sync with central'), James Patel ('bi-weekly Materials Planning sync with central'), and Marcus Thompson ('bi-weekly supplier reviews' \u2014 partially overlapping but distinct; see note). The 'Daily Production Stand-Up' is confirmed as the same 7am forum referenced by Sarah Martinez and James Patel.",
+        "meetings": [
+          {
+            "canonical_name": "Executive S&OP",
+            "cadence": "Quarterly",
+            "confirmed_attendees": "Patricia Chen (VP, Supply Chain); COO; CFO; Sales leadership; Manufacturing VP; Sarah Martinez (as SME resource, not facilitator)",
+            "purpose": "Review and sanction the strategic planning framework \u2014 capacity expansion, major supplier contracts, network changes, capital decisions. Framework-level governance, not operational gap resolution.",
+            "forum_type": "True decision forum",
+            "lean_governance_note": "Structured executive review consistent with tiered management principles; functions as the apex governance body for horizon-3 supply chain decisions.",
+            "decision_types_made": "Capital allocation approvals; major network restructuring decisions; strategic supplier commitments beyond VP authority; planning horizon framework changes",
+            "key_outputs": "Sanctioned plans and capital approvals cascaded to monthly S&OP; strategic direction changes",
+            "who_carries_out_actions": "Patricia Chen and her Directors; cross-functional VPs within their own functions"
+          },
+          {
+            "canonical_name": "Monthly S&OP (Working Session)",
+            "cadence": "Monthly",
+            "confirmed_attendees": "Patricia Chen (VP, Supply Chain); Sales VP; Manufacturing VP; Finance; Director, Supply Chain Strategy & Analytics (represents SC function per Patricia); Sarah Martinez (facilitator/process owner)",
+            "purpose": "Finalize demand plan, resolve demand-supply gaps within established planning framework, authorize tactical inventory and capacity decisions. Intended as mid-level cross-functional decision forum.",
+            "forum_type": "\u26a0\ufe0f Intended as true decision forum; functioning inconsistently \u2014 Patricia describes it as underperforming when under pressure, with alignment work migrating to bilateral calls",
+            "lean_governance_note": "Structurally resembles an Obeya-style integrated planning review but lacks the stable attendance and clear chair accountability required for lean governance effectiveness.",
+            "decision_types_made": "Demand plan finalization; supply-demand gap resolution; tactical inventory positioning; product mix adjustments within sanctioned plan. Patricia closes contested decisions.",
+            "key_outputs": "Finalized monthly demand plan; inventory positioning decisions; escalation items for Executive S&OP",
+            "who_carries_out_actions": "Sarah Martinez (schedule and MRP execution); Procurement Directors (supply-side adjustments); Sales (commercial commitments)",
+            "governance_gap": "\u26a0\ufe0f Chair accountability is ambiguous \u2014 Director of Strategy & Analytics sets agenda by default but no explicit chair with accountability for forum effectiveness was ever designated. When under operational pressure, attendance degrades and decision-authority substitutes attend."
+          },
+          {
+            "canonical_name": "Supply Chain Leadership Meeting",
+            "cadence": "Monthly",
+            "confirmed_attendees": "Patricia Chen (chair); all 6 Directors including David Okonkwo and Sarah Martinez; Finance and Operations representation (stated by Marcus Thompson, unconfirmed by directors)",
+            "purpose": "Review sub-function KPI performance, close structural supply chain decisions above Director authority, surface and resolve cross-sub-function issues.",
+            "forum_type": "True decision forum",
+            "lean_governance_note": "Consistent with a lean tier-2/tier-3 management review; Patricia chairs, Directors are accountable nodes.",
+            "decision_types_made": "New supplier approvals; contract awards above $50M; significant volume reallocation; supplier disqualification; cross-sub-function issue resolution",
+            "key_outputs": "Decisions on structural supplier and sourcing issues; KPI accountability assignments; escalation items for Executive S&OP",
+            "who_carries_out_actions": "Relevant Directors own execution within their sub-functions; Patricia owns items requiring cross-functional coordination",
+            "governance_gap": "\u26a0\ufe0f Decision documentation and closure loop noted as inconsistent by Patricia \u2014 verbal alignment in the room does not consistently translate into written direction that cascades to execution teams."
+          },
+          {
+            "canonical_name": "Weekly Operations Review",
+            "cadence": "Weekly",
+            "confirmed_attendees": "Patricia Chen; Manufacturing VP; Finance; Engineering; COO (Marcus Webb) chairs",
+            "purpose": "Near-term operational issue resolution across Supply Chain, Manufacturing, Finance, and Engineering. Patricia describes this as the most action-oriented recurring meeting she attends.",
+            "forum_type": "True decision forum",
+            "lean_governance_note": "Closest analog to a lean daily/weekly management tiered review at the executive level; cross-functional, chaired by COO, action-oriented.",
+            "decision_types_made": "Near-term operational escalations requiring cross-functional authorization; production risk responses; resource prioritization",
+            "key_outputs": "Cross-functional action items with owners; operational recovery decisions",
+            "who_carries_out_actions": "Respective function VPs and their teams"
+          },
+          {
+            "canonical_name": "Monthly Supplier Performance Review",
+            "cadence": "Monthly",
+            "confirmed_attendees": "David Okonkwo (chair); Supplier Quality team; Production Planning team; Procurement buyers/analysts. Engineering does NOT regularly attend.",
+            "purpose": "Review supplier scorecards, resolve root cause attribution disputes, authorize corrective action plans and inspection level changes.",
+            "forum_type": "True decision forum for supplier-execution issues; informational/escalation-staging only for items requiring Engineering or contract-level authority",
+            "lean_governance_note": "Structured supplier review consistent with lean supplier management cadences; gap is Engineering's absence creates a recurring bottleneck for disposition decisions.",
+            "decision_types_made": "Corrective action plan authorization; incoming inspection level changes; root cause attribution; temporary volume shifts within existing contracts",
+            "key_outputs": "Corrective action plans assigned to suppliers; escalation items to Supply Chain Leadership Meeting for contract-level decisions",
+            "who_carries_out_actions": "David Okonkwo and relevant buyers; Supplier Quality Engineers",
+            "governance_gap": "\u26a0\ufe0f Engineering does not regularly attend. Disposition decisions requiring engineering sign-off (e.g., tolerance relaxations) cannot close in this forum \u2014 they are logged and referred to Engineering informally with no SLA or escalation mechanism."
+          },
+          {
+            "canonical_name": "Bi-weekly Materials Planning Sync",
+            "cadence": "Bi-weekly (Monday and Thursday per Sarah Martinez)",
+            "confirmed_attendees": "David Okonkwo or senior buyer (Procurement); Sarah Martinez's Planning team; James Patel (plant-side); Marcus Thompson attends a version of this or an overlapping forum for metals-specific issues",
+            "purpose": "Near-term supply coverage review, shortage identification, expedite prioritization, and root cause attribution for delivery misses.",
+            "forum_type": "True decision forum for tactical supply decisions within existing contracts and authority",
+            "lean_governance_note": "High-cadence operational sync consistent with lean tiered daily management at the manager/specialist level; most action-oriented sub-VP forum identified.",
+            "decision_types_made": "Expedite authorizations (within authority); allocation priority calls; short-term schedule adjustments; shortage escalation to Director level when required",
+            "key_outputs": "Expedite actions; shortage risk flags; escalation items to Directors; premium freight requests (subject to $15K plant-level threshold)",
+            "who_carries_out_actions": "Planning Managers, Procurement buyers, James Patel and plant team",
+            "governance_gap": "\u26a0\ufe0f Plant-side premium freight escalations above $15K must route through central Commodity Manager then Procurement Director \u2014 approval latency in urgent situations documented as causing near-stoppage events (see James Patel interview)."
+          },
+          {
+            "canonical_name": "Daily Production Stand-Up",
+            "cadence": "Daily, 7am",
+            "confirmed_attendees": "Sarah Martinez; Manufacturing supervision; James Patel (plant-side); Manufacturing VP (when significant issues present)",
+            "purpose": "Prior-day schedule attainment review, same-day recovery decision-making, shortage and risk flagging for immediate response.",
+            "forum_type": "\u26a0\ufe0f Mixed \u2014 immediate sequence/line-balancing decisions are made; broader issues are flagged and routed up. James Patel characterizes it as primarily information-sharing; Sarah Martinez characterizes it as a decision forum for sequencing.",
+            "lean_governance_note": "Closest to a lean tier-1 daily management meeting; structured, time-boxed, floor-level. Cadence and format are consistent with TPS-influenced governance.",
+            "decision_types_made": "Same-day sequence changes (Sarah's authority, within 2-week window); line balancing between lines; immediate shortage escalation triggers",
+            "key_outputs": "Day's production sequence; escalation flags to Materials Planning Sync or directly to VP when line stoppage is imminent",
+            "who_carries_out_actions": "Sarah Martinez (schedule execution); Manufacturing supervisors (line execution); James Patel (plant materials staging)"
+          },
+          {
+            "canonical_name": "Quarterly Plant Supply Chain Review",
+            "cadence": "Quarterly",
+            "confirmed_attendees": "James Patel; Plant Manager; Director of Operations (plant); Patricia Chen (VP, Supply Chain); Planning Directors or Commodity Managers from central (agenda-dependent); Regional Manufacturing VP (inconsistent)",
+            "purpose": "Surface plant-level supply chain performance issues, align on process improvement needs, assign follow-up actions between plant and central.",
+            "forum_type": "\u26a0\ufe0f Primarily informational and alignment-oriented \u2014 decisions in principle are made but process change follow-through is chronically incomplete due to absent action ownership",
+            "lean_governance_note": "Structurally appropriate as a quarterly plant-central governance bridge, but operates more as a status report forum than a lean accountability review. Lacks the action-closure discipline of effective tiered management.",
+            "decision_types_made": "Policy alignment on plant-central interfaces; in-principle authorization of process changes; formal surfacing of structural issues (e.g., $15K premium freight threshold)",
+            "key_outputs": "Action items \u2014 but with diffuse ownership and no named tracker between quarters",
+            "who_carries_out_actions": "\u26a0\ufe0f Unclear \u2014 James Patel tracks plant-side actions; central-side actions have no named owner between quarterly sessions",
+            "governance_gap": "\u26a0\ufe0f No dedicated action-tracking owner between quarters. Items raised (including the $15K premium freight threshold review) have received general agreement but have not been assigned formal owners with dates. This is a structural gap in plant-central governance."
+          },
+          {
+            "canonical_name": "Weekly Procurement Team Meeting",
+            "cadence": "Weekly",
+            "confirmed_attendees": "David Okonkwo; 8 buyers; 4 analysts",
+            "purpose": "Supplier performance updates, in-function decision-making on order placement, escalations, and supplier actions within David's authority.",
+            "forum_type": "True decision forum (within Procurement sub-function)",
+            "lean_governance_note": "Standard lean sub-function weekly management review; decisions close in the room for items within Director authority.",
+            "decision_types_made": "Order placement and timing; supplier escalation authorizations; corrective action initiation; expedite approvals within David's authority",
+            "key_outputs": "Buyer action assignments; escalation items for Supply Chain Leadership Meeting",
+            "who_carries_out_actions": "Buyers and analysts per assigned actions"
+          },
+          {
+            "canonical_name": "Weekly 1:1s (Patricia with Direct Reports; Patricia with COO)",
+            "cadence": "Weekly",
+            "confirmed_attendees": "Patricia Chen + each direct report (6 individual sessions); Patricia Chen + COO (Marcus Webb)",
+            "purpose": "Pulse checks, proactive loop-ins on issues approaching escalation thresholds, directional alignment before formal decisions.",
+            "forum_type": "Informational / soft-escalation forum \u2014 not a formal decision venue but functionally substitutes for formal forums when those forums are too slow",
+            "lean_governance_note": "Bilateral rather than tiered; Patricia notes variability in structure across her 6 director 1:1s \u2014 inconsistency noted as a self-identified development area.",
+            "decision_types_made": "No formal decisions close here; directional guidance given that shapes downstream decisions",
+            "key_outputs": "VP awareness; informal directional guidance; flags for Weekly Operations Review or Supply Chain Leadership Meeting"
+          }
+        ]
+      },
+      "section_4_decision_authority_map": {
+        "title": "Section 4: Decision Authority Map",
+        "authority_tiers": [
+          {
+            "tier": "Executive (VP, Supply Chain \u2014 Patricia Chen)",
+            "decision_types": [
+              {
+                "decision": "Supplier sourcing contracts up to $50M annually",
+                "forum": "Supply Chain Leadership Meeting; bilateral with COO for complex cases",
+                "clarity": "Clear"
+              },
+              {
+                "decision": "Supplier disqualification / controlled shipping authorization",
+                "forum": "Supply Chain Leadership Meeting; unilateral when speed is required",
+                "clarity": "Clear \u2014 Patricia explicitly owns this unilaterally, citing speed imperative"
+              },
+              {
+                "decision": "Demand plan finalization (monthly)",
+                "forum": "Monthly S&OP \u2014 Patricia closes contested decisions",
+                "clarity": "Clear within S&OP; \u26a0\ufe0f ambiguous when S&OP is absent or attendance degrades"
+              },
+              {
+                "decision": "Inventory corrective action (cross-functional)",
+                "forum": "Bilateral calls with Sales and Manufacturing VPs; Executive S&OP for major shifts",
+                "clarity": "\u26a0\ufe0f Ambiguous \u2014 Patricia cannot drive unilaterally; formal path (Executive S&OP) is too slow; actual path is bilateral ad hoc"
+              },
+              {
+                "decision": "Logistics network decisions (carrier contracts, 3PL, routing)",
+                "forum": "Supply Chain Leadership Meeting; within budget authority",
+                "clarity": "Clear"
+              },
+              {
+                "decision": "Dual-sourcing strategy authorization",
+                "forum": "Supply Chain Leadership Meeting; Weekly Operations Review for urgent cases",
+                "clarity": "Clear \u2014 explicitly escalated to VP level by Directors regardless of dollar value"
+              }
+            ]
+          },
+          {
+            "tier": "Executive (COO \u2014 Marcus Webb) / Above VP",
+            "decision_types": [
+              {
+                "decision": "Supplier contracts above $50M annually",
+                "forum": "Executive S&OP; direct COO engagement with CFO visibility",
+                "clarity": "Clear threshold; \u26a0\ufe0f decision documentation and cascade back to VP execution team noted as inconsistent"
+              },
+              {
+                "decision": "Major capital implications, network restructuring",
+                "forum": "Executive S&OP",
+                "clarity": "Clear"
+              },
+              {
+                "decision": "Multi-year strategic supplier commitments (especially where quality issues co-exist)",
+                "forum": "Weekly Operations Review and/or direct escalation to COO",
+                "clarity": "\u26a0\ufe0f Threshold is judgment-based, not codified \u2014 Patricia applies a 'would Marcus want to know' heuristic rather than a documented criterion"
+              }
+            ]
+          },
+          {
+            "tier": "Director (David Okonkwo, Sarah Martinez)",
+            "decision_types": [
+              {
+                "decision": "Sourcing contracts and order placement within existing supplier relationships (below $50M)",
+                "forum": "Weekly Procurement Team Meeting; bilateral with VP for strategic implications",
+                "clarity": "Clear"
+              },
+              {
+                "decision": "New supplier qualification / dual-sourcing initiation",
+                "forum": "Supply Chain Leadership Meeting (authorization); Supplier Performance Review (evidence base)",
+                "clarity": "Clear \u2014 explicitly escalated even below dollar threshold"
+              },
+              {
+                "decision": "Corrective action plan authorization for suppliers",
+                "forum": "Monthly Supplier Performance Review",
+                "clarity": "Clear within supplier execution issues; \u26a0\ufe0f contested root cause (supplier vs. Planning forecast) cannot close without VP escalation or bilateral resolution"
+              },
+              {
+                "decision": "Master schedule sequence changes within 2-week rolling window",
+                "forum": "Daily Production Stand-Up; direct authority, no escalation required",
+                "clarity": "Clear"
+              },
+              {
+                "decision": "Demand plan changes with commercial implication",
+                "forum": "Monthly S&OP \u2014 requires Sales alignment",
+                "clarity": "\u26a0\ufe0f Sarah cannot close unilaterally; dependent on Sales VP presence and engagement in S&OP"
+              },
+              {
+                "decision": "Premium freight authorization above $15K (plant-originated)",
+                "forum": "Escalated from James Patel to Commodity Manager to David Okonkwo",
+                "clarity": "\u26a0\ufe0f Approval path is clear but latency is operationally problematic \u2014 documented near-stoppage incident where 36-hour timeline was insufficient"
+              },
+              {
+                "decision": "Engineering disposition requests (tolerance relaxations, spec changes)",
+                "forum": "Ad hoc \u2014 no standing forum; Engineering liaison or direct contact with design engineer",
+                "clarity": "\u26a0\ufe0f No standing cross-functional forum; David cannot compel Engineering to act; items sit in Engineering queue with no SLA \u2014 documented 4-month unresolved casting disposition"
+              }
+            ]
+          },
+          {
+            "tier": "Manager / Senior Manager (Marcus Thompson, James Patel)",
+            "decision_types": [
+              {
+                "decision": "Order quantities and timing within existing contracts",
+                "forum": "Bi-weekly Materials Planning Sync; Weekly Procurement Team Meeting",
+                "clarity": "Clear"
+              },
+              {
+                "decision": "Short-term price negotiations (spot buys, quarterly adjustments) within approved relationships",
+                "forum": "Buyer authority; results reported up at Weekly Procurement Team Meeting",
+                "clarity": "Clear"
+              },
+              {
+                "decision": "Local expedite requests within approved suppliers and contracts (plant)",
+                "forum": "Plant-level; James Patel's authority",
+                "clarity": "Clear"
+              },
+              {
+                "decision": "Premium freight authorization below $15K (plant)",
+                "forum": "Joint call between James Patel and Director of Operations",
+                "clarity": "Clear"
+              },
+              {
+                "decision": "Inventory staging resequencing (plant)",
+                "forum": "Daily 7am Stand-Up; James Patel's authority",
+                "clarity": "Clear"
+              },
+              {
+                "decision": "New supplier qualification initiation",
+                "forum": "\u26a0\ufe0f Not Manager-level \u2014 must escalate to Director; Marcus Thompson explicitly confirmed this boundary",
+                "clarity": "Clear boundary; \u26a0\ufe0f 3-4 week decision cycle for non-emergency new qualification creates latency risk when supplier financial stress is early-stage"
+              }
+            ]
+          }
+        ],
+        "authority_distribution_note": "The decision authority architecture is broadly coherent at the VP and Director tiers, with reasonably clear thresholds on financial delegation. However, two structural weaknesses are evident. First, cross-functional decisions \u2014 particularly those requiring Engineering commitment or Sales acceptance of delivery changes \u2014 have no formal authority mechanism below the VP level; they depend on bilateral relationships and informal influence, creating latency and unresolved persistence risk. Second, the informal escalation heuristic Patricia uses with the COO ('would Marcus want to know') is not documented or shared with Directors, meaning escalation calibration below the VP tier is uncodified. The semiconductor/electronics procurement commodity (not directly interviewed in this cohort) was identified in the research brief as strategically elevated post-COVID; based on the pattern observed across metals and direct materials, it is highly probable that electronics/semiconductor escalation authority is similarly concentrated at Director/VP level with compressed timelines creating the same latency risk \u2014 this should be explicitly confirmed in the next interview wave.",
+        "semiconductor_note": "\u26a0\ufe0f The Manager, Commodity Purchasing (Electronics/Semiconductors) was not among the five interviewees in this cohort. Given the known strategic elevation of this category post-COVID and the documented latency risks in the premium freight and dual-sourcing escalation paths, the semiconductor decision authority pattern should be treated as an explicit gap and prioritized in subsequent interviews."
+      },
+      "section_5_cross_functional_seams": {
+        "title": "Section 5: Cross-Functional Seams & Handoff Points",
+        "seams_table": [
+          {
+            "adjacent_function": "Manufacturing",
+            "nature_of_handoff": "Schedule attainment accountability is shared \u2014 Supply Chain owns material delivery and planning; Manufacturing owns equipment, labor, and plant schedule changes. Late schedule changes by Manufacturing flow back as Supply Chain KPI misses.",
+            "sc_interface_owner": "Sarah Martinez (Director, Production Planning) at Director level; James Patel at plant level",
+            "observed_clarity": "Partial",
+            "risk_or_tension": "On-time delivery to plants is a joint KPI with no clear RACI for root cause attribution when misses occur. Sarah and James both noted that Manufacturing-driven schedule changes hit their scorecards. Daily stand-up surfaces the tension but does not resolve accountability."
+          },
+          {
+            "adjacent_function": "Engineering",
+            "nature_of_handoff": "Supplier specification changes, tolerance dispositions, and drawing revisions require Engineering sign-off before Procurement can resolve supplier quality nonconformances. Engineering has a single procurement liaison but no standing joint decision forum.",
+            "sc_interface_owner": "David Okonkwo (Director, Procurement) \u2014 ad hoc engagement via Engineering liaison or direct contact",
+            "observed_clarity": "Ambiguous",
+            "risk_or_tension": "\u26a0\ufe0f Critical gap. A 4-month unresolved casting disposition (documented by David Okonkwo) demonstrates that Engineering's queue has no SLA for supply chain-initiated requests. The $200-300K annual cost of the unresolved item is distributed across cost centers, masking the true financial impact and removing the financial trigger for escalation. This is the most structurally significant cross-functional seam identified in this interview cohort."
+          },
+          {
+            "adjacent_function": "Sales / Commercial",
+            "nature_of_handoff": "Demand plan inputs from Sales drive the S&OP process; Sales must accept or reject delivery push-outs when shortages occur. Sarah Martinez cannot close demand plan changes or customer delivery commitments without Sales VP involvement.",
+            "sc_interface_owner": "Sarah Martinez (S&OP facilitator); Patricia Chen (VP-to-VP for contested decisions)",
+            "observed_clarity": "Partial",
+            "risk_or_tension": "Monthly S&OP is the designated forum for this interface but is underperforming under operational pressure. Patricia escalates to bilateral VP calls as a workaround. Risk: Sales-driven demand volatility (e.g., late forecast changes) directly causes inventory days on hand misses that are measured against Supply Chain, with no formal accountability mechanism for Sales-side forecast accuracy."
+          },
+          {
+            "adjacent_function": "Finance",
+            "nature_of_handoff": "Finance owns landed cost measurement and reporting; Procurement owns the cost levers. Cost allocation methodology creates recurring tension. Above-threshold supplier contracts require CFO visibility alongside COO.",
+            "sc_interface_owner": "Patricia Chen (VP level for major decisions); David Okonkwo (Director level for contract financials)",
+            "observed_clarity": "Partial",
+            "risk_or_tension": "The $200-300K annual cost of the unresolved casting nonconformance is distributed across cost centers in a way that makes it invisible as a supply chain issue \u2014 acknowledged explicitly by David. This cost-visibility gap is a structural Finance-Supply Chain seam that removes financial pressure from cross-functional resolution of supplier issues."
+          },
+          {
+            "adjacent_function": "Plant Operations (Manufacturing plant-central interface)",
+            "nature_of_handoff": "Central supply chain sets policy, demand plans, and supplier contracts; James Patel executes at the plant and escalates upward. Premium freight above $15K must route through central Commodity Manager and Procurement Director before authorization.",
+            "sc_interface_owner": "James Patel (plant); relevant Commodity Manager and David Okonkwo (central)",
+            "observed_clarity": "Partial",
+            "risk_or_tension": "\u26a0\ufe0f The $15K premium freight threshold has not been formally reviewed since it was set and is operationally insufficient for air freight scenarios. A documented near-stoppage event resulted from approval latency in the central escalation path. The threshold itself is a policy decision that sits with central Procurement \u2014 James cannot change it \u2014 and despite being raised at the quarterly Plant Supply Chain Review, it has not been assigned a formal owner or timeline."
+          }
+        ],
+        "critical_dependencies_note": "The most consequential cross-functional dependency identified is the Procurement-Engineering interface on supplier specification decisions: there is no standing forum, no SLA, and no escalation trigger short of a line-down event, meaning issues can persist for months while costs accumulate invisibly. The second most significant dependency is the Supply Chain-Sales interface within S&OP: when the monthly working session underperforms, Patricia defaults to bilateral VP calls, but there is no documented fallback governance mechanism. The plant-central premium freight threshold is a lower-magnitude but immediately actionable structural fix."
+      },
+      "section_6_executive_narrative": {
+        "title": "Section 6: Executive Narrative & Diagnostic Priorities",
+        "how_decisions_actually_flow": "The supply chain function operates with a coherent tiered governance architecture: a quarterly Executive S&OP for strategic framework decisions, a monthly Supply Chain Leadership Meeting for sub-function accountability and structural decisions, a monthly S&OP working session for demand-supply alignment, and high-cadence operational forums (bi-weekly Materials Planning Sync, daily Production Stand-Up) for tactical execution. Patricia Chen holds clear authority on the supply chain side, closes decisions in the monthly S&OP, and escalates to COO with well-calibrated judgment. Below the VP level, Directors have clear financial delegation thresholds and well-understood escalation paths for supplier and sourcing decisions. However, the system's load-bearing assumption \u2014 that cross-functional alignment happens through formal forums \u2014 breaks down at two points: the monthly S&OP working session underperforms under operational pressure, pushing alignment work into ad hoc bilateral calls at the VP level; and cross-functional decisions requiring Engineering commitment have no formal mechanism at any level below the VP, creating chronic unresolved issues. Decision documentation and cascade from verbal agreement to written execution direction is inconsistently practiced across the function.",
+        "what_is_working_well": [
+          "Clear financial delegation: The $50M VP threshold and the plant-level $15K premium freight threshold are understood and consistently applied across the Director and Manager tiers. Marcus Thompson and James Patel both articulated their boundaries accurately without ambiguity.",
+          "High-cadence operational forums function well: The bi-weekly Materials Planning Sync and the daily Production Stand-Up operate with lean discipline \u2014 short, structured, action-oriented. These are the most effective decision forums in the architecture for their intended scope.",
+          "Supplier disqualification and quality escalation authority is clean: Patricia's unilateral authority on controlled shipping and disqualification is explicitly designed for speed and is well understood by the function. This is correctly delegated given the cost of delay in quality escapes.",
+          "The Monthly Supplier Performance Review provides a structured cross-sub-function accountability mechanism at the Director level \u2014 the forum is well-structured and closes real decisions on supplier execution issues within the Procurement and Quality teams' combined authority."
+        ],
+        "gaps_overlaps_bottlenecks": [
+          "\u26a0\ufe0f Monthly S&OP working session has ambiguous ownership and degrades under pressure: Patricia explicitly identifies this forum as underperforming \u2014 no designated chair with accountability for forum effectiveness, attendance degrades when operational pressure is high, and substitutes without decision authority attend. The result is that the primary cross-functional demand-supply alignment mechanism defaults to bilateral VP calls. This is not a resource problem; it is a governance design problem.",
+          "\u26a0\ufe0f Procurement-Engineering interface has no formal decision mechanism: There is no standing forum, no SLA, and no escalation trigger between Procurement and Engineering below the VP level. David Okonkwo's documented 4-month unresolved casting disposition \u2014 costing $200-300K annually \u2014 persists because the cost is distributed across cost centers and the only escalation trigger is a line-down event. Engineering's procurement liaison is a single point of contact, not a governance mechanism.",
+          "\u26a0\ufe0f KPI ownership is widely shared but RACI is not formally documented: Schedule attainment, shortage incidents, OTD to plants, and inventory days on hand all have multiple contributors and no documented RACI distinguishing 'accountable' from 'contributes to.' Sarah Martinez owns schedule attainment 'on paper' but has limited unilateral control over it. This creates scorecard misalignment under pressure and contested accountability during post-mortems.",
+          "\u26a0\ufe0f Decision documentation from verbal alignment to written execution direction is structurally weak: Patricia identified this pattern directly \u2014 decisions made verbally in meetings (including with the COO) do not consistently produce written direction that execution teams can act on. The stamping supplier dual-sourcing case, where a quality-milestone condition was verbally agreed but not documented or owned, is a concrete example. This is a systemic governance hygiene issue, not an isolated incident.",
+          "\u26a0\ufe0f Plant-central premium freight threshold ($15K) is operationally stale and has no owner for review: The threshold has not been formally reviewed in at least two years; air freight on urgent expedites routinely exceeds it; a documented near-stoppage event resulted from approval latency; and despite being raised at the Quarterly Plant Supply Chain Review, it has not been assigned a formal action owner with a date. The threshold itself is a low-complexity fix that has been stuck because of the same action-ownership gap that characterizes the Quarterly Plant Review outputs more broadly."
+        ],
+        "prioritized_areas_for_investigation": [
+          {
+            "rank": 1,
+            "area": "Monthly S&OP working session \u2014 governance redesign",
+            "rationale": "This is the single most structurally consequential gap identified. The forum is the intended load-bearing mechanism for cross-functional demand-supply alignment, but it has no designated chair, degrades under pressure, and has forced alignment work into ad hoc bilateral VP calls. Fixing this \u2014 by assigning explicit ownership, accountability criteria, and a decision-authority charter \u2014 would have the highest leverage on overall decision quality across the function. Interviews from Sales Planning and Manufacturing Planning directors should be prioritized to confirm the bilateral call pattern from their side."
+          },
+          {
+            "rank": 2,
+            "area": "Procurement-Engineering joint governance mechanism",
+            "rationale": "The absence of a standing forum with Engineering for supplier specification decisions is creating persistent, financially invisible issue accumulation. The casting disposition case is likely not isolated \u2014 it represents a structural pattern where Engineering's queue has no SLA for supply chain requests. Mapping the full universe of open Engineering-dependent supplier issues would establish the true scope; interviews with Engineering leadership are required to understand the barrier from their side."
+          },
+          {
+            "rank": 3,
+            "area": "KPI ownership RACI documentation",
+            "rationale": "Multiple high-visibility KPIs (schedule attainment, shortage incidents, OTD to plants, inventory days on hand) have multiple contributors without a documented RACI distinguishing accountability from contribution. This creates contested post-mortems and diffuse corrective action ownership. A structured RACI exercise across the six sub-functions, anchored to the KPI Ownership Matrix in this brief, would resolve this relatively quickly."
+          },
+          {
+            "rank": 4,
+            "area": "Decision documentation discipline \u2014 from verbal alignment to written execution direction",
+            "rationale": "Patricia identified this as a self-aware gap; Marcus Thompson's escalation resolution pattern ('same day or next day' directional guidance, but formal decisions dependent on Marcus Webb's calendar) suggests it manifests at multiple tiers. A lightweight action-documentation protocol for decisions made in the Supply Chain Leadership Meeting and Monthly S&OP would address the most high-impact instances without bureaucratic overhead."
+          },
+          {
+            "rank": 5,
+            "area": "Plant-central escalation authority review \u2014 premium freight threshold and Quarterly Plant Review action ownership",
+            "rationale": "The $15K premium freight threshold is an immediately actionable structural fix with documented operational risk. Broader plant-central governance \u2014 specifically the absence of named action owners between quarterly reviews \u2014 represents the same documentation and accountability gap observed centrally, but with compounded risk given the time-sensitivity of plant-floor operations. Interviewing Plant Managers at additional assembly plants would confirm whether this pattern is systemic across the plant network."
+          }
+        ]
+      }
+    }
+  }
+}

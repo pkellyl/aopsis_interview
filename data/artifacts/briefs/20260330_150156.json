@@ -1,0 +1,251 @@
+{
+  "id": "20260330_150156",
+  "label": "Brief",
+  "timestamp": "2026-03-30T15:01:56.525559+00:00",
+  "data": {
+    "context": {
+      "organisation_name": "Toyota-scale US Auto OEM (anonymized)",
+      "industry": "Automotive Manufacturing \u2014 Original Equipment Manufacturer",
+      "description": "A large, mature US-based automotive OEM with deep lean/TPS-influenced culture. The supply chain function employs approximately 350 people across multiple sub-functions including procurement, supplier quality, logistics, production planning, inventory management, and supply chain strategy. The organization operates with formal governance cadences and structured decision-making processes typical of Japanese-influenced manufacturing culture adapted to US operations.",
+      "organisational_dynamics": {
+        "culture": "Process-driven, lean methodology embedded, consensus-oriented but hierarchical. Strong emphasis on standardization and continuous improvement.",
+        "structure": "Multi-layered with VP/Director/Manager/Specialist tiers across six core sub-functions. Regional plant-level supply chain teams report into central supply chain leadership.",
+        "sub_functions": [
+          "Procurement / Purchasing (direct and indirect materials)",
+          "Supplier Quality / Supplier Development",
+          "Logistics & Transportation (inbound and outbound)",
+          "Production Planning & Scheduling",
+          "Inventory Management / Warehousing",
+          "Supply Chain Strategy & Analytics"
+        ],
+        "known_tensions": "None specifically identified. This is a diagnostic baseline exercise to understand the current state of decision-making."
+      }
+    },
+    "interview_objectives": {
+      "research_topic": "Decision-making topology of the supply chain function: mapping who makes what decisions, in what forums, with what authority, tied to what KPIs.",
+      "key_questions": [
+        "What is this person's role and scope of responsibility?",
+        "Who do they report to and who reports to them?",
+        "What KPIs do they personally own or are accountable for?",
+        "What decisions do they make independently vs. escalate?",
+        "What recurring meetings do they attend?",
+        "What is the purpose of each meeting, who else attends, and what types of decisions are made there?",
+        "What are the key outputs or outcomes of those meetings?",
+        "How do decisions from meetings translate into action \u2014 who carries them out?"
+      ],
+      "themes_to_probe": [
+        "Formal decision authority vs. informal influence",
+        "KPI ownership clarity \u2014 sole owner vs. shared accountability",
+        "Meeting effectiveness \u2014 are decisions actually made or just discussed?",
+        "Cross-functional handoffs \u2014 where does supply chain decision-making intersect with manufacturing, engineering, finance?",
+        "Escalation pathways \u2014 what goes up and what gets resolved locally"
+      ]
+    },
+    "interview_output_structure": {
+      "format": "Structured, punchy summaries per interviewee \u2014 no more than 2 pages each",
+      "required_topics": [
+        {
+          "topic": "Role Profile",
+          "details": "Title, sub-function, scope, reporting line (up and down)"
+        },
+        {
+          "topic": "KPI Ownership",
+          "details": "List of KPIs owned or co-owned, how they are measured, frequency of review"
+        },
+        {
+          "topic": "Decision Authority",
+          "details": "Key decisions this person makes, decision boundaries, what gets escalated and to whom"
+        },
+        {
+          "topic": "Meeting Participation",
+          "details": "List of recurring meetings attended, their cadence, attendees, purpose, and types of decisions made in each"
+        },
+        {
+          "topic": "Meeting Outcomes",
+          "details": "What outputs or actions come from each meeting, who is accountable for follow-through"
+        }
+      ],
+      "depth_criteria": "Focused and factual. Prioritize structure and specificity over narrative. Each interview should produce data points that can be directly mapped onto the network diagram.",
+      "per_interview_deliverable": "A structured role card with: role profile, KPI table, decision inventory, and meeting-by-meeting breakdown with attendees and decision types"
+    },
+    "report_objectives": {
+      "report_type": "Executive diagnostic brief with visual decision-making map",
+      "target_audience": "Top management and consulting team \u2014 people who need to quickly understand the current state and identify priorities for improving decision-making",
+      "output_sections": [
+        {
+          "section": "Decision-Making Network Map",
+          "description": "Visual network diagram showing roles (nodes), meetings (nodes), KPIs (nodes), and the connections between them. Should show who attends what, who owns what, and where decision authority sits. Color-coded by sub-function and layered by seniority."
+        },
+        {
+          "section": "Meeting Architecture",
+          "description": "A structured overview of all core recurring meetings in the supply chain function: purpose, cadence, attendees by role, decision types, and outputs. Organized from strategic (quarterly/monthly) to operational (weekly/daily)."
+        },
+        {
+          "section": "KPI Ownership Matrix",
+          "description": "A matrix mapping every identified KPI to its owner(s), the meetings where it is reviewed, and the decisions it drives."
+        },
+        {
+          "section": "Decision Authority Map",
+          "description": "A layered view showing what types of decisions are made at each level (VP, Director, Manager, Specialist) and in which forums \u2014 highlighting where authority is concentrated, distributed, or ambiguous."
+        },
+        {
+          "section": "Executive Narrative & Priorities",
+          "description": "A punchy 2-3 page written brief summarizing: how decisions actually flow in the supply chain, where the system is clear and well-governed, where there are potential gaps, overlaps, or bottlenecks in decision-making, and a prioritized list of areas to investigate further for improvement."
+        }
+      ],
+      "focus_areas": [
+        "Clarity of decision ownership across the function",
+        "Meeting effectiveness \u2014 are the right people in the right rooms making the right decisions?",
+        "KPI alignment \u2014 do KPIs drive the right decisions at the right level?",
+        "Cross-functional seams \u2014 where supply chain decision-making depends on or conflicts with adjacent functions",
+        "Structural efficiency \u2014 is the meeting and governance architecture proportionate or bloated?"
+      ]
+    },
+    "synthetic_audience": {
+      "total_interviewees": 20,
+      "design_rationale": "Selected to cover all six sub-functions at multiple seniority levels, ensuring both strategic and operational decision-making is captured. Includes the VP of Supply Chain as the apex, directors who run sub-functions, managers who own day-to-day decisions, and key senior specialists who execute and attend operational meetings.",
+      "interviewees": [
+        {
+          "id": 1,
+          "role": "VP, Supply Chain",
+          "sub_function": "Overall Supply Chain Leadership",
+          "seniority": "Executive",
+          "rationale": "Apex of the function. Sets strategy, chairs senior governance meetings, owns top-level KPIs, interfaces with C-suite and plant GMs."
+        },
+        {
+          "id": 2,
+          "role": "Director, Procurement (Direct Materials)",
+          "sub_function": "Procurement",
+          "seniority": "Director",
+          "rationale": "Owns sourcing strategy for production materials \u2014 the largest spend category. Key decision-maker on supplier selection and cost targets."
+        },
+        {
+          "id": 3,
+          "role": "Director, Supplier Quality & Development",
+          "sub_function": "Supplier Quality",
+          "seniority": "Director",
+          "rationale": "Owns supplier performance standards and development programs. Gatekeeper for supplier approvals and quality escalations."
+        },
+        {
+          "id": 4,
+          "role": "Director, Logistics & Transportation",
+          "sub_function": "Logistics",
+          "seniority": "Director",
+          "rationale": "Owns inbound/outbound logistics network, freight spend, carrier management. Critical for on-time delivery KPIs."
+        },
+        {
+          "id": 5,
+          "role": "Director, Production Planning",
+          "sub_function": "Production Planning",
+          "seniority": "Director",
+          "rationale": "Owns the master production schedule, balances demand with capacity. Central node connecting supply chain to manufacturing."
+        },
+        {
+          "id": 6,
+          "role": "Director, Supply Chain Strategy & Analytics",
+          "sub_function": "Strategy & Analytics",
+          "seniority": "Director",
+          "rationale": "Owns long-range planning, network optimization, and data/reporting infrastructure. Provides the analytical backbone for strategic decisions."
+        },
+        {
+          "id": 7,
+          "role": "Senior Manager, Indirect Procurement",
+          "sub_function": "Procurement",
+          "seniority": "Manager",
+          "rationale": "Manages non-production spend (MRO, services, tooling). Different governance and decision cadence from direct procurement."
+        },
+        {
+          "id": 8,
+          "role": "Manager, Commodity Purchasing (Metals)",
+          "sub_function": "Procurement",
+          "seniority": "Manager",
+          "rationale": "Manages a critical commodity category. Makes day-to-day sourcing decisions, negotiates contracts, manages supplier relationships."
+        },
+        {
+          "id": 9,
+          "role": "Manager, Commodity Purchasing (Electronics/Semiconductors)",
+          "sub_function": "Procurement",
+          "seniority": "Manager",
+          "rationale": "Manages the most volatile and strategically sensitive commodity. Semiconductor shortages have elevated this role's decision-making importance."
+        },
+        {
+          "id": 10,
+          "role": "Senior Manager, Supplier Quality Engineering",
+          "sub_function": "Supplier Quality",
+          "seniority": "Manager",
+          "rationale": "Leads the team that conducts supplier audits, manages PPAPs, and handles containment actions. Key operational decision-maker on quality holds."
+        },
+        {
+          "id": 11,
+          "role": "Manager, Supplier Development",
+          "sub_function": "Supplier Quality",
+          "seniority": "Manager",
+          "rationale": "Runs improvement programs with underperforming suppliers. Decides on intervention strategies and resource allocation."
+        },
+        {
+          "id": 12,
+          "role": "Senior Manager, Inbound Logistics",
+          "sub_function": "Logistics",
+          "seniority": "Manager",
+          "rationale": "Manages milk runs, consolidation centers, and inbound carrier network. Owns inbound freight cost and on-time delivery to plants."
+        },
+        {
+          "id": 13,
+          "role": "Manager, Outbound Logistics & Distribution",
+          "sub_function": "Logistics",
+          "seniority": "Manager",
+          "rationale": "Manages finished vehicle and parts distribution. Different decision rhythm \u2014 tied to dealer network and customer delivery."
+        },
+        {
+          "id": 14,
+          "role": "Senior Manager, Master Scheduling",
+          "sub_function": "Production Planning",
+          "seniority": "Manager",
+          "rationale": "Translates demand plans into weekly/daily production schedules. Makes high-frequency decisions on sequencing and line balancing."
+        },
+        {
+          "id": 15,
+          "role": "Manager, Materials Planning (MRP)",
+          "sub_function": "Production Planning",
+          "seniority": "Manager",
+          "rationale": "Manages material requirements planning, release schedules to suppliers, and shortage escalations. Critical operational node."
+        },
+        {
+          "id": 16,
+          "role": "Manager, Inventory Control & Warehousing",
+          "sub_function": "Inventory Management",
+          "seniority": "Manager",
+          "rationale": "Owns inventory targets (days on hand), warehouse operations, and cycle count accuracy. Balances cost vs. availability."
+        },
+        {
+          "id": 17,
+          "role": "Senior Manager, S&OP / Demand Planning",
+          "sub_function": "Production Planning / Strategy",
+          "seniority": "Manager",
+          "rationale": "Facilitates the Sales & Operations Planning process \u2014 a critical cross-functional governance meeting. Bridges demand and supply sides."
+        },
+        {
+          "id": 18,
+          "role": "Manager, Supply Chain Risk & Resilience",
+          "sub_function": "Strategy & Analytics",
+          "seniority": "Manager",
+          "rationale": "Monitors supply disruptions, manages risk mitigation playbooks. Increasingly important role post-COVID. Owns risk KPIs and escalation protocols."
+        },
+        {
+          "id": 19,
+          "role": "Senior Analyst, Supply Chain Performance",
+          "sub_function": "Strategy & Analytics",
+          "seniority": "Specialist",
+          "rationale": "Builds and maintains the KPI dashboards and scorecards used in governance meetings. Understands the data layer of decision-making."
+        },
+        {
+          "id": 20,
+          "role": "Plant Supply Chain Manager (Lead Assembly Plant)",
+          "sub_function": "Cross-functional / Plant-level",
+          "seniority": "Manager",
+          "rationale": "Represents the plant-level perspective. Manages local supply chain execution, attends both plant-level and central meetings. Critical for understanding how central decisions land on the ground."
+        }
+      ]
+    }
+  }
+}

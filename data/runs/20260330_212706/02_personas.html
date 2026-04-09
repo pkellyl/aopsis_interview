@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="UTF-8"><title>Persona Profiles</title><style>
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; max-width: 800px; margin: 40px auto; padding: 0 20px; color: #1a1a1a; line-height: 1.6; }
+h1 { border-bottom: 2px solid #2563eb; padding-bottom: 8px; color: #1e3a5f; }
+h2 { color: #2563eb; margin-top: 32px; }
+h3 { color: #374151; }
+.card { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 16px; margin: 12px 0; }
+.label { font-size: 12px; color: #6b7280; text-transform: uppercase; letter-spacing: 0.05em; }
+.tag { display: inline-block; background: #dbeafe; color: #1e40af; padding: 2px 8px; border-radius: 4px; font-size: 12px; margin: 2px; }
+blockquote { border-left: 3px solid #2563eb; margin: 12px 0; padding: 8px 16px; background: #f0f9ff; }
+pre { background: #f1f5f9; padding: 12px; border-radius: 6px; overflow-x: auto; font-size: 13px; }
+table { border-collapse: collapse; width: 100%; } th, td { border: 1px solid #e2e8f0; padding: 8px 12px; text-align: left; } th { background: #f8fafc; }
+.meta { color: #6b7280; font-size: 13px; }
+@media print { body { margin: 20px; } .card { break-inside: avoid; } }
+</style></head>
+<body>
+<h1>Persona Profiles</h1>
+<h2>Design Rationale</h2><div class='card'><p>The 12 personas (note: the brief requested 13 but the constraint requires exactly 12; persona 13 is integrated into persona 1's scope) are designed to map the decision structure of a large automotive OEM supply chain organization along four critical dimensions: (1) Functional coverage — procurement, logistics, planning, manufacturing, finance, engineering, and digital — ensuring no decision domain is blind. (2) Hierarchical depth — from VP level through directors to operational managers, capturing both strategic intent and ground-truth execution gaps. (3) Geographic and structural tension points — corporate (Plano) vs. plant (Georgetown), North America vs. Japan HQ, traditional (TPS-trained) vs. digital-native, and cross-functional interfaces (procurement-manufacturing, supply chain-finance, engineering-operations). (4) Decision velocity and ownership patterns — roles that own decisions, influence them, get consulted, or are bypassed entirely. Together, these personas will reveal: where decision authority is clear vs. contested; which KPIs conflict; what meetings produce real decisions vs. performative updates; where information asymmetries hide problems; and which relationships are formal vs. informal power. The design isolates the seven known organizational tensions cited in the brief and embeds them in persona pairs and networks (e.g., Procurement Director vs. Plant Manager, Commodity Manager vs. Logistics Director, Production Planning vs. Engineering).</p></div>
+<h2>Michael Chen</h2>
+<div class='card'>
+<p><span class='label'>Role</span><br>VP of Supply Chain – North America</p>
+<p><span class='label'>Department</span><br>Supply Chain (Corporate)</p>
+<p><span class='label'>Description</span><br>Toyota lifer who bridges Japan HQ strategy and North American execution; balances cost discipline with post-COVID resilience legacy.</p>
+<p class='label'>Traits</p>
+<span class='tag'>30+ year Toyota career, trained in TPS philosophy</span><span class='tag'>Comfortable with Japan HQ relationship, but increasingly advocates for NA autonomy</span><span class='tag'>Strategic thinker but operationally engaged</span><span class='tag'>Measured, consensus-building communication style</span><span class='tag'>Sensitive to cost pressure from CFO but protective of supply resilience investments</span><span class='tag'>Feels pulled between HQ mandates and plant-level realities</span>
+</div>
+<h2>Sarah Martinez</h2>
+<div class='card'>
+<p><span class='label'>Role</span><br>Director of Procurement – Direct Materials</p>
+<p><span class='label'>Department</span><br>Procurement</p>
+<p><span class='label'>Description</span><br>Hard-charging procurement leader who drives cost discipline but battles constant pressure from manufacturing, engineering, and HQ over supply resilience and late decisions.</p>
+<p class='label'>Traits</p>
+<span class='tag'>12 years at Toyota, came from supplier side (knows supplier economics deeply)</span><span class='tag'>Aggressive cost reducer, analytics-driven, data-first communication style</span><span class='tag'>Manages a team of 8 commodity managers with varying seniority</span><span class='tag'>Feels pressure from finance on cost targets; defensive about post-COVID resilience spend</span><span class='tag'>Owns commodity strategy but frustrated by plant-level overrides and engineering late changes</span><span class='tag'>Relationship with Michael Chen is respectful but sometimes strained over cost vs. resilience trade-offs</span>
+</div>
+<h2>David Okafor</h2>
+<div class='card'>
+<p><span class='label'>Role</span><br>Commodity Manager – Semiconductors &amp; Electronics</p>
+<p><span class='label'>Department</span><br>Procurement</p>
+<p><span class='label'>Description</span><br>Post-shortage semiconductor commodity manager navigating tension between resilience and cost, with technical expertise but limited organizational power.</p>
+<p class='label'>Traits</p>
+<span class='tag'>8 years at Toyota, came through college hire program</span><span class='tag'>Younger, digital-native, comfortable with data and modeling tools</span><span class='tag'>High technical knowledge of semiconductor supply chain</span><span class='tag'>Post-shortage legacy: carries weight of dual-sourcing resilience decisions; now under pressure to prove ROI</span><span class='tag'>Feels caught between Sarah's cost targets and Michael's resilience commitment</span><span class='tag'>Direct relationships with key semiconductor suppliers; understands geopolitical sourcing risks</span><span class='tag'>Somewhat defensive about past decisions (dual sourcing) now questioned by finance</span>
+</div>
+<h2>Jennifer Holt</h2>
+<div class='card'>
+<p><span class='label'>Role</span><br>Director of Supplier Development</p>
+<p><span class='label'>Department</span><br>Procurement / Supplier Quality</p>
+<p><span class='label'>Description</span><br>TPS-grounded supplier development leader who bridges procurement and manufacturing; escalates supplier risk but battles bureaucracy to implement changes.</p>
+<p class='label'>Traits</p>
+<span class='tag'>18 years at Toyota, started in manufacturing quality</span><span class='tag'>TPS expert, believes in supplier partnership and continuous improvement</span><span class='tag'>Travels constantly between Plano and plants</span><span class='tag'>Comfortable with confrontation when it comes to supplier performance; less comfortable with politics</span><span class='tag'>Bridge-builder but frustrated by corporate-plant disconnects</span><span class='tag'>Has authority to escalate suppliers to watch lists, trigger dual-sourcing reviews, or place on probation</span><span class='tag'>Relationship with both plant leadership and Sarah Martinez is respectful but sometimes strained</span>
+</div>
+<h2>Marcus Thompson</h2>
+<div class='card'>
+<p><span class='label'>Role</span><br>Plant Supply Chain Manager – Georgetown, KY</p>
+<p><span class='label'>Department</span><br>Plant Operations / Supply Chain</p>
+<p><span class='label'>Description</span><br>Veteran plant supply chain manager who prioritizes operational stability over corporate cost targets; represents the plant-versus-corporate tension.</p>
+<p class='label'>Traits</p>
+<span class='tag'>15 years at Toyota, 10+ at Georgetown plant (largest NA assembly plant)</span><span class='tag'>Deep relationships with local supplier base and plant floor leadership</span><span class='tag'>Operationally focused; trusts his instincts and relationships over corporate processes</span><span class='tag'>Frustrated by corporate procurement decisions made without plant input (supplier location, lead times)</span><span class='tag'>Protective of plant autonomy; sometimes bypasses corporate supplier agreements for local sourcing</span><span class='tag'>High respect for manufacturing leadership at the plant; less respect for Plano-based supply chain staff who 'don't understand plant realities'</span><span class='tag'>Relationship with Michael Chen is respectful but feels distant; relationship with Jennifer Holt is stronger because she visits the plant</span>
+</div>
+<h2>Patricia Lau</h2>
+<div class='card'>
+<p><span class='label'>Role</span><br>Director of Logistics – Inbound</p>
+<p><span class='label'>Department</span><br>Logistics</p>
+<p><span class='label'>Description</span><br>Logistics leader whose freight cost and delivery KPIs are impacted by procurement sourcing location decisions; battles to optimize networks under constraints she didn't create.</p>
+<p class='label'>Traits</p>
+<span class='tag'>14 years at Toyota, came from 3PL background (understands carrier and network economics)</span><span class='tag'>Analytical, cost-focused, uses transportation optimization tools extensively</span><span class='tag'>Frustrated by procurement decisions that increase transportation complexity (e.g., offshore sourcing, diversified supplier locations)</span><span class='tag'>Manages a team of 6 logistics planners and works closely with external logistics service providers</span><span class='tag'>Relationship with Sarah Martinez is somewhat strained over sourcing location decisions</span><span class='tag'>High respect for Marcus Thompson at Georgetown; tries to support his operational needs while managing network efficiency</span><span class='tag'>Feels that procurement doesn't fully understand the downstream cost and complexity of their sourcing decisions</span>
+</div>
+<h2>Robert Park</h2>
+<div class='card'>
+<p><span class='label'>Role</span><br>S&amp;OP Process Lead</p>
+<p><span class='label'>Department</span><br>Supply Chain Planning</p>
+<p><span class='label'>Description</span><br>S&amp;OP process lead navigating the tension between commercial demand forecasts and supply chain planning; owns the process but not the decisions.</p>
+<p class='label'>Traits</p>
+<span class='tag'>10 years at Toyota, promoted into S&amp;OP coordination role 3 years ago</span><span class='tag'>Process-oriented, values structure and transparency</span><span class='tag'>Frustrated by the tension between commercial forecasts and supply chain planning</span><span class='tag'>Knows that demand forecasts from commercial/sales are not trusted by planners</span><span class='tag'>Manages the monthly S&amp;OP cycle but aware that parallel 'shadow forecasting' happens informally</span><span class='tag'>Conflict-averse; tries to surface tensions but doesn't drive resolution</span><span class='tag'>Technical skills in planning systems but feels politically outmatched when functions dispute forecast accuracy</span>
+</div>
+<h2>Lisa Morrison</h2>
+<div class='card'>
+<p><span class='label'>Role</span><br>Director of Production Planning</p>
+<p><span class='label'>Department</span><br>Supply Chain Planning / Manufacturing Interface</p>
+<p><span class='label'>Description</span><br>Production planning director who translates demand into plant schedules while balancing supply constraints, engineering changes, and plant autonomy.</p>
+<p class='label'>Traits</p>
+<span class='tag'>16 years at Toyota, started in manufacturing, moved to planning 8 years ago</span><span class='tag'>Hybrid mindset — understands manufacturing constraints deeply but also supply chain economics</span><span class='tag'>Manages production plans across all NA plants; sits in middle between supply chain strategy and plant operations</span><span class='tag'>Frustrated by late engineering changes that disrupt production schedules</span><span class='tag'>Respectful of plant autonomy but tries to enforce enterprise discipline on scheduling</span><span class='tag'>Strong relationship with Jennifer Holt (supplier development) and Marcus Thompson (plant manager); more strained with Sarah Martinez (procurement)</span><span class='tag'>Direct report to Michael Chen; reports to Michael on supply-side constraints but also to VP Manufacturing on demand-side realities</span>
+</div>
+<h2>James Mueller</h2>
+<div class='card'>
+<p><span class='label'>Role</span><br>VP of Manufacturing – North America</p>
+<p><span class='label'>Department</span><br>Manufacturing</p>
+<p><span class='label'>Description</span><br>Manufacturing VP whose operational priorities (uptime, throughput) can conflict with supply chain priorities (cost, inventory); powerful informal influence on enterprise decisions.</p>
+<p class='label'>Traits</p>
+<span class='tag'>25+ year Toyota veteran, operational excellence mindset</span><span class='tag'>Focuses on plant uptime, throughput, safety, labor efficiency</span><span class='tag'>Respectful of supply chain but sometimes frustrated by supply chain priorities (cost, inventory optimization) that don't align with operational reality</span><span class='tag'>Strong relationships with individual plant managers; protective of plant autonomy</span><span class='tag'>Powerful informal influence on Michael Chen (they speak the same TPS language)</span><span class='tag'>Skeptical of 'corporate' initiatives that he sees as disconnected from shop floor reality</span><span class='tag'>Tends to solve problems locally rather than escalate; this sometimes creates parallel decision-making</span>
+</div>
+<h2>Rajesh Patel</h2>
+<div class='card'>
+<p><span class='label'>Role</span><br>Director of Supply Chain Finance</p>
+<p><span class='label'>Department</span><br>Finance</p>
+<p><span class='label'>Description</span><br>Finance leader who applies financial discipline to supply chain investments; questions post-COVID resilience spending, creating friction with procurement and strategy.</p>
+<p class='label'>Traits</p>
+<span class='tag'>12 years at Toyota, came from corporate finance (FP&amp;A background)</span><span class='tag'>Numbers-first thinking; understands working capital, cash conversion cycle, cost accounting</span><span class='tag'>Drives the post-COVID review of resilience investments — questions dual-sourcing cost, safety stock carry cost</span><span class='tag'>Relationship with Sarah Martinez is transactional but sometimes tense (Sarah is defensive about resilience spend)</span><span class='tag'>Relationship with Michael Chen is more collegial (Michael appreciates finance's rigor but sometimes pushes back on cost-first framing)</span><span class='tag'>Somewhat disconnected from plant-level operations; sees supply chain through the lens of working capital and cost</span><span class='tag'>Data-driven; relies on models and cost accounting, less connected to supplier relationships or operational realities</span>
+</div>
+<h2>Amara Okonkwo</h2>
+<div class='card'>
+<p><span class='label'>Role</span><br>Senior Manager, Supply Chain Digital &amp; Analytics</p>
+<p><span class='label'>Department</span><br>Supply Chain / Information Technology</p>
+<p><span class='label'>Description</span><br>Digital-native supply chain data scientist advocating for algorithmic decision-making; represents generational divide with traditional TPS-trained leaders.</p>
+<p class='label'>Traits</p>
+<span class='tag'>8 years at Toyota, came from tech background (analytics startup)</span><span class='tag'>Digital-native, data scientist thinking, comfortable with machine learning and predictive models</span><span class='tag'>Frustrated by resistance to algorithmic recommendations from more traditional supply chain leaders</span><span class='tag'>Younger than most of her peers; sees herself as a modernizer bringing data discipline to a people-driven function</span><span class='tag'>Leads supply chain dashboard/analytics initiatives, demand sensing pilots, supplier risk prediction models</span><span class='tag'>Relationship with Michael Chen is respectful but sometimes feels patronizing ('I appreciate what you're doing, but experience still matters')</span><span class='tag'>Tension with Jennifer Holt and other TPS-trained leaders who value intuition and relationship over models</span><span class='tag'>Excited by the work but sometimes frustrated by organizational resistance to change</span>
+</div>
+<h2>Dr. Gregory Chen</h2>
+<div class='card'>
+<p><span class='label'>Role</span><br>Director of Engineering – Vehicle Programs</p>
+<p><span class='label'>Department</span><br>Product Engineering</p>
+<p><span class='label'>Description</span><br>Engineering director with significant autonomy over vehicle design decisions; disconnected from supply chain impact of late design and specification changes.</p>
+<p class='label'>Traits</p>
+<span class='tag'>16 years at Toyota, Engineering PhD background</span><span class='tag'>Focused on vehicle performance, safety, and cost-engineering optimization</span><span class='tag'>Operates with significant autonomy; engineering decisions are nominally his to make</span><span class='tag'>Somewhat disconnected from supply chain impact of engineering decisions (late changes, spec changes)</span><span class='tag'>Respectful of supply chain but doesn't fully appreciate the cascading impact of late design decisions</span><span class='tag'>Relationship with Lisa Morrison (production planning) is professional but sometimes tense (Lisa complains about late changes)</span><span class='tag'>Late engineering changes are driven by his team's pursuit of technical optimization or responses to test results/market requirements</span>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,792 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="UTF-8"><title>Toyota Motor North America – Supply Chain & Procurement Division: Organizational Decision-Flow Diagnostic Report</title><style>
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; max-width: 800px; margin: 40px auto; padding: 0 20px; color: #1a1a1a; line-height: 1.6; }
+h1 { border-bottom: 2px solid #2563eb; padding-bottom: 8px; color: #1e3a5f; }
+h2 { color: #2563eb; margin-top: 32px; }
+h3 { color: #374151; }
+.card { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 16px; margin: 12px 0; }
+.label { font-size: 12px; color: #6b7280; text-transform: uppercase; letter-spacing: 0.05em; }
+.tag { display: inline-block; background: #dbeafe; color: #1e40af; padding: 2px 8px; border-radius: 4px; font-size: 12px; margin: 2px; }
+blockquote { border-left: 3px solid #2563eb; margin: 12px 0; padding: 8px 16px; background: #f0f9ff; }
+pre { background: #f1f5f9; padding: 12px; border-radius: 6px; overflow-x: auto; font-size: 13px; }
+table { border-collapse: collapse; width: 100%; } th, td { border: 1px solid #e2e8f0; padding: 8px 12px; text-align: left; } th { background: #f8fafc; }
+.meta { color: #6b7280; font-size: 13px; }
+@media print { body { margin: 20px; } .card { break-inside: avoid; } }
+</style></head>
+<body>
+<h1>Toyota Motor North America – Supply Chain & Procurement Division: Organizational Decision-Flow Diagnostic Report</h1>
+<h2>Executive Summary</h2><div class='card' style='background:#eff6ff;border-color:#bfdbfe'><p>The most critical fault line in Toyota North America's supply chain organization is the structural misalignment between cost-reduction KPIs (owned by Finance and Procurement) and supply resilience investments (defended by Supply Chain leadership), which distorts decisions on semiconductor dual-sourcing, safety stock levels, and supplier development in ways that no single forum is currently equipped to resolve. A secondary but equally pervasive fault line runs between corporate Plano and plant-level operations, most sharply visible at Georgetown KY, where the Plant Supply Chain Manager (Marcus Thompson) routinely exercises de facto sourcing authority that bypasses formal procurement governance—a pattern tacitly endorsed by VP of Manufacturing James Mueller but never formalized. The S&amp;OP process, nominally the organization's demand-supply balancing forum, is functionally compromised by a documented shadow forecasting practice among production planners who systematically distrust commercial inputs—a problem the S&amp;OP Process Lead (Robert Park) has acknowledged but declined to formally escalate. Decision ownership is ambiguous or contested across at least seven high-stakes domains including semiconductor dual-sourcing rationalization, engineering change gate enforcement, supplier risk governance, and the logistics inclusion protocol for sourcing decisions, all of which lack a single named owner with both authority and accountability. The highest-priority diagnostic follow-up should focus on the governance gap between Michael Chen (VP Supply Chain) and the COO layer above him, where multiple unresolved cross-functional decisions—engineering change gates, resilience premium frameworks, the exception sourcing protocol—are stalled awaiting executive sponsorship that has not been formally requested.</p></div>
+<h2>Section 1: Organizational Decision Graph</h2>
+<h2>Node Table</h2>
+<p>| Node ID | Name | Title | Function | Location | Degree |</p>
+<p>|---------|------|-------|----------|----------|--------|</p>
+<p>| N01 | Michael Chen | VP of Supply Chain – North America | Supply Chain (Corporate) | Plano, TX | 14 |</p>
+<p>| N02 | Sarah Martinez | Director of Procurement – Direct Materials | Procurement | Plano, TX | 12 |</p>
+<p>| N03 | David Okafor | Commodity Manager – Semiconductors &amp; Electronics | Procurement | Plano, TX | 8 |</p>
+<p>| N04 | Jennifer Holt | Director of Supplier Development | Procurement / Supplier Quality | Plano, TX | 10 |</p>
+<p>| N05 | Marcus Thompson | Plant Supply Chain Manager – Georgetown, KY | Plant Operations / Supply Chain | Georgetown, KY | 7 |</p>
+<p>| N06 | Patricia Lau | Director of Logistics – Inbound | Logistics | Plano, TX | 9 |</p>
+<p>| N07 | Robert Park | S&amp;OP Process Lead | Supply Chain Planning | Plano, TX | 9 |</p>
+<p>| N08 | Lisa Morrison | Director of Production Planning | Manufacturing / Supply Chain Planning | Plano, TX | 10 |</p>
+<p>| N09 | James Mueller | VP of Manufacturing – North America | Manufacturing | Plano, TX | 9 |</p>
+<p>| N10 | Rajesh Patel | Director of Supply Chain Finance | Finance | Plano, TX | 8 |</p>
+<p>| N11 | Amara Okonkwo | Senior Manager, Supply Chain Digital &amp; Analytics | Supply Chain / IT | Plano, TX | 7 |</p>
+<p>| N12 | Dr. Gregory Chen | Director of Engineering – Vehicle Programs | Product Engineering | Plano, TX / Ann Arbor, MI | 7 |</p>
+<h2>Edge Table</h2>
+<p>| From Node | To Node | Edge Type | Label | Direction |</p>
+<p>|-----------|---------|-----------|-------|-----------|</p>
+<p>| N01 | N02 | Reporting Line | VP to Director, Procurement | → |</p>
+<p>| N01 | N04 | Reporting Line | VP to Director, Supplier Dev | → |</p>
+<p>| N01 | N06 | Reporting Line | VP to Director, Logistics | → |</p>
+<p>| N01 | N11 | Reporting Line | VP to Sr. Manager, Analytics | → |</p>
+<p>| N01 | HQ VP SC | Reporting Line (dotted) | Quarterly Business Review + Monthly check-in | → |</p>
+<p>| N02 | N03 | Reporting Line | Director to Commodity Manager | → |</p>
+<p>| N09 | N08 | Peer/COO peer | Executive Operations Council | ↔ |</p>
+<p>| N01 | N09 | Meeting Co-attendance | Executive Operations Council (monthly) | ↔ |</p>
+<p>| N01 | N07 | Meeting Co-attendance | Executive S&amp;OP (monthly, chaired by N01) | ↔ |</p>
+<p>| N02 | N07 | Meeting Co-attendance | Monthly Commodity Review / S&amp;OP demand review | ↔ |</p>
+<p>| N04 | N02 | Meeting Co-attendance | Monthly Commodity Review | ↔ |</p>
+<p>| N06 | N07 | Meeting Co-attendance | S&amp;OP – logistics constraints presentation | ↔ |</p>
+<p>| N08 | N07 | Meeting Co-attendance | S&amp;OP supply review / production plan | ↔ |</p>
+<p>| N11 | N07 | Meeting Co-attendance | S&amp;OP – analytics input embedded in demand review | ↔ |</p>
+<p>| N10 | N01 | Meeting Co-attendance | Operations Review / dual-sourcing rationalization | ↔ |</p>
+<p>| N12 | N08 | Meeting Co-attendance | Design-for-Manufacturability Sessions (quarterly) | ↔ |</p>
+<p>| N05 | N07 | Meeting Co-attendance | Monthly S&amp;OP call (remote participant) | ↔ |</p>
+<p>| N08 | N06 | Meeting Co-attendance | Biweekly Production-Logistics touchpoint | ↔ |</p>
+<p>| N01 | N09 | Decision Interdependency | Emergency sourcing exception (Georgetown) | ↔ |</p>
+<p>| N02 | N06 | Decision Interdependency | Supplier location / total landed cost | ↔ |</p>
+<p>| N03 | N06 | Decision Interdependency | Semiconductor dual-source logistics impact | ↔ |</p>
+<p>| N04 | N02 | Decision Interdependency | Watch-list escalation → sourcing action | → |</p>
+<p>| N08 | N12 | Decision Interdependency | Engineering change notice → production plan variance | ← |</p>
+<p>| N10 | N02 | KPI Conflict | Procurement cost realization 90% vs. dual-source premium | ↔ |</p>
+<p>| N10 | N01 | KPI Conflict | Inventory turns / working capital vs. resilience safety stock | ↔ |</p>
+<p>| N06 | N02 | KPI Conflict | Freight cost % vs. PPV / supplier consolidation savings | ↔ |</p>
+<p>| N09 | N01 | KPI Conflict | OEE / throughput vs. on-time delivery cost targets | ↔ |</p>
+<p>| N11 | N07 | KPI Conflict | Forecast MAPE improvement vs. shadow forecast adoption | ↔ |</p>
+<p>| N05 | N01 | KPI Conflict | Plant safety stock (Georgetown) vs. corporate inventory turns | ↔ |</p>
+<p><strong>N01 (Michael Chen)</strong> is the highest-degree node with 14 edges, serving as the structural hub connecting HQ, corporate procurement, logistics, planning, manufacturing, finance, and analytics. <strong>N02 (Sarah Martinez)</strong> and <strong>N08 (Lisa Morrison)</strong> are the next highest-degree nodes at 12 and 10 respectively, reflecting their cross-functional coordination roles. <strong>N12 (Dr. Gregory Chen)</strong> and <strong>N05 (Marcus Thompson)</strong> are the most structurally isolated nodes—Engineering has no direct meeting co-attendance edge with Finance or Logistics, and Georgetown has no direct edge to the Supplier Development or Analytics functions, representing meaningful visibility gaps.</p>
+<h2>Section 2: Decision Inventory</h2>
+<h2>Decision Inventory Table</h2>
+<p>| Decision Name | Primary Owner | Co-Owners / Influencers | Decision Type | Frequency | Meeting Venue | KPIs Affected | Ownership Status |</p>
+<p>|---|---|---|---|---|---|---|---|</p>
+<p>| Enterprise supplier selection (direct materials) | Sarah Martinez, Dir. Procurement | Michael Chen (approval above threshold); Jennifer Holt (risk input); Patricia Lau (logistics input) | Strategic | Ad hoc / program cycle | Strategic Sourcing Review | PPV, Supply Diversification Ratio, Freight Cost % | Clear |</p>
+<p>| ⚠ Semiconductor dual-sourcing rationalization | Contested: Michael Chen vs. Rajesh Patel | Sarah Martinez; David Okafor; HQ VP SC (informal veto) | Strategic | Annual (2025 plan) | No dedicated forum yet | Resilience Score, Inventory Carrying Cost, Procurement Cost Realization | Contested |</p>
+<p>| ⚠ Safety stock level-setting (strategic components) | Michael Chen (claims ownership) | Rajesh Patel (finance pressure); Marcus Thompson (plant execution) | Operational | Quarterly / Annual plan | S&amp;OP; QBR | Inventory Turns, Cash-to-Cash Cycle, On-time Delivery | Contested |</p>
+<p>| Commodity contract renewal (semiconductors) | David Okafor | Sarah Martinez (strategic direction); Michael Chen (volume forecast input) | Operational | Ad hoc (contract cycle) | Commodity Review | Cost per Unit, Supply Risk Score, Expedited Order Cost | Clear |</p>
+<p>| ⚠ Emergency / exception local sourcing (plant level) | Marcus Thompson (in practice) | James Mueller (tacit endorsement); Michael Chen (formal authority) | Operational | Ad hoc | No formal forum | OEE, On-time Inbound Delivery, Line Stoppages | Contested |</p>
+<p>| Supplier watch-list designation | Jennifer Holt | Sarah Martinez (sourcing action approval); relevant commodity manager | Operational | Monthly trigger | Monthly Commodity Review | Supplier Quality Index, Supplier Financial Health Score | Clear |</p>
+<p>| ⚠ Cross-functional supplier risk governance (standing forum) | Unassigned | Jennifer Holt (proposed); Michael Chen; Sarah Martinez; James Mueller | Strategic | Proposed (not standing) | No forum established | Supplier Financial Health, Line Stoppages, Dual-Source %, Resilience Score | Ambiguous |</p>
+<p>| Production schedule (S&amp;OP output) | Lisa Morrison | Robert Park (process); James Mueller (capacity); Michael Chen (supply constraints) | Operational | Monthly | S&amp;OP Executive Session | Schedule Attainment, Production Plan Variance, OEE | Clear |</p>
+<p>| ⚠ Demand forecast (commercial input) | Sarah Chen (commercial) | Robert Park (process); David Lim (shadow adjustment); Tom Bradley VP Sales (political override) | Operational | Monthly | S&amp;OP Demand Review | Forecast Accuracy, Inventory Variance, Production Plan Variance | Contested |</p>
+<p>| ⚠ Engineering change gate approval | Dr. Gregory Chen (engineering); David Park (program mgr.) | Lisa Morrison (supply chain impact); Sandra Park COO (escalation) | Strategic | Ad hoc | Program Management Reviews | Production Plan Variance, Expedite Cost, Schedule Attainment | Ambiguous |</p>
+<p>| Inbound logistics network design | Patricia Lau | Sarah Martinez (sourcing decisions upstream); Michael Chen (strategic alignment) | Strategic | Annual / ad hoc | S&amp;OP; Carrier QBRs | Freight Cost %, On-time Delivery, Expedite Rate | Clear |</p>
+<p>| ⚠ Total landed cost framework (logistics inclusion in sourcing) | Unassigned | Patricia Lau (proposed); Sarah Martinez (resistant); Michael Chen (nominal owner) | Strategic | Should be systematic | No formal trigger | PPV, Freight Cost %, Procurement Cost Realization | Ambiguous |</p>
+<p>| Analytics recommendation adoption | Function leads (Holt, Morrison, Lau) | Amara Okonkwo (recommends only); Michael Chen (air cover) | Operational | Monthly / ad hoc | Monthly Analytics Review; S&amp;OP | Forecast Accuracy MAPE, Dashboard Adoption Rate | Ambiguous |</p>
+<p>| Network optimization (DC repositioning) | Ambiguous: Michael Chen / Patricia Lau / Rajesh Patel | Amara Okonkwo (model owner) | Strategic | Active workstream | No dedicated forum established | Freight Cost %, Working Capital Days, Transit Cost per Unit | Ambiguous |</p>
+<p>⚠ flags appear on 7 of 14 decisions, concentrated in the domains of resilience investment, engineering-supply chain interface, demand forecasting governance, and plant-level exception authority—the highest-risk decision domains in the organization.</p>
+<h2>Section 3: Meeting Map</h2>
+<h2>Meeting Inventory Table</h2>
+<p>| Meeting Name | Frequency | Confirmed Attendees | Decision Outputs | Classification | Issues Flagged |</p>
+<p>|---|---|---|---|---|---|</p>
+<p>| Executive S&amp;OP | Monthly | Michael Chen (chair), Robert Park, Lisa Morrison, James Mueller, Patricia Lau, Amara Okonkwo (embedded), Sarah Chen (commercial), Tom Bradley (VP Sales) | Production plan approval, inventory position sign-off, escalated forecast disputes | Mixed | Overdense; forecast accountability avoided by chair |</p>
+<p>| S&amp;OP Demand Review | Monthly (pre-Executive S&amp;OP) | Robert Park (facilitator), David Lim (planning mgr.), Sarah Chen (commercial forecast owner) | Demand forecast input to production plan | Informational | Underdense; shadow forecast adjustments happen outside this forum |</p>
+<p>| Monthly Commodity Review | Monthly | Sarah Martinez (chair), David Okafor, Jennifer Holt (when quality/risk issue present), relevant senior buyers | Commodity strategy updates, watch-list flags, sourcing action triggers | Mixed | None flagged; medium-priority risk items lack follow-through |</p>
+<p>| Biweekly Production-Logistics Touchpoint | Biweekly | Lisa Morrison, Patricia Lau (4-5 each side) | Expedite requests, revised delivery windows, supplier constraint escalations to procurement | Decision-Producing | None |</p>
+<p>| Plant Operations Weekly Meeting | Weekly | Marcus Thompson, Plant Manager Georgetown, manufacturing leadership | Supply-production alignment for coming week, supplier escalation flags | Decision-Producing | Plant-only; no Plano participation |</p>
+<p>| Daily Stand-Up (Georgetown) | Daily | Marcus Thompson, inbound logistics supervisors, line-side supervisors | Tactical: expedite calls, safety stock draws, delivery exception handling | Decision-Producing | None |</p>
+<p>| Executive Operations Council | Monthly | Sandra Park (COO, chair), James Mueller, Michael Chen, Lisa Morrison, peers | Resource allocation, cross-functional priority alignment, escalated disputes | Mixed | Underdense on supply chain-engineering tensions; no formal decision log cited |</p>
+<p>| Plant Manager Quarterly Meeting | Quarterly | James Mueller (chair), all NA plant managers including Georgetown | Operational performance across plants, enterprise standards, best practice sharing | Informational | Underdense on supply chain exception protocol |</p>
+<p>| Monthly Analytics Review | Monthly | Amara Okonkwo (chair), supply chain function leads (variable attendance) | Analytics KPI updates, model performance — awareness only | Performative | Underdense; no decisions produced |</p>
+<p>| Carrier Quarterly Business Reviews | Quarterly | Patricia Lau (owner), carrier partners | Carrier scorecards, contract adjustments, performance improvement plans | Decision-Producing | None |</p>
+<p>| Program Management Reviews | Monthly | Dr. Gregory Chen, program managers (incl. David Park), CPO | Gate approvals/holds, late change log review, schedule attainment | Decision-Producing | Engineering-supply chain notification gap not addressed |</p>
+<p>| Design-for-Manufacturability Sessions | Quarterly | Dr. Gregory Chen, Rachel Huang (procurement rep), manufacturing rep | Design simplification, tooling decisions — quality variable | Mixed | Underdense on supply chain strategic participation; attendance inconsistent |</p>
+<p>| Supply Resilience Working Group | Defunct (was biweekly 2021-22) | Michael Chen (chair), David Okafor, logistics, manufacturing, finance (observer) | Supplier risk profiles, scenario modeling — now inactive | Defunct | Was decision-producing; lost momentum post-shortage normalization |</p>
+<p>The <strong>Executive S&amp;OP</strong> and <strong>Monthly Commodity Review</strong> carry the highest decision-producing density but are both flagged for structural issues: the Executive S&amp;OP is overdense with competing agenda items that crowd out accountability conversations on forecast accuracy, while the Commodity Review lacks a formal mechanism to escalate medium-priority supplier risks into sourcing actions. The <strong>Monthly Analytics Review</strong> and <strong>Plant Manager Quarterly Meeting</strong> are the clearest examples of performative or underdense forums—both run on regular cadence but produce no documented decisions and do not connect to the formal decision flow in any traceable way.</p>
+<h2>Section 4: KPI Conflict Analysis</h2>
+<h2>KPI Conflict Pairs</h2>
+<p>| KPI A (Owner, Metric) | KPI B (Owner, Metric) | Nature of Conflict | Decisions Distorted | Severity |</p>
+<p>|---|---|---|---|---|</p>
+<p>| Rajesh Patel: Inventory Carrying Cost &lt;18% of procurement spend | Michael Chen: Supply Chain Resilience Score (dual-source %, safety stock coverage) | Reducing safety stock and consolidating to single-source improves working capital but degrades resilience; optimizing resilience inflates carrying cost | Semiconductor dual-source rationalization; safety stock level-setting; 2025 operating plan | High |</p>
+<p>| Sarah Martinez: PPV reduction 3% YoY | Patricia Lau: Freight Cost &lt;5% of procurement spend | Procurement's unit cost optimization (supplier consolidation, offshore sourcing) increases freight complexity and expedite premiums, degrading Lau's metrics without appearing in Martinez's scorecard | Supplier location decisions; logistics inclusion in sourcing; semiconductor dual-source | High |</p>
+<p>| Rajesh Patel: Procurement Cost Realization 90% | David Okafor: Supply Risk Score (directional, composite) | Dual-sourcing premium compresses realized savings; risk score justification carries no hard dollar target and loses in budget conversations against a numeric realization shortfall | Dual-source contract flexibility; volume exclusivity trade-offs | High |</p>
+<p>| James Mueller: OEE ≥95% / Zero Line Stoppages | Michael Chen: On-time Delivery to Plants ≥98% / Total Landed Cost –2% | Mueller's OEE mandate creates pressure for exception local sourcing that violates enterprise supplier agreements, undermining Chen's cost and compliance targets | Emergency exception sourcing (Georgetown); supplier agreement compliance | Medium |</p>
+<p>| Robert Park: Forecast Accuracy ±10% at model level | Tom Bradley (Sales VP): No formal forecast accuracy KPI on commercial side | Supply chain carries accountability for a metric substantially driven by commercial inputs that commercial leadership is not accountable for | Demand review credibility; shadow forecasting; production plan variance | High |</p>
+<p>| Lisa Morrison: Production Plan Variance &lt;3% | Dr. Gregory Chen: Program Schedule Attainment 90% (gate-based) | Engineering's gate attainment metric does not penalize late changes that occur <em>after</em> design freeze; changes that slip post-freeze create plan variance for Morrison but register as on-time for Chen's scorecard | Engineering change gate enforcement; production plan variance | High |</p>
+<p>| Amara Okonkwo: Forecast MAPE improvement –15pp vs. commercial forecast | Robert Park: S&amp;OP Process Compliance 95% | Okonkwo's model outperforms the commercial forecast (her KPI) but planners informally use shadow adjustments rather than formally adopting her model output, creating a compliance gap Robert cannot surface without exposing the shadow forecasting practice | Demand sensing adoption; S&amp;OP process integrity | Medium |</p>
+<p><strong>The most systemic KPI conflict pattern</strong> is the structural separation of cost-reduction accountability from resilience-investment accountability across the procurement-finance axis. Sarah Martinez's 3% PPV target and Rajesh Patel's 90% cost realization target both create direct pressure to consolidate suppliers and reduce dual-sourcing premiums, while Michael Chen's resilience score and David Okafor's supply risk composite carry no equivalent financial weight in budget or performance review processes. This asymmetry—hard cost KPIs on one side, soft directional risk indicators on the other—means that in any resource or governance conversation, cost arguments win by default. The same asymmetry appears in the manufacturing-engineering interface: OEE and production plan variance are hard tracked, but the engineering change contribution to those variances is not captured in any KPI that engineering leadership is accountable for.</p>
+<h2>Section 5: Fault Line Analysis</h2>
+<p><strong>Fault Line 1: Plant Operations vs. Corporate Procurement</strong></p>
+<ul>
+<li><strong>Evidence:</strong> Marcus Thompson (Georgetown): <em>"What I own outright... expedited or emergency local sourcing when the schedule is at risk. That last one is technically in a gray zone formally, but operationally I own it because I'm the one who has to keep the plant running."</em> James Mueller tacitly endorsed the Georgetown exception sourcing decision by framing it as a manufacturing standpoint judgment, not a process violation. Sarah Martinez described losing an enterprise fastener agreement enforcement against Princeton plant, resulting in ~$400K annual pricing tier shortfall.</li>
+<li><strong>Decision Domains Affected:</strong> Emergency exception sourcing; enterprise supplier agreement compliance; plant-level safety stock levels; supplier qualification bypass.</li>
+<li><strong>Prevalence:</strong> Surfaced in 6 of 12 interviews (Thompson, Mueller, Chen M., Martinez, Lau, Morrison).</li>
+</ul>
+<p><strong>Fault Line 2: Finance vs. Supply Chain on Resilience Investment</strong></p>
+<ul>
+<li><strong>Evidence:</strong> Rajesh Patel: <em>"The CFO's chief of staff pushed back... if lead times had normalized, the risk justification for the slow drawdown wasn't there."</em> David Okafor noted that his supply risk score <em>"doesn't carry the same weight as a cost number"</em> in budget conversations. Michael Chen described dual-sourcing expansion being <em>"significantly shaped by anticipated HQ reaction"</em> before formal proposal.</li>
+<li><strong>Decision Domains Affected:</strong> Semiconductor dual-sourcing rationalization; safety stock level-setting; 2025 operating plan working capital targets; supplier resilience working group resourcing.</li>
+<li><strong>Prevalence:</strong> Surfaced in 7 of 12 interviews (Chen M., Martinez, Okafor, Patel, Mueller, Lau, Holt).</li>
+</ul>
+<p><strong>Fault Line 3: HQ Japan vs. North America Decision Rights</strong></p>
+<ul>
+<li><strong>Evidence:</strong> Michael Chen described decisions being <em>"significantly shaped by anticipated HQ reaction before they ever became formal proposals"</em> and the dual-sourcing expansion being walked back after a bilateral call with the HQ VP of Supply Chain. Chen acknowledged: <em>"Nobody puts a block in writing if they can avoid it — you have a conversation, the message lands, and the decision adjusts."</em> David Okafor noted the supply resilience working group lost momentum partly because <em>"the narrative shifted"</em> toward cost normalization aligned with HQ priorities.</li>
+<li><strong>Decision Domains Affected:</strong> Dual-sourcing investment scale; strategic safety stock philosophy; supplier qualification thresholds; quarterly business review framing.</li>
+<li><strong>Prevalence:</strong> Surfaced in 4 of 12 interviews (Chen M., Okafor, Martinez, Patel).</li>
+</ul>
+<p><strong>Fault Line 4: Engineering vs. Supply Chain on ECN Lead Time</strong></p>
+<ul>
+<li><strong>Evidence:</strong> Lisa Morrison: <em>"There's no formal gate process to prevent it from happening again. I can flag it, I can escalate to Michael, but I don't have an enforcement mechanism."</em> Dr. Gregory Chen acknowledged the thermal management ECN created <em>"real conflict"</em> with Lisa's team but defended engineering's need for <em>"flexibility to respond to quality or regulatory issues."</em> Jennifer Holt quantified expedited freight costs from ECN-driven retrofits.</li>
+<li><strong>Decision Domains Affected:</strong> Engineering change gate enforcement; production plan variance accountability; supplier lead time commitments; design-for-manufacturability session authority.</li>
+<li><strong>Prevalence:</strong> Surfaced in 5 of 12 interviews (Morrison, Chen G., Holt, Mueller, Patel).</li>
+</ul>
+<p><strong>Fault Line 5: TPS-Trained Cohort vs. Digital/Analytics Cohort</strong></p>
+<ul>
+<li><strong>Evidence:</strong> Amara Okonkwo described planners rejecting her demand sensing model with the phrase <em>"the model doesn't know what we know about those customer conversations."</em> Robert Park acknowledged shadow forecasting by experienced senior planners as <em>"people with institutional knowledge applying what they genuinely believe is better judgment."</em> Okonkwo noted Michael Chen <em>"engages most readily when I bring him a concrete operational problem"</em> rather than abstract model recommendations.</li>
+<li><strong>Decision Domains Affected:</strong> Demand forecast adoption; analytics recommendation implementation; S&amp;OP agenda structure; supplier risk model utilization.</li>
+<li><strong>Prevalence:</strong> Surfaced in 4 of 12 interviews (Okonkwo, Park R., Morrison, Chen M.).</li>
+</ul>
+<p><strong>Fault Line 6: Procurement vs. Logistics on Total Landed Cost</strong></p>
+<ul>
+<li><strong>Evidence:</strong> Patricia Lau: <em>"Procurement's metrics are built around unit cost and savings against benchmark. Transportation cost doesn't show up in their scorecard in a way that creates urgency to involve me earlier."</em> Lau was <em>"brought in after the sourcing decision was essentially made"</em> on semiconductor dual-sourcing. The cross-functional sourcing review process is <em>"inconsistently applied"</em> when procurement is moving quickly.</li>
+<li><strong>Decision Domains Affected:</strong> Logistics inclusion in sourcing decisions; semiconductor dual-source network cost; total landed cost framework ownership.</li>
+<li><strong>Prevalence:</strong> Surfaced in 5 of 12 interviews (Lau, Martinez, Okafor, Patel, Chen M.).</li>
+</ul>
+<h2>Section 6: Opportunity Zones</h2>
+<p>1. <strong>S&amp;OP Forecast Accountability Gap</strong></p>
+<p>The Executive S&amp;OP meeting has no formal mechanism to assign ownership of forecast accuracy corrections: a systematic commercial over-forecast has been documented for at least three consecutive months on specific model lines, the root cause has been identified in meeting post-mortems, yet no action owner has been captured in the decision log.</p>
+<p><em>Diagnostic question: What would need to change in the S&amp;OP governance structure—agenda design, decision documentation, or attendee accountability—for the forecast accuracy gap to produce a named corrective action rather than a bilaterally managed side conversation?</em></p>
+<p>2. <strong>Shadow Forecast Legitimacy Question</strong></p>
+<p>Senior planners are systematically adjusting commercial forecasts downward before using them in production decisions, and the S&amp;OP Process Lead has knowingly refrained from formally surfacing this practice for approximately 18 months.</p>
+<p><em>Diagnostic question: Is the shadow forecast a symptom of a broken commercial forecasting process that should be formalized and governed, or is it an informal quality control mechanism that the organization depends on but cannot officially sanction?</em></p>
+<p>3. <strong>Resilience Investment Framework Absence</strong></p>
+<p>The 2025 operating plan requires a resolved position on semiconductor dual-sourcing premiums by late October, but the analytical framework to make that decision is not yet resourced or in progress, and the cross-functional team needed to build it (Supply Chain risk + Procurement + Finance) has not formally mobilized.</p>
+<p><em>Diagnostic question: Is the absence of a shared risk-adjusted framework for evaluating resilience investments a resource problem, a governance problem, or a reflection of genuine disagreement about whether such a framework can produce a number that all parties will accept?</em></p>
+<p>4. <strong>Engineering Change Gate Authority Vacuum</strong></p>
+<p>A formal engineering change gate requiring supply chain approval has been discussed between Lisa Morrison and Dr. Gregory Chen for over a year, has COO-level visibility in operational reviews, but has not been formally proposed as a structured governance change with cost data and a named proposal owner.</p>
+<p><em>Diagnostic question: What is the minimum governance structure—gate criteria, approval authority, emergency exception path—that would satisfy both engineering's flexibility needs and supply chain's planning stability requirements, and who has the cross-functional standing to propose it?</em></p>
+<p>5. <strong>Plant Exception Sourcing Protocol</strong></p>
+<p>The Georgetown sourcing exception has established a de facto precedent for plant-level bypass of enterprise supplier agreements, tacitly endorsed by two VPs but not formalized into a tiered exception protocol that other plants could invoke consistently.</p>
+<p><em>Diagnostic question: Does the organization intend to formalize a tiered exception sourcing protocol, and if so, who owns the design of that protocol and what threshold criteria would distinguish a legitimate plant emergency from a preference-driven bypass?</em></p>
+<p>6. <strong>Analytics Structural Positioning</strong></p>
+<p>Amara Okonkwo's demand sensing model demonstrably outperforms the commercial forecast on MAPE, but her analysis is embedded as a supplement within planning's S&amp;OP section rather than presented as an independent input—a structural positioning that subordinates the output before it reaches decision-makers.</p>
+<p><em>Diagnostic question: Does the current meeting structure and reporting relationship for the analytics function match the level of organizational authority needed to drive adoption of recommendations that challenge incumbent judgment-based practices?</em></p>
+<p>7. <strong>Logistics-Procurement Coordination Trigger</strong></p>
+<p>A total landed cost framework that includes logistics input in sourcing decisions above a spend threshold exists in policy but is inconsistently applied; Patricia Lau has raised this repeatedly in S&amp;OP without producing a process commitment, and the incentive structure (procurement KPIs exclude freight cost) does not reinforce compliance.</p>
+<p><em>Diagnostic question: Is the total landed cost framework a process design problem solvable through clearer trigger criteria, or does it require a KPI restructuring on the procurement side before behavioral change is achievable?</em></p>
+<p>8. <strong>Supplier Risk Governance Orphan</strong></p>
+<p>The supply resilience working group formed in 2021 produced substantive risk artifacts (single-point-of-failure maps, Taiwan Strait scenario models) but disbanded as shortage urgency faded; no standing forum now owns proactive supplier risk governance at a cross-functional level.</p>
+<p><em>Diagnostic question: Is there a current organizational owner willing and positioned to sponsor a standing supplier risk governance forum with cross-functional decision rights, and what would be required to distinguish it structurally from the commodity reviews and S&amp;OP meetings that currently absorb but do not resolve these risks?</em></p>
+<h2>Section 7: Individual Interview Profiles (Appendix)</h2>
+<p>---</p>
+<h3>Profile 1: Michael Chen — VP of Supply Chain, North America</h3>
+<p><strong>Reports To:</strong> COO, Toyota Motor North America (Sandra Park implied; direct line); dotted-line to HQ VP of Supply Chain (Japan)</p>
+<p><strong>Direct Reports:</strong> Sarah Martinez (Dir. Procurement), Jennifer Holt (Dir. Supplier Development), Patricia Lau (Dir. Logistics – Inbound), Amara Okonkwo (Sr. Mgr. Analytics)</p>
+<p><strong>KPIs:</strong></p>
+<ul>
+<li>Total landed cost reduction: 2% YoY</li>
+<li>Supply chain resilience score: composite (dual-source %, supplier financial health, geographic diversity); directional vs. 2022 baseline</li>
+<li>On-time delivery to plants: ≥98%</li>
+<li>Inventory turns on strategic safety stock: under active tension with Finance</li>
+</ul>
+<p><strong>Key Meetings:</strong></p>
+<ul>
+<li>Executive S&amp;OP (monthly, chair): approves production plan, escalates forecast disputes</li>
+<li>Executive Operations Council (monthly, participant): cross-functional priority alignment</li>
+<li>Quarterly Business Review with HQ VP SC (quarterly, presenter): 5-KPI package, major sourcing decisions, risk flags</li>
+<li>Monthly HQ bilateral check-in (monthly, presenter): standing update, informal signal detection</li>
+</ul>
+<p><strong>Decisions Owned:</strong></p>
+<ul>
+<li>Strategic: dual-sourcing investment scale (co-owned with HQ, above threshold)</li>
+<li>Strategic: supply chain resilience philosophy and safety stock philosophy</li>
+<li>Operational: Tier 2 supplier financial intervention authorization</li>
+<li>Operational: enterprise exception sourcing endorsement (tacit)</li>
+</ul>
+<p><strong>Key Interfaces:</strong></p>
+<ul>
+<li>HQ VP SC (Japan): structured reporting + informal signal channel</li>
+<li>Rajesh Patel (Finance): contested resilience premium debate</li>
+<li>James Mueller (Manufacturing VP): exception sourcing alignment; tiered protocol discussion</li>
+<li>COO: briefed proactively; formal escalation rarely used</li>
+</ul>
+<p><strong>Pain Points:</strong></p>
+<ul>
+<li><em>"I've had decisions significantly shaped by anticipated HQ reaction before they ever became formal proposals."</em></li>
+<li>Dual-sourcing expansion walked back informally via bilateral HQ call before formal proposal.</li>
+</ul>
+<p><strong>Workarounds:</strong></p>
+<ul>
+<li>Initiates bilateral calls with HQ VP before formal proposals to test reaction and pre-shape decisions.</li>
+<li>Briefs COO proactively on decisions near authority boundary to avoid post-hoc accountability.</li>
+</ul>
+<p><strong>Node-Edge Summary:</strong></p>
+<ul>
+<li>N01 → [Reporting Line] COO (Sandra Park)</li>
+<li>N01 → [Reporting Line dotted] HQ VP Supply Chain (Japan)</li>
+<li>N01 ← [Reporting Line] N02, N04, N06, N11</li>
+<li>N01 ↔ [Meeting: Executive S&amp;OP] N07, N08, N09, N06, N11</li>
+<li>N01 ↔ [Meeting: Executive Operations Council] N09, N08</li>
+<li>N01 ↔ [KPI Conflict: Resilience vs. Working Capital] N10</li>
+<li>N01 ↔ [Decision Interdependency: Exception Sourcing] N09, N05</li>
+<li>N01 ↔ [Decision Interdependency: Dual-Source Rationalization] N02, N03, N10</li>
+</ul>
+<p>---</p>
+<h3>Profile 2: Sarah Martinez — Director of Procurement, Direct Materials</h3>
+<p><strong>Reports To:</strong> Michael Chen (VP Supply Chain)</p>
+<p><strong>Direct Reports:</strong> David Okafor (Commodity Mgr. Semiconductors); additional commodity managers (named generically)</p>
+<p><strong>KPIs:</strong></p>
+<ul>
+<li>PPV: 3% YoY reduction on direct materials (hard target)</li>
+<li>Supplier cost competitiveness: at or below market median quarterly</li>
+<li>Supply diversification ratio: commodity-specific floors (semiconductors ≥2 sources for &gt;$5M spend; steel ≥3 sources per grade)</li>
+<li>Supplier on-time delivery: part of shared scorecard</li>
+<li>Contract compliance rate: directional</li>
+</ul>
+<p><strong>Key Meetings:</strong></p>
+<ul>
+<li>Monthly Commodity Review (chair): watch-list flags, sourcing action triggers, strategy updates</li>
+<li>Strategic procurement planning meetings (periodic, chair): sourcing direction setting</li>
+<li>S&amp;OP (participant): supply-side inputs</li>
+</ul>
+<p><strong>Decisions Owned:</strong></p>
+<ul>
+<li>Strategic: enterprise supplier selection and contract structure (sole authority within threshold)</li>
+<li>Operational: volume split decisions (e.g., 30/70 incumbent/alternate split on steel panels)</li>
+<li>Transactional: supplier escalation approvals from Jennifer Holt's watch-list flags</li>
+</ul>
+<p><strong>Key Interfaces:</strong></p>
+<ul>
+<li>Jennifer Holt: receives risk signals; approves or delays sourcing actions</li>
+<li>Patricia Lau: logistics cost data input (received post-decision, not pre-decision)</li>
+<li>Marcus Thompson / Georgetown: plant acceptance of new suppliers (source of friction)</li>
+<li>Michael Chen: escalation for plant non-compliance; alignment on dual-source philosophy</li>
+</ul>
+<p><strong>Pain Points:</strong></p>
+<ul>
+<li><em>"What [Michael] didn't do was explicitly direct Georgetown to accept the supplier split. He created the conditions."</em> — indirect escalation support limits enforcement.</li>
+<li>Princeton plant non-compliance with fastener enterprise agreement: ~$400K annual pricing tier shortfall unresolved.</li>
+</ul>
+<p><strong>Workarounds:</strong></p>
+<ul>
+<li>Uses Michael Chen's brief attendance in plant meetings to signal organizational priority without him directing outcomes.</li>
+<li>Tracks procurement-owned risk register monthly but acknowledges it is not a corporate governance document.</li>
+</ul>
+<p><strong>Node-Edge Summary:</strong></p>
+<ul>
+<li>N02 → [Reporting Line] N01</li>
+<li>N02 ← [Reporting Line] N03</li>
+<li>N02 ↔ [Meeting: Monthly Commodity Review] N04, N03</li>
+<li>N02 ↔ [Meeting: S&amp;OP] N07</li>
+<li>N02 ↔ [KPI Conflict: PPV vs. Freight Cost] N06</li>
+<li>N02 ↔ [Decision Interdependency: Supplier Selection] N04, N05, N06</li>
+<li>N02 ↔ [KPI Conflict: PPV vs. Dual-Source Premium] N10</li>
+</ul>
+<p>---</p>
+<h3>Profile 3: David Okafor — Commodity Manager, Semiconductors &amp; Electronics</h3>
+<p><strong>Reports To:</strong> Sarah Martinez (Dir. Procurement)</p>
+<p><strong>Direct Reports:</strong> None stated</p>
+<p><strong>KPIs:</strong></p>
+<ul>
+<li>Cost per unit: 2% YoY reduction (hard target, primary friction source)</li>
+<li>Supplier on-time delivery: 98%</li>
+<li>Supply risk score: composite (financial health, geopolitical exposure, capacity utilization) — directional, no hard target</li>
+<li>Expedited order cost: informal "keep low" directive; no hard budget line</li>
+</ul>
+<p><strong>Key Meetings:</strong></p>
+<ul>
+<li>Monthly Commodity Review (participant): surfaces risk score data, defends dual-source strategy</li>
+<li>S&amp;OP (limited participation): volume forecast inputs for contract renewals</li>
+<li>Supply Resilience Working Group (defunct; was biweekly 2021-22, now inactive)</li>
+</ul>
+<p><strong>Decisions Owned:</strong></p>
+<ul>
+<li>Operational: commodity contract renewals (within Sarah's strategic direction)</li>
+<li>Operational: dual-source vs. consolidation recommendation (influences, does not own final call)</li>
+<li>Transactional: supplier negotiation tactics (pricing, volume, contract flexibility language)</li>
+</ul>
+<p><strong>Key Interfaces:</strong></p>
+<ul>
+<li>Sarah Martinez: primary escalation path; strategic direction (filtered pressure from finance)</li>
+<li>Patricia Lau: logistics implications of dual-source decisions (indirect, through Lau's network)</li>
+<li>Michael Chen: volume forecast inputs for contract horizon planning</li>
+<li>Finance: indirect pressure via Sarah; no direct relationship</li>
+</ul>
+<p><strong>Pain Points:</strong></p>
+<ul>
+<li><em>"I'm responding to pressure I'm getting secondhand rather than making my case directly to the person asking the questions."</em></li>
+<li>Supply resilience working group lost momentum: <em>"The narrative shifted... and the organizational urgency dissipated."</em></li>
+</ul>
+<p><strong>Workarounds:</strong></p>
+<ul>
+<li>Maintains internal supplier risk register outside formal procurement system to track dual-fab exposure.</li>
+<li>Negotiated dual-source flexibility language into contract directly (holding half a pricing point) without explicit Sarah sign-off on that trade-off.</li>
+</ul>
+<p><strong>Node-Edge Summary:</strong></p>
+<ul>
+<li>N03 → [Reporting Line] N02</li>
+<li>N03 ↔ [Meeting: Monthly Commodity Review] N02, N04</li>
+<li>N03 ↔ [Decision Interdependency: Semiconductor Dual-Source] N02, N01, N10</li>
+<li>N03 ↔ [KPI Conflict: Cost Reduction vs. Supply Risk Score] N10</li>
+<li>N03 ↔ [Meeting: Supply Resilience WG (defunct)] N01</li>
+<li>N03 ↔ [Decision Interdependency: Logistics impact of dual-source] N06</li>
+</ul>
+<p>---</p>
+<h3>Profile 4: Jennifer Holt — Director of Supplier Development</h3>
+<p><strong>Reports To:</strong> Sarah Martinez (Dir. Procurement) — direct report, no layer between</p>
+<p><strong>Direct Reports:</strong> Engineers (unnamed); at least one named as flagging financial deterioration</p>
+<p><strong>KPIs:</strong></p>
+<ul>
+<li>Supplier Quality Index: &lt;50 PPM defects; on-time delivery &gt;98% (shared with procurement and manufacturing)</li>
+<li>Supplier Financial Health Score: ≥90% of strategic suppliers showing healthy indicators</li>
+<li>Suppliers on Watch List / Probation: target near zero</li>
+<li>Dual-Sourcing Recommendations Acted On: directional; no hard target</li>
+<li>Time-to-Escalation: directional; no hard target</li>
+</ul>
+<p><strong>Key Meetings:</strong></p>
+<ul>
+<li>Monthly Commodity Review (periodic participant, when quality/risk issue present): surfaces watch-list additions</li>
+<li>Ad hoc escalation discussions (when severity warrants): smaller group with Sarah or deputy</li>
+<li>Proposed (not standing): cross-functional supplier risk review — not yet approved</li>
+</ul>
+<p><strong>Decisions Owned:</strong></p>
+<ul>
+<li>Operational: supplier watch-list designation (own, with 90-day reassessment triggers)</li>
+<li>Operational: supplier facility visit and risk assessment</li>
+<li>Influences (not owns): sourcing action initiation, dual-sourcing review trigger</li>
+</ul>
+<p><strong>Key Interfaces:</strong></p>
+<ul>
+<li>Sarah Martinez: risk signal escalation; watch-list approval (creates structural tension as subordinate flagging boss's process gaps)</li>
+<li>Michael Chen (VP Manufacturing): aligned on cross-functional risk governance need; described as more willing to escalate</li>
+<li>James Mueller: plant impact when supplier risk materializes</li>
+<li>Lisa Morrison: expedited freight cost quantification for ECN retrofits</li>
+</ul>
+<p><strong>Pain Points:</strong></p>
+<ul>
+<li><em>"By the time a sourcing decision moves through her process, sometimes weeks have passed and the risk profile has shifted."</em></li>
+<li>Proposing cross-functional risk review to her own manager creates repeated awkwardness.</li>
+</ul>
+<p><strong>Workarounds:</strong></p>
+<ul>
+<li>Conducts supplier facility visits before formal watch-list recommendation to strengthen framing and reduce Sarah's decision friction.</li>
+<li>Pulls in finance team input independently to convert risk signal to dollar exposure before escalation.</li>
+</ul>
+<p><strong>Node-Edge Summary:</strong></p>
+<ul>
+<li>N04 → [Reporting Line] N02</li>
+<li>N04 ↔ [Meeting: Monthly Commodity Review] N02, N03</li>
+<li>N04 ↔ [Decision Interdependency: Watch-list → Sourcing Action] N02</li>
+<li>N04 ↔ [Decision Interdependency: Supplier Risk Governance Proposal] N01, N09</li>
+<li>N04 ↔ [KPI Conflict: Time-to-Escalation vs. PPV target speed] N02</li>
+<li>N04 → [Interface: Expedite cost data] N08</li>
+</ul>
+<p>---</p>
+<h3>Profile 5: Marcus Thompson — Plant Supply Chain Manager, Georgetown KY</h3>
+<p><strong>Reports To:</strong> Plant Manager, Georgetown KY (name withheld; long-tenured; ~12 years at plant)</p>
+<p><strong>Direct Reports:</strong> Inbound logistics supervisors; line-side supervisors</p>
+<p><strong>KPIs:</strong></p>
+<ul>
+<li>On-time inbound delivery: ≥99%, measured daily</li>
+<li>Line stoppages from supplier quality/delivery failures: target zero</li>
+<li>Inventory turns on line-side stock: below Plano's lean model target (carries deliberate excess buffer)</li>
+<li>Freight cost per unit inbound: contributing metric, not primary</li>
+</ul>
+<p><strong>Key Meetings:</strong></p>
+<ul>
+<li>Daily stand-up (daily, lead): delivery exceptions, safety stock draws, tactical expedite calls</li>
+<li>Weekly plant operations meeting (weekly, participant): supply-production alignment for coming week</li>
+<li>Monthly S&amp;OP call (monthly, participant/observer): raises lead-time model concerns "on the record"</li>
+<li>Quarterly business review with Plano (quarterly, participant): safety stock negotiation</li>
+</ul>
+<p><strong>Decisions Owned:</strong></p>
+<ul>
+<li>Operational (formal): inbound logistics, line-side inventory, safety stock within plant, supplier communication</li>
+<li>Operational (contested): emergency exception local sourcing — claims operational ownership; Plano claims process authority</li>
+</ul>
+<p><strong>Key Interfaces:</strong></p>
+<ul>
+<li>Plant Manager: primary reporting and backing in Plano disputes</li>
+<li>Michael Chen / Director of Logistics (Plano): dotted-line accountability; source of constraint and occasional conflict</li>
+<li>Patricia Lau: inbound logistics network; constraint flags</li>
+<li>Supplier local contacts: direct relationship for emergency sourcing</li>
+</ul>
+<p><strong>Pain Points:</strong></p>
+<ul>
+<li><em>"Plano's model is built on a lean inventory assumption that looks good on paper... but Georgetown's reality has variability that the model doesn't fully capture."</em></li>
+<li>S&amp;OP concerns noted but rarely acted on: lead-time model recalibration took multiple cycles.</li>
+</ul>
+<p><strong>Workarounds:</strong></p>
+<ul>
+<li>Maintains informal relationship with local Northern Kentucky fabricator as emergency backup supplier.</li>
+<li>Uses Plant Manager's presence in QBR as organizational backing for safety stock buffer position.</li>
+</ul>
+<p><strong>Node-Edge Summary:</strong></p>
+<ul>
+<li>N05 → [Reporting Line] Plant Manager (Georgetown)</li>
+<li>N05 ↔ [Meeting: Monthly S&amp;OP call] N07, N01</li>
+<li>N05 ↔ [Meeting: Weekly Plant Operations] Plant Manager, Manufacturing Leads</li>
+<li>N05 ↔ [KPI Conflict: Safety Stock vs. Inventory Turns] N01, N10</li>
+<li>N05 ↔ [Decision Interdependency: Exception Sourcing] N09, N01</li>
+<li>N05 ↔ [Interface: Inbound logistics constraint flags] N06</li>
+</ul>
+<p>---</p>
+<h3>Profile 6: Patricia Lau — Director of Logistics, Inbound</h3>
+<p><strong>Reports To:</strong> VP of Supply Chain Operations (name not confirmed)</p>
+<p><strong>Direct Reports:</strong> 6 logistics planners (organized by region and mode; one dedicated Georgetown planner)</p>
+<p><strong>KPIs:</strong></p>
+<ul>
+<li>Freight cost as % of total procurement spend: &lt;5% (currently tracking to target)</li>
+<li>On-time delivery to plants from suppliers: 97% (shared with procurement and suppliers)</li>
+<li>Transportation network cost per unit delivered: composite (consolidation efficiency, expedite premiums, carrying cost)</li>
+<li>Carrier performance score: quarterly; on-time, quality, responsiveness</li>
+<li>Expedite rate: target &lt;2.5%; currently 3.2% (above target)</li>
+</ul>
+<p><strong>Key Meetings:</strong></p>
+<ul>
+<li>S&amp;OP (monthly, presenter): transportation constraints, lead time inputs, expedite risk flags</li>
+<li>Biweekly production-logistics touchpoint with Lisa Morrison (biweekly, co-lead): expedite requests, delivery window revisions</li>
+<li>Carrier quarterly business reviews (quarterly, owner): scorecards, contract adjustments</li>
+<li>Sarah Martinez's strategic procurement planning meetings (occasional participant): sourcing direction awareness</li>
+</ul>
+<p><strong>Decisions Owned:</strong></p>
+<ul>
+<li>Strategic: inbound transportation network design, carrier relationships</li>
+<li>Operational: carrier performance management, expedite authorization within managed range</li>
+<li>Influences (not owns): sourcing decisions that affect freight network — currently excluded pre-decision</li>
+</ul>
+<p><strong>Key Interfaces:</strong></p>
+<ul>
+<li>Sarah Martinez: primary procurement interface; total landed cost tension</li>
+<li>Marcus Thompson: primary plant logistics contact (collaborative, not reporting)</li>
+<li>Lisa Morrison: biweekly touchpoint (strong alignment, complementary incentives)</li>
+<li>David Okafor: logistics implications of semiconductor dual-source (post-decision notification)</li>
+</ul>
+<p><strong>Pain Points:</strong></p>
+<ul>
+<li><em>"My role was implementation, not input"</em> on semiconductor dual-sourcing decision.</li>
+<li><em>"The incentive structure doesn't reinforce the process change"</em> — procurement KPIs exclude freight cost.</li>
+</ul>
+<p><strong>Workarounds:</strong></p>
+<ul>
+<li>Presents expedite cost and network fragmentation data in S&amp;OP to surface procurement coordination failures indirectly rather than as direct organizational critique.</li>
+<li>Built landed cost model showing dual-source freight implications post-decision; used as retrospective evidence to push for future inclusion.</li>
+</ul>
+<p><strong>Node-Edge Summary:</strong></p>
+<ul>
+<li>N06 → [Reporting Line] VP Supply Chain Operations</li>
+<li>N06 ↔ [Meeting: S&amp;OP] N07, N01, N08</li>
+<li>N06 ↔ [Meeting: Biweekly Production-Logistics] N08</li>
+<li>N06 ↔ [KPI Conflict: Freight Cost vs. PPV] N02</li>
+<li>N06 ↔ [Decision Interdependency: Total Landed Cost Framework] N02, N01</li>
+<li>N06 ↔ [Interface: Georgetown logistics] N05</li>
+</ul>
+<p>---</p>
+<h3>Profile 7: Robert Park — S&amp;OP Process Lead</h3>
+<p><strong>Reports To:</strong> Not explicitly named; within supply chain planning organization</p>
+<p><strong>Direct Reports:</strong> None stated; process facilitator role</p>
+<p><strong>KPIs:</strong></p>
+<ul>
+<li>S&amp;OP process compliance: 95% (meetings on cadence, inputs on time, decisions documented)</li>
+<li>Forecast accuracy: ±10% at model level (monthly) — does not fully control inputs</li>
+<li>Inventory variance: planned vs. actual within 5%</li>
+<li>On-time S&amp;OP cycle completion: 15-day cycle target</li>
+</ul>
+<p><strong>Key Meetings:</strong></p>
+<ul>
+<li>S&amp;OP Demand Review (monthly, facilitator): commercial forecast intake, planner adjustments</li>
+<li>Executive S&amp;OP (monthly, facilitator/presenter): production plan approval, escalation</li>
+<li>Owns process design and decision documentation across both</li>
+</ul>
+<p><strong>Decisions Owned:</strong></p>
+<ul>
+<li>Operational: S&amp;OP process structure, meeting cadence, agenda design, decision log, scorecard</li>
+<li>Influences (not owns): forecast number, production plan, balancing calls in executive session</li>
+</ul>
+<p><strong>Key Interfaces:</strong></p>
+<ul>
+<li>David Lim (Planning Manager): shadow forecasting dynamic; informal adjustment awareness</li>
+<li>Sarah Chen (Demand Planning Mgr., commercial): forecast accuracy tension</li>
+<li>Tom Bradley (VP Sales): blocks forecast accountability at executive level</li>
+<li>Michael Chen: S&amp;OP chair; accountable for executive-level decisions Robert surfaces</li>
+<li>Amara Okonkwo: analytics input embedded in Robert's demand review section</li>
+</ul>
+<p><strong>Pain Points:</strong></p>
+<ul>
+<li><em>"What I own is the process structure... What I influence but don't control is essentially everything substantive."</em></li>
+<li>Used <em>"I don't own that"</em> to avoid formally documenting shadow forecasting practice for ~18 months.</li>
+</ul>
+<p><strong>Workarounds:</strong></p>
+<ul>
+<li>Raised forecast accuracy accountability via email to Michael rather than meeting confrontation; result: bilateral side conversation with Tom Bradley that Robert has no visibility into.</li>
+<li>Tolerates shadow forecasting as informal quality control rather than escalating it as a process failure.</li>
+</ul>
+<p><strong>Node-Edge Summary:</strong></p>
+<ul>
+<li>N07 ↔ [Meeting: Executive S&amp;OP] N01, N08, N09, N06, N11</li>
+<li>N07 ↔ [Meeting: S&amp;OP Demand Review] David Lim, Sarah Chen</li>
+<li>N07 ↔ [KPI Conflict: Forecast Accuracy (no commercial accountability)] Tom Bradley</li>
+<li>N07 ↔ [Decision Interdependency: Production Plan] N08</li>
+<li>N07 ↔ [Interface: Shadow Forecast] David Lim (Planning Mgr.)</li>
+<li>N07 ↔ [Interface: Analytics embedding] N11</li>
+</ul>
+<p>---</p>
+<h3>Profile 8: Lisa Morrison — Director of Production Planning</h3>
+<p><strong>Reports To:</strong> COO (Sandra Park) — peer to Michael Chen and James Mueller</p>
+<p><strong>Direct Reports:</strong> Production planning team (size not stated)</p>
+<p><strong>KPIs:</strong></p>
+<ul>
+<li>Production plan variance from S&amp;OP: &lt;3% month over month (currently breached more often than desired)</li>
+<li>Schedule attainment to plants: ≥98%</li>
+<li>Plant capacity utilization: 85–92% band target</li>
+<li>Inventory turns on WIP and finished goods: directional</li>
+</ul>
+<p><strong>Key Meetings:</strong></p>
+<ul>
+<li>Executive S&amp;OP (monthly, supply review presenter): production plan, capacity inputs</li>
+<li>Biweekly production-logistics touchpoint with Patricia Lau (biweekly, co-lead): expedite alignment, supplier constraint flags</li>
+<li>Monthly production planning review (monthly, chair): root cause on plan variance breaches</li>
+<li>Design-for-manufacturability sessions (quarterly, participant): engineering-supply chain interface</li>
+<li>Program Management Reviews (monthly, stakeholder): late ECN visibility</li>
+</ul>
+<p><strong>Decisions Owned:</strong></p>
+<ul>
+<li>Operational: production sequencing and scheduling decisions across plants</li>
+<li>Operational: capacity allocation when demand shifts</li>
+<li>Influences (not owns): engineering change gate — proposed formal gate, no enforcement authority</li>
+</ul>
+<p><strong>Key Interfaces:</strong></p>
+<ul>
+<li>Dr. Gregory Chen (Engineering): ECN disruption, DFM sessions, gate proposal — productive but contested</li>
+<li>Patricia Lau: biweekly touchpoint (strong alignment)</li>
+<li>Sarah Martinez (Procurement): supplier constraint escalations (response time variable)</li>
+<li>James Mueller (Mfg. VP): capacity inputs; OEE-production plan tension</li>
+<li>COO Sandra Park: above both Engineering VP and herself; gate proposal needs COO sponsorship</li>
+</ul>
+<p><strong>Pain Points:</strong></p>
+<ul>
+<li><em>"I can flag it, I can escalate to Michael, but I don't have an enforcement mechanism"</em> on late ECNs.</li>
+<li>Seating bracket ECN retrofit: hundreds of thousands in cost, partial-build workaround required.</li>
+</ul>
+<p><strong>Workarounds:</strong></p>
+<ul>
+<li>Works with Jennifer Holt to quantify logistics cost of ECN-driven expedites to build case for David Kowalski.</li>
+<li>Uses monthly production planning review root cause categorization to build evidence for COO-level ECN gate proposal.</li>
+</ul>
+<p><strong>Node-Edge Summary:</strong></p>
+<ul>
+<li>N08 → [Reporting Line] COO (Sandra Park)</li>
+<li>N08 ↔ [Meeting: Executive S&amp;OP] N01, N07, N09, N06</li>
+<li>N08 ↔ [Meeting: Biweekly Production-Logistics] N06</li>
+<li>N08 ↔ [Decision Interdependency: ECN → Plan Variance] N12</li>
+<li>N08 ↔ [KPI Conflict: Plan Variance &lt;3% vs. Engineering Gate Attainment] N12</li>
+<li>N08 ↔ [Decision Interdependency: Supplier Constraint Escalation] N02</li>
+</ul>
+<p>---</p>
+<h3>Profile 9: James Mueller — VP of Manufacturing, North America</h3>
+<p><strong>Reports To:</strong> COO (Sandra Park)</p>
+<p><strong>Direct Reports:</strong> All NA plant managers including Georgetown Plant Manager</p>
+<p><strong>KPIs:</strong></p>
+<ul>
+<li>OEE: ≥95%</li>
+<li>Throughput vs. plan: 100%</li>
+<li>Safety incident rate: zero harm</li>
+<li>Labor productivity: 1–2% annual improvement</li>
+<li>Manufacturing cost per unit: tracked, lowest explicit priority</li>
+<li>First-pass quality rate: ≥98.5% (shared with QA)</li>
+</ul>
+<p><strong>Key Meetings:</strong></p>
+<ul>
+<li>Executive Operations Council (monthly, participant): cross-functional priority alignment with COO</li>
+<li>Plant Manager quarterly meetings (quarterly, chair): operational performance, standards, escalation review</li>
+<li>One-on-ones with plant managers (variable frequency; crisis plants more frequent)</li>
+<li>S&amp;OP (participant): manufacturing capacity inputs</li>
+</ul>
+<p><strong>Decisions Owned:</strong></p>
+<ul>
+<li>Strategic: manufacturing standards and enterprise policy across NA plants</li>
+<li>Operational: plant-level OEE interventions and exception endorsements</li>
+<li>Co-owns (informal): exception sourcing endorsement at Georgetown — formal authority is Chen's</li>
+</ul>
+<p><strong>Key Interfaces:</strong></p>
+<ul>
+<li>Michael Chen: exception sourcing alignment; tiered protocol discussion (ongoing, informal)</li>
+<li>COO Sandra Park: monthly access; Georgetown protocol not yet escalated</li>
+<li>Marcus Thompson: direct plant authority chain; backed Thompson in Plano dispute</li>
+<li>Jennifer Holt: aligned on cross-functional risk governance need</li>
+<li>Lisa Morrison: capacity inputs for production planning (COO peer)</li>
+</ul>
+<p><strong>Pain Points:</strong></p>
+<ul>
+<li><em>"It's not on fire right now... cross-functional process work moves when there's pain."</em></li>
+<li>Exception sourcing protocol: <em>"That's a process, that's two people with a good relationship making things work. It's functional but it's not scalable."</em></li>
+</ul>
+<p><strong>Workarounds:</strong></p>
+<ul>
+<li>Uses bilateral relationship with Michael Chen to move exception sourcing decisions without formal protocol.</li>
+<li>Relies on Plant Manager's presence in QBRs to reinforce plant position against Plano pressure.</li>
+</ul>
+<p><strong>Node-Edge Summary:</strong></p>
+<ul>
+<li>N09 → [Reporting Line] COO (Sandra Park)</li>
+<li>N09 ← [Reporting Line] Georgetown Plant Manager, all NA plant managers</li>
+<li>N09 ↔ [Meeting: Executive Operations Council] COO, N01, N08</li>
+<li>N09 ↔ [Meeting: Plant Manager Quarterly] all plant managers including N05's manager</li>
+<li>N09 ↔ [KPI Conflict: OEE vs. Enterprise Supplier Compliance] N01, N02</li>
+<li>N09 ↔ [Decision Interdependency: Exception Sourcing] N01, N05</li>
+<li>N09 ↔ [Decision Interdependency: ECN Gate Protocol] N12, N08</li>
+</ul>
+<p>---</p>
+<h3>Profile 10: Rajesh Patel — Director of Supply Chain Finance</h3>
+<p><strong>Reports To:</strong> CFO (direct line)</p>
+<p><strong>Direct Reports:</strong> 3 direct reports (2 senior financial analysts; 1 working capital/cash cycle manager); 4 analysts below; 7 total</p>
+<p><strong>KPIs:</strong></p>
+<ul>
+<li>Inventory carrying cost as % of procurement spend: target &lt;18% (running 22–23%)</li>
+<li>Cash-to-cash cycle (working capital days): target ~50 days near-term (running 58–60 days)</li>
+<li>Expedite cost as % of COGS: target &lt;0.3%</li>
+<li>Procurement cost reduction realization: target 90% of committed savings (running 74–76%)</li>
+<li>Safety stock coverage: directional, context-dependent</li>
+</ul>
+<p><strong>Key Meetings:</strong></p>
+<ul>
+<li>Operations review / finance-supply chain bilateral with Michael Chen (recurring, cadence not specified): resilience premium debate</li>
+<li>CFO staff meetings (internal finance)</li>
+<li>S&amp;OP (stakeholder/reviewer): inventory and working capital visibility</li>
+</ul>
+<p><strong>Decisions Owned:</strong></p>
+<ul>
+<li>Strategic: recommendation on resilience investment rationalization (co-owned with Michael Chen; CFO escalation path if unresolved)</li>
+<li>Operational: safety stock rationalization phased drawdown recommendation</li>
+<li>Influences: procurement cost targets and savings realization tracking</li>
+</ul>
+<p><strong>Key Interfaces:</strong></p>
+<ul>
+<li>Michael Chen: peer debate on dual-source premium vs. working capital</li>
+<li>Sarah Martinez: savings realization tracking; structural gap between committed and realized savings</li>
+<li>CFO / CFO chief of staff: primary reporting line; working capital pressure channel</li>
+<li>David Okafor: needs supply risk input for probability-weighted disruption model (currently unresourced)</li>
+</ul>
+<p><strong>Pain Points:</strong></p>
+<ul>
+<li><em>"The incentive structure doesn't reinforce the process change"</em> — resilience premium has no quantified probability-weighted cost to offset it in budget conversations.</li>
+<li>Analytical work for 2025 semiconductor dual-source decision not yet resourced; October deadline at risk.</li>
+</ul>
+<p><strong>Workarounds:</strong></p>
+<ul>
+<li>Framed safety stock drawdown recommendation as phased to hold line against CFO chief of staff's faster reduction pressure.</li>
+<li>Sent formal email to Michael requesting named resource for risk framework; awaiting response 10 days later.</li>
+</ul>
+<p><strong>Node-Edge Summary:</strong></p>
+<ul>
+<li>N10 → [Reporting Line] CFO</li>
+<li>N10 ↔ [KPI Conflict: Carrying Cost vs. Resilience Score] N01</li>
+<li>N10 ↔ [KPI Conflict: Cost Realization vs. Dual-Source Premium] N02, N03</li>
+<li>N10 ↔ [Decision Interdependency: 2025 Dual-Source Rationalization] N01, N02</li>
+<li>N10 ↔ [Decision Interdependency: Safety Stock Drawdown] N01, N05</li>
+<li>N10 ↔ [Interface: Risk model input needed] N03</li>
+</ul>
+<p>---</p>
+<h3>Profile 11: Amara Okonkwo — Senior Manager, Supply Chain Digital &amp; Analytics</h3>
+<p><strong>Reports To:</strong> Michael Chen (VP Supply Chain)</p>
+<p><strong>Direct Reports:</strong> Not stated; leads analytics team</p>
+<p><strong>KPIs:</strong></p>
+<ul>
+<li>Dashboard/analytics adoption rate: target 80% active usage across supply chain functions (currently ~60%)</li>
+<li>Forecast accuracy improvement: demand sensing model target –15pp MAPE vs. commercial forecast (hitting this metric)</li>
+<li>Supplier risk model validation: precision/recall tracked; directional improvement targets</li>
+<li>Analytics-to-decision conversion rate: directional; no hard target</li>
+</ul>
+<p><strong>Key Meetings:</strong></p>
+<ul>
+<li>Executive S&amp;OP (monthly, embedded in demand review section under David Lim's agenda): demand sensing analysis presentation</li>
+<li>Monthly analytics review (monthly, chair/owner): KPI updates, model performance — awareness only, no decisions</li>
+<li>Standing check-ins with function leads (monthly with planning and procurement; less regular with logistics)</li>
+<li>Network optimization workstream (ad hoc; not yet formally convened with Finance and Logistics)</li>
+</ul>
+<p><strong>Decisions Owned:</strong></p>
+<ul>
+<li>Owns: analytics model design, dashboard architecture, tool development</li>
+<li>Influences (does not own): any functional decision downstream of her recommendations</li>
+</ul>
+<p><strong>Key Interfaces:</strong></p>
+<ul>
+<li>Michael Chen: biweekly 1:1 (rescheduled frequently); air cover for data access disputes</li>
+<li>David Lim (Planning Mgr.): demand review framing; shadow forecast tension</li>
+<li>Jennifer Holt: supplier financial data access (previously blocked, unlocked via Michael)</li>
+<li>Patricia Lau / Robert (Logistics): network optimization workstream (not yet mobilized)</li>
+</ul>
+<p><strong>Pain Points:</strong></p>
+<ul>
+<li><em>"The model doesn't know what we know about those customer conversations"</em> — her demand sensing model rejected in S&amp;OP by planners citing tacit knowledge.</li>
+<li>Analytics embedded in planning's S&amp;OP section rather than presented independently, subordinating analysis before room evaluates it.</li>
+</ul>
+<p><strong>Workarounds:</strong></p>
+<ul>
+<li>Used Michael Chen as data access lever (email to Jennifer) when direct request slow-walked on governance grounds.</li>
+<li>Frames analytics recommendations as "data supplements" to planning's presentation to avoid triggering territorial resistance from David Lim.</li>
+</ul>
+<p><strong>Node-Edge Summary:</strong></p>
+<ul>
+<li>N11 → [Reporting Line] N01</li>
+<li>N11 ↔ [Meeting: Executive S&amp;OP (embedded)] N07, N01</li>
+<li>N11 ↔ [Meeting: Monthly Analytics Review] function leads (variable)</li>
+<li>N11 ↔ [KPI Conflict: MAPE Improvement vs. Shadow Forecast Adoption] N07, David Lim</li>
+<li>N11 ↔ [Decision Interdependency: Demand Sensing Adoption] N07, N08</li>
+<li>N11 ↔ [Decision Interdependency: Network Optimization] N06, N10</li>
+<li>N11 ↔ [Interface: Supplier risk model data] N04</li>
+</ul>
+<p>---</p>
+<h3>Profile 12: Dr. Gregory Chen — Director of Engineering, Vehicle Programs</h3>
+<p><strong>Reports To:</strong> CPO (Chief Product Officer); peers with program managers</p>
+<p><strong>Direct Reports:</strong> Validation leads: Kevin Okafor (powertrain/thermal), Sarah Lindqvist (chassis/safety/electrical — overloaded at 3 programs), James Torrealba (electrical architecture, 8 months tenure)</p>
+<p><strong>KPIs:</strong></p>
+<ul>
+<li>Engineering cost per vehicle: 2–3% reduction vs. prior generation (negotiated with CPO)</li>
+<li>Vehicle quality metrics: warranty cost –5% YoY; below industry average on J.D. Power IQS</li>
+<li>Program schedule attainment: 90% gate attainment (design freeze, prototype, validation sign-off, Job 1)</li>
+<li>Late ECN count: tracked internally by type (safety, regulatory, test failure, cost engineering) — no hard numerical target</li>
+</ul>
+<p><strong>Key Meetings:</strong></p>
+<ul>
+<li>Vehicle program management reviews (monthly, participant/presenter): gate status, late change log, resource allocation</li>
+<li>Engineering design reviews (program-specific milestones, chair): design approval, open action items</li>
+<li>Design-for-manufacturability sessions (quarterly, host): cross-functional design optimization — quality variable</li>
+<li>Post-incident reviews (ad hoc, participant): thermal ECN retrospective led to partial process changes</li>
+</ul>
+<p><strong>Decisions Owned:</strong></p>
+<ul>
+<li>Strategic: component specification decisions (gate-based authority)</li>
+<li>Operational: engineering change notice issuance and classification (safety / regulatory / cost)</li>
+<li>Influences (co-owns with program manager David Park): design freeze gate timing</li>
+</ul>
+<p><strong>Key Interfaces:</strong></p>
+<ul>
+<li>Lisa Morrison: ECN impact on production plan; DFM sessions; engineering change gate proposal (productive, contested)</li>
+<li>David Park (Program Manager): shared gate authority; freeze delay decisions</li>
+<li>Rachel Huang (procurement rep): DFM session attendance (below Lisa's seniority level)</li>
+<li>COO Sandra Park: above both engineering and supply chain; gate proposal needs COO sponsorship</li>
+</ul>
+<p><strong>Pain Points:</strong></p>
+<ul>
+<li><em>"Adding a supply chain approval step slows down our ability to respond to quality or regulatory issues."</em></li>
+<li>Formal gate criteria documentation not yet updated despite intent to change validation requirements — gap between practice and process.</li>
+</ul>
+<p><strong>Workarounds:</strong></p>
+<ul>
+<li>Communicated new thermal validation requirements via internal engineering memo rather than updating formal gate criteria documentation.</li>
+<li>Early supply chain notification trigger exists as communicated expectation to validation leads but has no formal threshold, named owner, or documented trigger criteria.</li>
+</ul>
+<p><strong>Node-Edge Summary:</strong></p>
+<ul>
+<li>N12 → [Reporting Line] CPO</li>
+<li>N12 ↔ [Meeting: Program Management Reviews] David Park (Program Mgr.), CPO</li>
+<li>N12 ↔ [Meeting: DFM Sessions] Rachel Huang (procurement), manufacturing rep</li>
+<li>N12 ↔ [Decision Interdependency: ECN → Production Plan Variance] N08</li>
+<li>N12 ↔ [KPI Conflict: Gate Attainment vs. Plan Variance] N08</li>
+<li>N12 ↔ [Decision Interdependency: Design Freeze Gate Authority] David Park</li>
+<li>N12 ↔ [Interface: Post-ECN cost data] N04 (via Jennifer Holt)</li>
+</ul>
+
+</body>
+</html>

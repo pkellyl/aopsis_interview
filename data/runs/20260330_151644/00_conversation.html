@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="UTF-8"><title>Briefing Conversation</title><style>
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; max-width: 800px; margin: 40px auto; padding: 0 20px; color: #1a1a1a; line-height: 1.6; }
+h1 { border-bottom: 2px solid #2563eb; padding-bottom: 8px; color: #1e3a5f; }
+h2 { color: #2563eb; margin-top: 32px; }
+h3 { color: #374151; }
+.card { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 16px; margin: 12px 0; }
+.label { font-size: 12px; color: #6b7280; text-transform: uppercase; letter-spacing: 0.05em; }
+.tag { display: inline-block; background: #dbeafe; color: #1e40af; padding: 2px 8px; border-radius: 4px; font-size: 12px; margin: 2px; }
+blockquote { border-left: 3px solid #2563eb; margin: 12px 0; padding: 8px 16px; background: #f0f9ff; }
+pre { background: #f1f5f9; padding: 12px; border-radius: 6px; overflow-x: auto; font-size: 13px; }
+table { border-collapse: collapse; width: 100%; } th, td { border: 1px solid #e2e8f0; padding: 8px 12px; text-align: left; } th { background: #f8fafc; }
+.meta { color: #6b7280; font-size: 13px; }
+@media print { body { margin: 20px; } .card { break-inside: avoid; } }
+</style></head>
+<body>
+<h1>Briefing Conversation</h1>
+<p class='meta'>Briefing conversation between user and context agent</p>
+<div class='card' style='background:#eff6ff;margin-left:40px'><strong>You</strong><p>Hello, I'd like to begin the research briefing.</p></div>
+<div class='card' style='background:#f8fafc;margin-right:40px'><strong>Context Agent</strong><p>Welcome, and thanks for taking the time. I'm looking forward to understanding your research needs so we can design something really useful.
+
+Let's start at the top — can you tell me about the organisation this research is focused on? What do they do, and what's the context for this project?</p></div>
+<div class='card' style='background:#eff6ff;margin-left:40px'><strong>You</strong><p>I want to map out how decisions are made in a company, specifically in the supply chain part of an auto manufacturer I want to know exactly: - who owns what KPIs - what meetings exist - who goes to the meetings - what types of decisions are made in the meetings - and overall outcomes of meetingsso what I want you to do is to interview 20 people from the supply chain areas and map out how decisions are made, who makes them, etc. From each interview, you need to understand that person's perspective on: - what they do - who reports to them - who they report to - what meetings they go to - what KPIs they own - what decisions they make - what decisions are made in the different meetings in the end, I want to have a map of all the decisions and meetings and people and KPIs. A map that I can see visually so that I understand the fabric of decision-making of the company.</p></div>
+<div class='card' style='background:#f8fafc;margin-right:40px'><strong>Context Agent</strong><p>This is a really clear and well-structured brief — essentially a decision-making topology of the supply chain function. I can already see the shape of this, but I need to dig into a few things to make sure the synthetic audience is realistic and useful.
+
+First, let me ask about the company itself:
+
+1. **Which auto manufacturer is this?** Can you name them, or would you prefer to describe them (e.g., size, geography, OEM vs. tier-1 supplier, legacy vs. EV-focused)? The organizational culture and structure will differ dramatically depending on this.
+
+2. **How large is the supply chain function?** Roughly how many people, and what's the geographic spread — are we talking a single HQ-based team, or a global operation with regional supply chain leads?</p></div>
+<div class='card' style='background:#eff6ff;margin-left:40px'><strong>You</strong><p>Imagine something like Toyota. That's what you have to imagine: just Toyota USA, so maybe there are 350 people in the supply chain, and imagine how they are spread around different parts of the organization.</p></div>
+<div class='card' style='background:#f8fafc;margin-right:40px'><strong>Context Agent</strong><p>Great, so a large, mature, Toyota-scale OEM — US operations, deeply process-driven culture, likely with strong influence from lean/TPS methodology baked into how decisions are made. That's a rich context.
+
+With 350 people in supply chain, there's going to be real structure here — multiple layers and sub-functions. Let me make sure I'm thinking about the right segments:
+
+**Can you confirm or adjust my assumption about the sub-functions within supply chain?** I'm imagining something like:
+
+- **Procurement / Purchasing** (direct materials, indirect)
+- **Supplier Quality / Supplier Development**
+- **Logistics &amp; Transportation** (inbound, outbound)
+- **Production Planning / Scheduling**
+- **Inventory Management / Warehousing**
+- **Supply Chain Strategy / Analytics**
+
+And within each, you'd have directors, managers, senior specialists, and maybe coordinators — so the 20 interviews would need to cut across both **sub-functions** and **levels of seniority** to get the full picture.
+
+Two questions:
+
+1. **Is there a particular tension or problem that's motivating this research?** For example, are decisions too slow? Is there confusion about ownership? Are there turf wars between sub-functions? Or is this more of a baseline mapping exercise?
+
+2. **For the 20 interviewees — do you have a sense of which roles are most critical to include, or do you want me to design the audience mix to maximize coverage of the decision-making landscape?**</p></div>
+<div class='card' style='background:#eff6ff;margin-left:40px'><strong>You</strong><p>No tension in particular; I just want to diagnose what's happening. You should be able to understand the 20 roles that are core to making the supply chain successful or not. Pick those and use those to interview.</p></div>
+<div class='card' style='background:#f8fafc;margin-right:40px'><strong>Context Agent</strong><p>Got it — a diagnostic exercise, not driven by a specific problem. You want to see the system as it is.
+
+Now let me ask about the outputs:
+
+1. **The "map" you described — are you envisioning something like a network diagram?** For example, nodes for people/roles, meetings, and KPIs, with lines showing who connects to what? Or more like a matrix — roles on one axis, meetings/decisions on another? I want to make sure the final deliverable structure matches what you'd actually use.
+
+2. **Who is the audience for this map and report?** Is this for you as a consultant to present to the client's leadership? Or is it for the supply chain leadership themselves to see their own system reflected back? That changes tone and level of detail.
+
+3. **Beyond the visual map, do you want a written narrative?** For example, observations about where decision authority clusters, where there might be gaps or overlaps, where KPI ownership is clear vs. ambiguous — that kind of interpretive layer?</p></div>
+<div class='card' style='background:#eff6ff;margin-left:40px'><strong>You</strong><p>Yes, I'd like something like a network diagram. The audience is basically top management and the consultants to start thinking about how to improve decision making overall. A very punchy brief written narrative with priorities is what I want.</p></div>
+<div class='card' style='background:#f8fafc;margin-right:40px'><strong>Context Agent</strong><p>Perfect — so the final deliverable needs to work in a boardroom: visually intuitive, with a sharp narrative that says "here's how decisions actually flow, and here's where to look first."
+
+A couple more questions and I think I'll have what I need:
+
+1. **On the interviews themselves — what depth are you expecting?** A focused 30-minute conversation that stays tight on role, meetings, KPIs, and decisions? Or do you want the interviews to also probe softer things like "do you feel empowered to make decisions" or "where do things get stuck" — even if the research isn't problem-driven, those signals could enrich the map with qualitative texture.
+
+2. **For the meeting landscape — do you expect there's a mix of formal governance meetings (e.g., monthly S&amp;OP, quarterly business reviews) and informal or ad-hoc decision-making?** I ask because in Toyota-style organizations, there's often a very structured cadence, but real decisions sometimes happen outside the formal structure — in hallway conversations or escalation calls. Do you want the interviews to capture both formal and informal decision pathways?</p></div>
+<div class='card' style='background:#eff6ff;margin-left:40px'><strong>You</strong><p>Let's have focused, very punchy interviews and again pick the core meetings that make this a successful function or not. This is all the information I have. Please give it your best shot. Move on from here.</p></div>
+<div class='card' style='background:#f8fafc;margin-right:40px'><strong>Context Agent</strong><p>(Brief generated — see Research Brief)</p></div>
+
+</body>
+</html>

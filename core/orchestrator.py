@@ -1,467 +1,432 @@
-"""Orchestrator loop. Background worker that receives events, calls orchestrator agent,
-parses decisions, and executes actions. Runs in its own thread to avoid blocking API responses."""
+"""Deterministic pipeline runner. Executes the fixed pipeline (brief → personas → strategy →
+interviews → synthesis) in a background thread. No LLM orchestrator — each step directly
+triggers the next. Interview loops run in parallel threads."""
 
 import json
 import re
-import queue
 import threading
 from datetime import datetime, timezone
 
 import config
+import artifact_store
 from core import hub, agent_runtime
 
-_queue = queue.Queue()
-_worker_thread = None
-_running = False
 
-# Events worth sending to the orchestrator
-_NOTIFY_EVENTS = {
-    "output_produced", "phase_changed", "user_command",
-    "error_occurred", "interview_complete"
-}
-
+# ---------------------------------------------------------------------------
+# Public API (called by server.py, state_routes.py, chat_routes.py)
+# ---------------------------------------------------------------------------
 
 def initialize():
-    """Create the orchestrator agent with base prompt and start background worker."""
-    prompt = config.load_prompt("orchestrator")
-    agent_runtime.create_agent(
-        agent_id="orchestrator",
-        agent_type="orchestrator",
-        system_prompt=prompt,
-        model_tier="smart"
-    )
-    start_worker()
+    """No-op. Kept for backward compatibility with callers."""
+    pass
 
 
 def start_worker():
-    """Start the background worker thread."""
-    global _worker_thread, _running
-    if _worker_thread and _worker_thread.is_alive():
-        return
-    _running = True
-    _worker_thread = threading.Thread(target=_worker_loop, daemon=True)
-    _worker_thread.start()
+    """No-op. Pipeline runs on demand via resume(), not as a persistent worker."""
+    pass
 
 
 def stop_worker():
-    """Stop the background worker thread."""
-    global _running
-    _running = False
-
-
-# Events from the orchestrator itself that should still be processed (not filtered as loops)
-_SELF_EVENTS = {"interview_complete"}
+    """No-op. No persistent worker to stop."""
+    pass
 
 
 def enqueue(event):
-    """Add an event to the orchestrator's processing queue. Called from any thread."""
-    if not _running:
-        return
-    event_type = event.get("event_type")
-    if event_type not in _NOTIFY_EVENTS:
-        return
-    # Skip orchestrator's own events to prevent loops, EXCEPT self-events like interview_complete
-    if event.get("agent_id") == "orchestrator" and event_type not in _SELF_EVENTS:
-        return
-    _queue.put(event)
+    """No-op. No event queue — pipeline is deterministic."""
+    pass
 
 
-def _worker_loop():
-    """Background loop: pull events from queue and process them."""
-    while _running:
-        try:
-            event = _queue.get(timeout=1.0)
-        except queue.Empty:
-            continue
-
-        agent = hub.get_agent("orchestrator")
-        if agent is None or agent["status"] != "active":
-            continue
-
-        try:
-            _process_event(event)
-        except Exception as e:
-            hub.add_orchestrator_log({
-                "timestamp": datetime.now(timezone.utc).isoformat(),
-                "decision": f"WORKER ERROR: {e}",
-                "reasoning": "Unhandled exception in orchestrator loop"
-            })
+def resume(override_phase=None):
+    """Clear the pipeline gate and run the appropriate pipeline step in a background thread."""
+    pending = override_phase or hub.get_pending_phase()
+    if not pending:
+        return False
+    hub.clear_pending_phase()
+    hub.set_phase(pending)
+    _emit("pipeline_progress", f"Phase → {pending}")
+    threading.Thread(target=_run_from_phase, args=(pending,), daemon=True).start()
+    return True
 
 
-def _process_event(event):
-    """Send event summary to orchestrator and handle response."""
-    summary = _format_event(event)
+# ---------------------------------------------------------------------------
+# Pipeline entry point
+# ---------------------------------------------------------------------------
 
+def _run_from_phase(phase):
+    """Run the pipeline starting from the given phase. Called in a background thread."""
     try:
-        response = agent_runtime.send_message("orchestrator", summary)
+        if phase == "persona_generation":
+            _step_personas()
+            _step_strategy()
+            _step_interviews()
+            _step_synthesize()
+        elif phase == "interviewing":
+            if not hub.get_outputs().get("interview_strategy"):
+                _step_strategy()
+            _step_interviews()
+            _step_synthesize()
+        elif phase == "synthesizing":
+            _step_synthesize()
+        else:
+            _emit("pipeline_progress", f"No pipeline action for phase: {phase}")
     except Exception as e:
+        _emit("error_occurred", f"Pipeline failed: {e}")
         hub.add_orchestrator_log({
             "timestamp": datetime.now(timezone.utc).isoformat(),
-            "event": summary,
-            "decision": f"ERROR: {e}",
-            "reasoning": "Orchestrator call failed"
+            "decision": f"PIPELINE ERROR: {e}",
+            "reasoning": "Unhandled exception in pipeline thread"
         })
-        return
-
-    actions = _parse_actions(response)
-
-    hub.add_orchestrator_log({
-        "timestamp": datetime.now(timezone.utc).isoformat(),
-        "event": summary,
-        "decision": response[:500],
-        "reasoning": response[:200],
-        "action_count": len(actions)
-    })
-
-    for action in actions:
-        _execute_action(action)
 
 
-def _format_event(event):
-    """Format an event as a concise message for the orchestrator."""
-    parts = [
-        f"EVENT: {event.get('event_type', 'unknown')}",
-        f"AGENT: {event.get('agent_id', 'system')}",
-        f"SUMMARY: {event.get('summary', '')}",
-        f"CURRENT_PHASE: {hub.get_phase()}",
-    ]
+# ---------------------------------------------------------------------------
+# Pipeline steps
+# ---------------------------------------------------------------------------
 
-    # Add outputs context so orchestrator knows what's available
-    outputs = hub.get_state().get("outputs", {})
-    if outputs.get("brief"):
-        parts.append(f"BRIEF_DATA: {json.dumps(outputs['brief'])[:3000]}")
-    if outputs.get("personas"):
-        # Send persona summaries (not full system prompts — those are large)
-        personas = outputs["personas"].get("personas", [])
-        summaries = [{"name": p.get("name"), "role": p.get("role"),
-                       "department": p.get("department"), "traits": p.get("traits"),
-                       "description": p.get("description")} for p in personas]
-        parts.append(f"PERSONAS: {json.dumps(summaries)[:3000]}")
-    if outputs.get("interview_strategy"):
-        parts.append("INTERVIEW_STRATEGY: available")
+def _step_personas():
+    """Step 1: Run persona_architect → produces personas + design rationale."""
+    _emit("pipeline_progress", "Creating personas...")
+    data = _run_agent("persona_architect", "persona_architect_1")
+    if not data or "personas" not in data:
+        raise RuntimeError("Persona architect did not produce valid personas")
 
-    # Add active agents
-    agents = hub.get_all_agents()
-    parts.append(f"ACTIVE_AGENTS: {[a['id'] for a in agents.values() if a['status'] == 'active']}")
+    # Enforce max_personas
+    cfg = config.get()
+    mode = cfg.get("model_mode", "")
+    max_p = cfg.get("max_personas", {}).get(mode)
+    if max_p and len(data["personas"]) > max_p:
+        data["personas"] = data["personas"][:max_p]
 
-    # Add event-specific data
-    data = event.get("data", {})
-    if data.get("command"):
-        parts.append(f"COMMAND: {data['command']}")
-
-    return "\n".join(parts)
+    hub.set_output("personas", data)
+    artifact_store.save("personas", data)
+    _emit("output_produced", f"Personas generated: {len(data['personas'])} personas")
 
 
-def _parse_actions(response):
-    """Extract JSON action array from orchestrator response."""
-    # Try to find a JSON array in the response
-    # The orchestrator might include reasoning text before/after the JSON
-    json_match = re.search(r'\[.*\]', response, re.DOTALL)
-    if json_match:
-        try:
-            actions = json.loads(json_match.group())
-            if isinstance(actions, list):
-                return actions
-        except json.JSONDecodeError:
-            pass
+def _step_strategy():
+    """Step 2: Run interview_designer → produces interview strategy + interviewer prompt."""
+    _emit("pipeline_progress", "Designing interview strategy...")
+    data = _run_agent("interview_designer", "interview_designer_1")
+    if not data or "interviewer_system_prompt" not in data:
+        raise RuntimeError("Interview designer did not produce valid strategy")
 
-    # Try parsing the whole response as JSON
-    try:
-        result = json.loads(response)
-        if isinstance(result, list):
-            return result
-        if isinstance(result, dict):
-            return [result]
-    except (json.JSONDecodeError, ValueError):
-        pass
-
-    return []
+    hub.set_output("interview_strategy", data)
+    artifact_store.save("strategies", data)
+    _emit("output_produced", "Interview strategy produced")
 
 
-def _execute_action(action):
-    """Execute a single orchestrator action."""
-    action_type = action.get("type", "")
-    params = action.get("params", {})
+def _step_interviews():
+    """Step 3: Run all interviews in parallel, wait for all to complete."""
+    hub.set_phase("interviewing")
+    _emit("pipeline_progress", "Starting interviews...")
 
-    try:
-        if action_type == "CREATE_AGENT":
-            _do_create_agent(params)
-        elif action_type == "SEND_MESSAGE":
-            _do_send_message(params)
-        elif action_type == "ADVANCE_PHASE":
-            _do_advance_phase(params)
-        elif action_type == "REQUEST_REVISION":
-            _do_request_revision(params)
-        elif action_type == "RUN_INTERVIEW":
-            _do_run_interview(params)
-        elif action_type == "COMPLETE_SYSTEM":
-            _do_complete_system(params)
-        else:
-            agent_runtime.emit_event(
-                "error_occurred", "orchestrator",
-                f"Unknown action type: {action_type}"
-            )
-    except Exception as e:
-        agent_runtime.emit_event(
-            "error_occurred", "orchestrator",
-            f"Action {action_type} failed: {e}"
-        )
+    persona_list = hub.get_outputs().get("personas", {}).get("personas", [])
+    max_allowed = _get_max_interviewees()
+    personas_to_interview = persona_list[:max_allowed]
 
-
-# Agent types that have base prompts on disk — orchestrator should NOT override these
-_BASE_PROMPT_AGENTS = {
-    "persona_architect": "persona_architect",
-    "interview_designer": "interview_designer",
-    "quality_reviewer": "quality_reviewer",
-}
-
-
-def _do_create_agent(params):
-    """Execute CREATE_AGENT action. Uses base prompts from disk for known agent types."""
-    agent_id = params.get("id", "")
-    agent_type = params.get("agent_type", agent_id)
-    model_tier = params.get("model_tier")
-    initial_message = params.get("initial_message")
-
-    # For known agent types, load base prompt from disk (not orchestrator-written)
-    if agent_type in _BASE_PROMPT_AGENTS:
-        system_prompt = config.load_prompt(_BASE_PROMPT_AGENTS[agent_type])
-    else:
-        system_prompt = params.get("system_prompt", "")
-
-    if not agent_id or not system_prompt:
-        return
-
-    agent_runtime.create_agent(
-        agent_id=agent_id,
-        agent_type=agent_type,
-        system_prompt=system_prompt,
-        model_tier=model_tier,
-        created_by="orchestrator"
-    )
-
-    if initial_message:
-        response = agent_runtime.send_message(agent_id, initial_message)
-        _handle_agent_output(agent_id, agent_type, response)
-
-
-def _do_send_message(params):
-    """Execute SEND_MESSAGE action."""
-    target = params.get("target_agent_id", "")
-    message = params.get("message", "")
-    if not target or not message:
-        return
-
-    agent = hub.get_agent(target)
-    if agent is None:
-        return
-
-    response = agent_runtime.send_message(target, message)
-    _handle_agent_output(target, agent.get("type", ""), response)
-
-
-def _do_advance_phase(params):
-    """Execute ADVANCE_PHASE action."""
-    new_phase = params.get("new_phase", "")
-    reason = params.get("reason", "")
-    if new_phase:
-        hub.set_phase(new_phase)
-        agent_runtime.emit_event(
-            "phase_changed", "orchestrator",
-            f"Phase → {new_phase}: {reason}"
-        )
-
-
-def _do_request_revision(params):
-    """Execute REQUEST_REVISION action and process the revised output."""
-    target = params.get("target_agent_id", "")
-    feedback = params.get("feedback", "")
-    if not target or not feedback:
-        return
-
-    agent = hub.get_agent(target)
-    if agent is None:
-        return
-
-    response = agent_runtime.send_message(target, f"REVISION REQUESTED: {feedback}")
-    _handle_agent_output(target, agent.get("type", ""), response)
-
-
-MAX_INTERVIEW_TURNS = 15
-
-
-def _do_run_interview(params):
-    """Execute RUN_INTERVIEW: create interviewer+persona agents, run multi-turn loop, store transcript."""
-    persona_id = params.get("persona_id", "")
-    if not persona_id:
-        return
-
-    # Get persona data from stored outputs
-    personas_data = hub.get_outputs().get("personas", {})
-    persona_list = personas_data.get("personas", [])
-    persona = None
-    for p in persona_list:
-        if p.get("name", "").lower().replace(" ", "_") == persona_id or p.get("name") == persona_id:
-            persona = p
-            break
-    # Fallback: match by index if persona_id is numeric
-    if persona is None and persona_id.isdigit():
-        idx = int(persona_id)
-        if 0 <= idx < len(persona_list):
-            persona = persona_list[idx]
-
-    if persona is None:
-        agent_runtime.emit_event(
-            "error_occurred", "orchestrator",
-            f"Persona not found: {persona_id}"
-        )
-        return
-
-    # Get interviewer prompt from interview strategy
     strategy = hub.get_outputs().get("interview_strategy", {})
     interviewer_prompt = strategy.get("interviewer_system_prompt", "")
     if not interviewer_prompt:
-        agent_runtime.emit_event(
-            "error_occurred", "orchestrator",
-            "No interviewer system prompt available"
+        raise RuntimeError("No interviewer system prompt available")
+
+    threads = []
+    for persona in personas_to_interview:
+        name = persona.get("name", "")
+        if not name:
+            continue
+        safe_id = name.lower().replace(" ", "_")
+        interviewer_id = f"interviewer_{safe_id}"
+        persona_agent_id = f"persona_{safe_id}"
+
+        agent_runtime.create_agent(
+            agent_id=interviewer_id, agent_type="interviewer",
+            system_prompt=interviewer_prompt, created_by="pipeline"
         )
+        agent_runtime.create_agent(
+            agent_id=persona_agent_id, agent_type="persona",
+            system_prompt=persona.get("system_prompt", ""), created_by="pipeline"
+        )
+        hub.add_transcript(safe_id, name)
+        _emit("interview_started", f"Interview started with {name}")
+
+        t = threading.Thread(
+            target=_interview_loop,
+            args=(safe_id, name, interviewer_id, persona_agent_id, persona),
+            daemon=True
+        )
+        threads.append(t)
+        t.start()
+
+    # Wait for all interviews to finish
+    for t in threads:
+        t.join()
+
+    # Save transcripts artifact
+    transcripts = hub.get_outputs().get("transcripts", [])
+    complete = [t for t in transcripts if t.get("status") == "complete"]
+    if not complete:
+        raise RuntimeError("All interviews failed — cannot proceed to synthesis")
+    artifact_store.save("transcripts", complete)
+    _emit("pipeline_progress", f"All interviews done ({len(complete)} complete)")
+
+
+def _step_synthesize():
+    """Step 4: Run synthesis designer + synthesis agent → produce report."""
+    _do_synthesize({})
+
+
+# ---------------------------------------------------------------------------
+# Agent runner
+# ---------------------------------------------------------------------------
+
+def _run_agent(agent_type, agent_id):
+    """Create agent from disk prompt, compose message from hub data, send, parse JSON output."""
+    prompt = config.load_prompt(agent_type)
+    if not prompt:
+        raise RuntimeError(f"No prompt found for agent type: {agent_type}")
+
+    agent_runtime.create_agent(
+        agent_id=agent_id, agent_type=agent_type,
+        system_prompt=prompt, created_by="pipeline"
+    )
+
+    message = _compose_initial_message(agent_type)
+    if not message:
+        raise RuntimeError(f"Could not compose message for {agent_type}")
+
+    response = agent_runtime.send_message(agent_id, message)
+    hub.update_agent_status(agent_id, "completed")
+    return _try_parse_json(response)
+
+
+def _compose_initial_message(agent_type):
+    """Build the data payload for each agent type from hub outputs."""
+    outputs = hub.get_outputs()
+
+    if agent_type == "persona_architect":
+        brief = outputs.get("brief")
+        if brief:
+            cfg = config.get()
+            mode = cfg.get("model_mode", "")
+            max_p = cfg.get("max_personas", {}).get(mode)
+            if max_p:
+                constraint = (
+                    f"MANDATORY REQUIREMENT: You MUST create exactly {max_p} personas. "
+                    f"Not fewer, not more — exactly {max_p}. "
+                    f"This is a hard constraint from the system configuration.\n\n"
+                )
+            else:
+                constraint = ""
+            return f"{constraint}RESEARCH BRIEF:\n{json.dumps(brief, indent=2)}"
+
+    elif agent_type == "interview_designer":
+        brief = outputs.get("brief")
+        personas = outputs.get("personas", {})
+        if brief and personas:
+            summaries = [
+                {k: p.get(k) for k in ("name", "role", "department", "traits", "description")}
+                for p in personas.get("personas", [])
+            ]
+            return (
+                f"RESEARCH BRIEF:\n{json.dumps(brief, indent=2)}\n\n"
+                f"PERSONAS:\n{json.dumps(summaries, indent=2)}\n\n"
+                f"Design the interview strategy and write the interviewer system prompt."
+            )
+
+    return None
+
+
+# ---------------------------------------------------------------------------
+# Interview loop (runs in its own thread per persona)
+# ---------------------------------------------------------------------------
+
+def _interview_loop(safe_id, persona_name, interviewer_id, persona_agent_id, persona):
+    """Run the multi-turn interview conversation. Executes in its own thread."""
+    turn_count = 0
+    try:
+        opening = agent_runtime.send_message(
+            interviewer_id,
+            f"Begin the interview. The respondent is: {persona_name}, "
+            f"{persona.get('role', '')}, {persona.get('department', '')}. "
+            f"{persona.get('description', '')}"
+        )
+        hub.append_turn(safe_id, "interviewer", opening)
+        last_interviewer_msg = opening
+
+        max_turns = _get_max_turns()
+        while turn_count < max_turns:
+            turn_count += 1
+
+            persona_response = agent_runtime.send_message(persona_agent_id, last_interviewer_msg)
+            hub.append_turn(safe_id, "persona", persona_response)
+
+            _emit("interview_turn", f"Interview {persona_name}: turn {turn_count}")
+
+            if turn_count >= max_turns:
+                break
+
+            interviewer_response = agent_runtime.send_message(interviewer_id, persona_response)
+            hub.append_turn(safe_id, "interviewer", interviewer_response)
+
+            if "[END_INTERVIEW]" in interviewer_response:
+                break
+
+            last_interviewer_msg = interviewer_response
+
+    except Exception as e:
+        hub.complete_transcript(safe_id)
+        hub.update_agent_status(interviewer_id, "completed")
+        hub.update_agent_status(persona_agent_id, "completed")
+        _emit("interview_complete", f"Interview FAILED with {persona_name}: {e}")
         return
 
-    persona_name = persona.get("name", persona_id)
-    persona_prompt = persona.get("system_prompt", "")
-    safe_id = persona_name.lower().replace(" ", "_")
-    interviewer_id = f"interviewer_{safe_id}"
-    persona_agent_id = f"persona_{safe_id}"
-
-    # Create both agents
-    agent_runtime.create_agent(
-        agent_id=interviewer_id,
-        agent_type="interviewer",
-        system_prompt=interviewer_prompt,
-        model_tier="balanced",
-        created_by="orchestrator"
-    )
-    agent_runtime.create_agent(
-        agent_id=persona_agent_id,
-        agent_type="persona",
-        system_prompt=persona_prompt,
-        model_tier="balanced",
-        created_by="orchestrator"
-    )
-
-    # Start transcript
-    hub.add_transcript(safe_id, persona_name)
-
-    agent_runtime.emit_event(
-        "interview_started", "orchestrator",
-        f"Interview started with {persona_name}",
-        {"persona_id": safe_id, "persona_name": persona_name}
-    )
-
-    # Get interviewer's opening question
-    opening = agent_runtime.send_message(
-        interviewer_id,
-        f"Begin the interview. The respondent is: {persona_name}, {persona.get('role', '')}, {persona.get('department', '')}. {persona.get('description', '')}"
-    )
-    hub.append_turn(safe_id, "interviewer", opening)
-
-    # Multi-turn loop
-    turn_count = 0
-    last_interviewer_msg = opening
-
-    while turn_count < MAX_INTERVIEW_TURNS:
-        turn_count += 1
-
-        # Persona responds to interviewer
-        persona_response = agent_runtime.send_message(persona_agent_id, last_interviewer_msg)
-        hub.append_turn(safe_id, "persona", persona_response)
-
-        agent_runtime.emit_event(
-            "interview_turn", "orchestrator",
-            f"Interview {persona_name}: turn {turn_count}",
-            {"persona_id": safe_id, "turn": turn_count, "role": "persona"}
-        )
-
-        # Check if we've hit the safety rail
-        if turn_count >= MAX_INTERVIEW_TURNS:
-            break
-
-        # Interviewer follows up
-        interviewer_response = agent_runtime.send_message(interviewer_id, persona_response)
-        hub.append_turn(safe_id, "interviewer", interviewer_response)
-
-        # Check if interviewer signals end (contains "[END_INTERVIEW]")
-        if "[END_INTERVIEW]" in interviewer_response:
-            break
-
-        last_interviewer_msg = interviewer_response
-
-    # Complete transcript and mark agents done
     hub.complete_transcript(safe_id)
     hub.update_agent_status(interviewer_id, "completed")
     hub.update_agent_status(persona_agent_id, "completed")
+    _emit("interview_complete", f"Interview complete with {persona_name} ({turn_count} turns)")
 
-    agent_runtime.emit_event(
-        "interview_complete", "orchestrator",
-        f"Interview complete with {persona_name} ({turn_count} turns)",
-        {"persona_id": safe_id, "persona_name": persona_name, "turns": turn_count}
+
+# ---------------------------------------------------------------------------
+# Synthesis (also called directly by /api/synthesize)
+# ---------------------------------------------------------------------------
+
+def _do_synthesize(params):
+    """Run synthesis designer + synthesis agent to produce the final report."""
+    hub.set_phase("synthesizing")
+    outputs = hub.get_outputs()
+    transcripts = outputs.get("transcripts", [])
+    complete_transcripts = [t for t in transcripts if t.get("status") == "complete"]
+    if not complete_transcripts:
+        _emit("error_occurred", "No completed transcripts to synthesize")
+        hub.set_phase("interviewing")
+        return
+
+    brief = outputs.get("brief", {})
+
+    # Step 1: Run synthesis designer to craft the synthesis agent's prompt
+    synthesis_prompt = _design_synthesis(brief, complete_transcripts)
+
+    # Step 2: Build transcript texts
+    transcript_texts = _build_transcript_texts(complete_transcripts)
+    all_transcripts = "\n\n---\n\n".join(transcript_texts)
+
+    # Step 3: Create synthesis agent
+    agent_id = "synthesis_agent"
+    agent_runtime.create_agent(
+        agent_id=agent_id, agent_type="synthesis_agent",
+        system_prompt=synthesis_prompt, model_tier="balanced", created_by="pipeline"
     )
 
-
-def _do_complete_system(params):
-    """Execute COMPLETE_SYSTEM action."""
-    summary = params.get("summary", "System complete")
-    hub.set_phase("complete")
-    agent_runtime.emit_event(
-        "phase_changed", "orchestrator",
-        f"SYSTEM COMPLETE: {summary}"
+    # Step 4: Send brief + transcripts
+    brief_text = json.dumps(brief, indent=2) if brief else "No brief available."
+    message = (
+        f"RESEARCH BRIEF:\n{brief_text}\n\n"
+        f"INTERVIEW TRANSCRIPTS ({len(complete_transcripts)} interviews):\n\n{all_transcripts}"
     )
 
-
-def _handle_agent_output(agent_id, agent_type, response):
-    """Check agent responses for structured outputs and store them."""
-    if agent_type == "persona_architect":
+    try:
+        response = agent_runtime.send_message(agent_id, message)
         data = _try_parse_json(response)
-        if data and "personas" in data:
-            hub.set_output("personas", data)
-            agent_runtime.emit_event(
-                "output_produced", agent_id,
-                f"Personas generated: {len(data['personas'])} personas",
-                {"type": "personas"}
-            )
+        if data and "sections" in data:
+            hub.set_output("synthesis", data)
+            artifact_store.save("syntheses", data)
             hub.update_agent_status(agent_id, "completed")
+            hub.set_phase("complete")
+            _emit("synthesis_complete", "Interview synthesis complete")
+        else:
+            hub.update_agent_status(agent_id, "completed")
+            hub.set_phase("complete")
+            _emit("error_occurred", f"Synthesis JSON parse failed. Raw: {response[:200]}")
+    except Exception as e:
+        hub.update_agent_status(agent_id, "completed")
+        hub.set_phase("complete")
+        _emit("error_occurred", f"Synthesis failed: {e}")
 
-    elif agent_type == "interview_designer":
-        data = _try_parse_json(response)
-        if data and "interviewer_system_prompt" in data:
-            hub.set_output("interview_strategy", data)
-            agent_runtime.emit_event(
-                "output_produced", agent_id,
-                "Interview strategy and interviewer prompt produced",
-                {"type": "interview_strategy"}
-            )
-            hub.update_agent_status(agent_id, "completed")
 
-    elif agent_type == "quality_reviewer":
+def _design_synthesis(brief, complete_transcripts):
+    """Run synthesis designer agent to craft the synthesis agent's system prompt."""
+    designer_id = "synthesis_designer"
+    prompt = config.load_prompt("synthesis_designer")
+    agent_runtime.create_agent(
+        agent_id=designer_id, agent_type="synthesis_designer",
+        system_prompt=prompt, model_tier="smart", created_by="pipeline"
+    )
+
+    interview_info = [f"- {t.get('persona_name', 'Unknown')}: {len(t.get('turns', []))} turns"
+                      for t in complete_transcripts]
+    interviews_summary = "\n".join(interview_info)
+    brief_text = json.dumps(brief, indent=2) if brief else "No brief available."
+    message = (
+        f"RESEARCH BRIEF:\n{brief_text}\n\n"
+        f"COMPLETED INTERVIEWS:\n{interviews_summary}\n\n"
+        f"Design the synthesis agent's system prompt based on this brief and interviews."
+    )
+
+    try:
+        response = agent_runtime.send_message(designer_id, message)
         data = _try_parse_json(response)
-        if data:
-            agent_runtime.emit_event(
-                "output_produced", agent_id,
-                f"Quality review: {'PASSED' if data.get('passed') else 'NEEDS REVISION'}",
-                {"type": "quality_review", "review": data}
-            )
-            hub.update_agent_status(agent_id, "completed")
+        if data and "synthesis_system_prompt" in data:
+            hub.set_output("synthesis_design", data)
+            hub.update_agent_status(designer_id, "completed")
+            _emit("output_produced", "Synthesis methodology designed")
+            return data["synthesis_system_prompt"]
+        else:
+            hub.update_agent_status(designer_id, "completed")
+            _emit("error_occurred", f"Designer parse failed, using fallback. Raw: {response[:200]}")
+    except Exception as e:
+        hub.update_agent_status(designer_id, "completed")
+        _emit("error_occurred", f"Designer failed, using fallback: {e}")
+
+    return config.load_prompt("synthesis_agent")
+
+
+# ---------------------------------------------------------------------------
+# Helpers
+# ---------------------------------------------------------------------------
+
+def _emit(event_type, summary, data=None):
+    """Emit an SSE event for frontend updates."""
+    agent_runtime.emit_event(event_type, "pipeline", summary, data)
+
+
+def _get_max_turns():
+    """Return max interview turns for current mode."""
+    cfg = config.get()
+    mode = cfg.get("model_mode", "dev")
+    turn_limits = cfg.get("turn_limits", {})
+    return turn_limits.get(mode, cfg.get("max_interview_turns", 15))
+
+
+def _get_max_interviewees():
+    """Return max interviewees for current mode."""
+    cfg = config.get()
+    mode = cfg.get("model_mode", "dev")
+    return cfg.get("max_interviewees", {}).get(mode, 8)
+
+
+def _build_transcript_texts(complete_transcripts):
+    """Build concise transcript text summaries for the synthesis agent."""
+    texts = []
+    for t in complete_transcripts:
+        lines = [f"=== Interview: {t.get('persona_name', 'Unknown')} ==="]
+        for turn in t.get("turns", []):
+            role = turn.get("role", "unknown").upper()
+            content = turn.get("content", "")
+            if len(content) > 800:
+                content = content[:800] + "..."
+            lines.append(f"{role}: {content}")
+        texts.append("\n".join(lines))
+    return texts
 
 
 def _try_parse_json(text):
-    """Try to extract JSON from a response that may contain text + JSON."""
-    json_match = re.search(r'\{.*\}', text, re.DOTALL)
+    """Extract JSON from a response that may contain text + JSON + markdown fences."""
+    cleaned = re.sub(r'```(?:json)?\s*', '', text).strip()
+    json_match = re.search(r'\{.*\}', cleaned, re.DOTALL)
     if json_match:
         try:
             return json.loads(json_match.group())
         except json.JSONDecodeError:
             pass
     try:
-        return json.loads(text)
+        return json.loads(cleaned)
     except (json.JSONDecodeError, ValueError):
         return None

@@ -14,10 +14,41 @@ def _defaults():
     """Return default configuration."""
     return {
         "models": {
-            "fast": "claude-3-5-haiku-20241022",
-            "balanced": "claude-sonnet-4-20250514",
-            "smart": "claude-opus-4-20250514",
-            "reasoning": "claude-opus-4-20250514"
+            "fast": "claude-haiku-4-5",
+            "balanced": "claude-sonnet-4-6",
+            "smart": "claude-opus-4-6",
+            "reasoning": "claude-opus-4-6"
+        },
+        "presets": {
+            "test": {
+                "fast": "claude-haiku-4-5",
+                "balanced": "claude-haiku-4-5",
+                "smart": "claude-haiku-4-5",
+                "reasoning": "claude-haiku-4-5"
+            },
+            "dev": {
+                "fast": "claude-haiku-4-5",
+                "balanced": "claude-haiku-4-5",
+                "smart": "claude-sonnet-4-6",
+                "reasoning": "claude-sonnet-4-6"
+            },
+            "production": {
+                "fast": "claude-haiku-4-5",
+                "balanced": "claude-sonnet-4-6",
+                "smart": "claude-opus-4-6",
+                "reasoning": "claude-opus-4-6"
+            }
+        },
+        "agent_overrides": {},
+        "turn_limits": {
+            "test": 5,
+            "dev": 10,
+            "production": 15
+        },
+        "max_interviewees": {
+            "test": 2,
+            "dev": 4,
+            "production": 8
         },
         "organization": {
             "name": "",
@@ -25,7 +56,9 @@ def _defaults():
             "description": ""
         },
         "max_interview_turns": 15,
-        "default_model_tier": "balanced"
+        "default_model_tier": "balanced",
+        "model_mode": "dev",
+        "max_concurrent_api_calls": 10
     }
 
 
@@ -83,3 +116,24 @@ def load_prompt(name):
         return path.read_text().strip()
     except (IOError, FileNotFoundError):
         return ""
+
+
+def save_prompt(name, content):
+    """Write prompt content to disk."""
+    path = PROMPTS_DIR / f"{name}.md"
+    try:
+        path.write_text(content)
+        return True
+    except IOError:
+        return False
+
+
+def list_prompts():
+    """Return list of available prompt file names (without .md extension)."""
+    try:
+        return sorted(
+            p.stem for p in PROMPTS_DIR.glob("*.md")
+            if p.stem != "AGENTS"
+        )
+    except IOError:
+        return []

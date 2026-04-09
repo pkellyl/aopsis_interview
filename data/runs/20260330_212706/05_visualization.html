@@ -1,0 +1,796 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Toyota NA Supply Chain – Decision-Flow Diagnostic</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: system-ui, -apple-system, sans-serif; background: #f8fafc; color: #1e293b; }
+
+  .page-header {
+    background: linear-gradient(135deg, #1e293b 0%, #2563eb 100%);
+    color: white; padding: 36px 24px 28px;
+  }
+  .page-header h1 { font-size: 22px; font-weight: 700; margin-bottom: 4px; }
+  .page-header .subtitle { font-size: 13px; opacity: 0.8; margin-bottom: 16px; }
+  .page-header .exec-summary {
+    background: rgba(255,255,255,0.12); border-radius: 8px;
+    padding: 14px 16px; font-size: 13px; line-height: 1.6; max-width: 960px; margin: 0 auto;
+  }
+
+  .header-inner { max-width: 960px; margin: 0 auto; }
+
+  nav {
+    background: white; border-bottom: 1px solid #e2e8f0;
+    position: sticky; top: 0; z-index: 100; box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+  }
+  .nav-inner {
+    max-width: 960px; margin: 0 auto;
+    display: flex; overflow-x: auto; gap: 0;
+  }
+  .nav-btn {
+    padding: 12px 16px; border: none; background: none; cursor: pointer;
+    font-size: 12px; font-weight: 600; color: #475569;
+    white-space: nowrap; border-bottom: 2px solid transparent;
+    transition: all 0.2s;
+  }
+  .nav-btn.active { color: #2563eb; border-bottom-color: #2563eb; }
+  .nav-btn:hover { color: #2563eb; background: #f0f7ff; }
+
+  .section { display: none; }
+  .section.active { display: block; }
+
+  .container { max-width: 960px; margin: 0 auto; padding: 24px; }
+
+  .section-title {
+    font-size: 18px; font-weight: 700; color: #1e293b;
+    margin-bottom: 6px; padding-bottom: 10px;
+    border-bottom: 2px solid #e2e8f0;
+  }
+  .section-desc { font-size: 13px; color: #64748b; margin-bottom: 20px; }
+
+  /* Metric Cards */
+  .metrics-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 12px; margin-bottom: 24px;
+  }
+  .metric-card {
+    background: white; border-radius: 8px; padding: 16px;
+    border: 1px solid #e2e8f0; text-align: center;
+  }
+  .metric-card .num { font-size: 32px; font-weight: 800; }
+  .metric-card .lbl { font-size: 11px; color: #64748b; margin-top: 4px; line-height: 1.3; }
+  .metric-card.red .num { color: #dc2626; }
+  .metric-card.amber .num { color: #d97706; }
+  .metric-card.blue .num { color: #2563eb; }
+  .metric-card.green .num { color: #059669; }
+  .metric-card.violet .num { color: #7c3aed; }
+
+  /* Badges */
+  .badge {
+    display: inline-block; padding: 2px 8px; border-radius: 99px;
+    font-size: 11px; font-weight: 600;
+  }
+  .badge-red { background: #fee2e2; color: #dc2626; }
+  .badge-amber { background: #fef3c7; color: #d97706; }
+  .badge-green { background: #d1fae5; color: #059669; }
+  .badge-blue { background: #dbeafe; color: #2563eb; }
+  .badge-violet { background: #ede9fe; color: #7c3aed; }
+  .badge-gray { background: #f1f5f9; color: #475569; }
+  .badge-cyan { background: #cffafe; color: #0891b2; }
+
+  /* Tables */
+  .data-table { width: 100%; border-collapse: collapse; font-size: 12px; }
+  .data-table th {
+    background: #f1f5f9; padding: 10px 12px; text-align: left;
+    font-weight: 600; font-size: 11px; color: #475569;
+    border-bottom: 1px solid #e2e8f0; white-space: nowrap;
+  }
+  .data-table td {
+    padding: 10px 12px; border-bottom: 1px solid #f1f5f9;
+    vertical-align: top; line-height: 1.4;
+  }
+  .data-table tr:hover td { background: #f8fafc; }
+  .data-table tr:last-child td { border-bottom: none; }
+  .table-wrap {
+    background: white; border: 1px solid #e2e8f0; border-radius: 8px;
+    overflow-x: auto; margin-bottom: 16px;
+  }
+  .contested-row td { background: #fff7ed !important; }
+  .ambiguous-row td { background: #faf5ff !important; }
+
+  /* Graph section */
+  #graph-svg {
+    width: 100%; height: 520px; background: white;
+    border: 1px solid #e2e8f0; border-radius: 8px;
+    display: block;
+  }
+  .graph-legend {
+    display: flex; flex-wrap: wrap; gap: 12px;
+    margin-top: 12px; margin-bottom: 16px;
+  }
+  .legend-item { display: flex; align-items: center; gap: 6px; font-size: 11px; color: #475569; }
+  .legend-dot { width: 12px; height: 12px; border-radius: 50%; }
+  .legend-line { width: 24px; height: 3px; border-radius: 2px; }
+
+  /* Meeting cards */
+  .meeting-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 12px;
+  }
+  .meeting-card {
+    background: white; border: 1px solid #e2e8f0; border-radius: 8px;
+    padding: 14px; border-left: 4px solid #e2e8f0;
+  }
+  .meeting-card.decision-producing { border-left-color: #059669; }
+  .meeting-card.overdense { border-left-color: #dc2626; }
+  .meeting-card.underdense { border-left-color: #d97706; }
+  .meeting-card.performative { border-left-color: #94a3b8; }
+  .meeting-card.defunct { border-left-color: #cbd5e1; opacity: 0.7; }
+  .meeting-card.mixed { border-left-color: #2563eb; }
+  .meeting-card h4 { font-size: 13px; font-weight: 700; margin-bottom: 4px; }
+  .meeting-card .freq { font-size: 11px; color: #64748b; margin-bottom: 8px; }
+  .meeting-card .attendees { font-size: 11px; color: #475569; margin-bottom: 6px; }
+  .meeting-card .output { font-size: 11px; color: #1e293b; line-height: 1.4; }
+  .meeting-card .issue { font-size: 11px; color: #dc2626; margin-top: 6px; font-style: italic; }
+
+  /* KPI Conflict */
+  .conflict-card {
+    background: white; border: 1px solid #e2e8f0; border-radius: 8px;
+    padding: 16px; margin-bottom: 12px;
+  }
+  .conflict-vs {
+    display: grid; grid-template-columns: 1fr 40px 1fr; gap: 8px;
+    align-items: center; margin-bottom: 10px;
+  }
+  .kpi-box {
+    background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 6px;
+    padding: 10px; font-size: 12px;
+  }
+  .kpi-box .owner { font-size: 11px; font-weight: 700; color: #2563eb; margin-bottom: 3px; }
+  .kpi-box .metric { font-weight: 600; color: #1e293b; font-size: 12px; }
+  .vs-circle {
+    width: 36px; height: 36px; background: #fee2e2; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 11px; font-weight: 800; color: #dc2626; margin: 0 auto;
+  }
+  .conflict-desc { font-size: 12px; color: #475569; margin-bottom: 8px; line-height: 1.4; }
+  .conflict-meta { display: flex; gap: 8px; flex-wrap: wrap; }
+
+  /* Fault lines */
+  .fault-card {
+    background: white; border: 1px solid #e2e8f0; border-radius: 8px;
+    padding: 16px; margin-bottom: 12px;
+  }
+  .fault-header { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+  .fault-num {
+    width: 28px; height: 28px; border-radius: 50%; background: #dc2626;
+    color: white; font-weight: 700; font-size: 13px;
+    display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+  }
+  .fault-title { font-size: 14px; font-weight: 700; }
+  .fault-body { font-size: 12px; color: #475569; line-height: 1.5; margin-bottom: 8px; }
+  .fault-quote {
+    background: #f8fafc; border-left: 3px solid #94a3b8;
+    padding: 8px 12px; font-size: 12px; color: #475569;
+    font-style: italic; border-radius: 0 4px 4px 0; margin-bottom: 8px;
+  }
+  .fault-prevalence { font-size: 11px; }
+
+  /* Opportunity zones */
+  .opp-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 12px;
+  }
+  .opp-card {
+    background: white; border: 1px solid #e2e8f0; border-radius: 8px;
+    padding: 16px;
+  }
+  .opp-num {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 24px; height: 24px; background: #dbeafe; color: #2563eb;
+    border-radius: 50%; font-size: 11px; font-weight: 700;
+    margin-bottom: 8px;
+  }
+  .opp-title { font-size: 13px; font-weight: 700; margin-bottom: 6px; }
+  .opp-desc { font-size: 12px; color: #475569; line-height: 1.4; margin-bottom: 8px; }
+  .opp-question {
+    background: #f0f7ff; border-radius: 4px; padding: 8px 10px;
+    font-size: 11px; color: #2563eb; line-height: 1.4; font-style: italic;
+  }
+
+  /* Profile cards */
+  .profile-card {
+    background: white; border: 1px solid #e2e8f0; border-radius: 8px;
+    padding: 16px; margin-bottom: 16px;
+  }
+  .profile-header {
+    display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;
+  }
+  .profile-avatar {
+    width: 44px; height: 44px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 16px; font-weight: 700; color: white; flex-shrink: 0;
+  }
+  .profile-name { font-size: 14px; font-weight: 700; }
+  .profile-title { font-size: 12px; color: #475569; }
+  .profile-loc { font-size: 11px; color: #94a3b8; }
+  .profile-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 12px;
+    font-size: 12px;
+  }
+  .profile-section-head { font-size: 11px; font-weight: 700; color: #64748b; text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 6px; }
+  .profile-pain {
+    grid-column: 1 / -1; background: #fff7ed; border-radius: 4px;
+    padding: 8px 10px; font-size: 12px; color: #92400e;
+    font-style: italic; line-height: 1.4;
+    border-left: 3px solid #d97706;
+  }
+  .kpi-pill {
+    display: inline-block; background: #f1f5f9; border-radius: 4px;
+    padding: 2px 7px; margin: 2px; font-size: 11px; color: #475569;
+  }
+
+  /* Degree bar */
+  .degree-bar-wrap { margin-bottom: 16px; }
+  .degree-bar-row {
+    display: flex; align-items: center; gap: 8px; margin-bottom: 5px;
+  }
+  .degree-bar-label { width: 160px; font-size: 12px; text-align: right; color: #475569; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .degree-bar-track { flex: 1; background: #f1f5f9; border-radius: 4px; height: 20px; position: relative; }
+  .degree-bar-fill { height: 100%; border-radius: 4px; display: flex; align-items: center; padding-left: 8px; }
+  .degree-bar-num { font-size: 11px; font-weight: 700; color: white; }
+
+  .interpretation {
+    background: #f8fafc; border-left: 3px solid #94a3b8;
+    padding: 10px 14px; font-size: 12px; color: #64748b;
+    margin-top: 12px; border-radius: 0 6px 6px 0; line-height: 1.5;
+  }
+
+  canvas { border-radius: 8px; border: 1px solid #e2e8f0; }
+
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  @media (max-width: 600px) { .two-col { grid-template-columns: 1fr; } .profile-grid { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+
+<div class="page-header">
+  <div class="header-inner">
+    <div style="font-size:11px;opacity:0.6;margin-bottom:4px;text-transform:uppercase;letter-spacing:0.08em;">Organizational Decision-Flow Diagnostic Report</div>
+    <h1>Toyota Motor North America – Supply Chain & Procurement Division</h1>
+    <div class="subtitle">13 Interviews · Supply Chain, Procurement, Manufacturing, Finance, Engineering, Analytics · Plano TX + Plant Locations</div>
+    <div class="exec-summary">
+      <strong>Critical Finding:</strong> The most significant fault line is a structural misalignment between cost-reduction KPIs (Finance/Procurement) and supply resilience investments (Supply Chain leadership), distorting decisions on semiconductor dual-sourcing and safety stock with no forum currently equipped to resolve it. A secondary fault line between corporate Plano and Georgetown KY has produced de facto plant-level sourcing authority tacitly endorsed by VP Manufacturing but never formalized. The S&OP process is functionally compromised by documented shadow forecasting, and decision ownership is contested or ambiguous across at least <strong>7 of 14 high-stakes decision domains</strong>. Highest-priority follow-up: the governance gap between VP Supply Chain and COO where multiple unresolved cross-functional decisions await executive sponsorship.
+    </div>
+  </div>
+</div>
+
+<nav>
+  <div class="nav-inner">
+    <button class="nav-btn active" onclick="showSection('overview')">Overview</button>
+    <button class="nav-btn" onclick="showSection('graph')">Decision Graph</button>
+    <button class="nav-btn" onclick="showSection('decisions')">Decision Inventory</button>
+    <button class="nav-btn" onclick="showSection('meetings')">Meeting Map</button>
+    <button class="nav-btn" onclick="showSection('kpi')">KPI Conflicts</button>
+    <button class="nav-btn" onclick="showSection('faultlines')">Fault Lines</button>
+    <button class="nav-btn" onclick="showSection('opportunities')">Opportunity Zones</button>
+    <button class="nav-btn" onclick="showSection('profiles')">Interview Profiles</button>
+  </div>
+</nav>
+
+<!-- SECTION: OVERVIEW -->
+<div id="section-overview" class="section active">
+<div class="container">
+  <div class="section-title">Executive Overview</div>
+  <div class="section-desc">Key quantitative findings across 13 interviews and 14 high-stakes decision domains.</div>
+
+  <div class="metrics-grid">
+    <div class="metric-card red"><div class="num">7</div><div class="lbl">Contested or ambiguous decision domains</div></div>
+    <div class="metric-card amber"><div class="num">6</div><div class="lbl">Major organizational fault lines</div></div>
+    <div class="metric-card blue"><div class="num">13</div><div class="lbl">Interviews across functions & locations</div></div>
+    <div class="metric-card violet"><div class="num">7</div><div class="lbl">KPI conflict pairs identified</div></div>
+    <div class="metric-card green"><div class="num">14</div><div class="lbl">Recurring meetings mapped</div></div>
+    <div class="metric-card red"><div class="num">18mo</div><div class="lbl">Shadow forecasting known but unescalated</div></div>
+  </div>
+
+  <div class="two-col" style="margin-bottom:20px;">
+    <div>
+      <div class="section-title" style="font-size:15px;margin-bottom:12px;">Node Degree – Organizational Connectivity</div>
+      <div class="degree-bar-wrap" id="degree-bars"></div>
+      <div class="interpretation">Michael Chen (N01) is the highest-degree node with 14 connections — a single-point concentration that creates structural fragility. N12 (Engineering) and N05 (Georgetown Plant) are the most isolated, representing critical visibility gaps.</div>
+    </div>
+    <div>
+      <div class="section-title" style="font-size:15px;margin-bottom:12px;">Decision Ownership Status</div>
+      <canvas id="ownership-chart" height="220"></canvas>
+      <div class="interpretation">Only 7 of 14 significant decisions have clear, named owners. The remaining 7 are either contested between two parties or simply unassigned — an unusually high ambiguity rate for an organization of this scale.</div>
+    </div>
+  </div>
+
+  <div class="section-title" style="font-size:15px;margin-bottom:12px;">Meeting Classification by Decision-Producing Capacity</div>
+  <canvas id="meeting-chart" height="180"></canvas>
+  <div class="interpretation">Only 5 of 13 mapped meetings reliably produce decisions. Three are "performative" or defunct — running on cadence without outputs. The Executive S&OP is overdense: too many decisions competing for too little accountability structure.</div>
+</div>
+</div>
+
+<!-- SECTION: GRAPH -->
+<div id="section-graph" class="section">
+<div class="container">
+  <div class="section-title">Organizational Decision Graph</div>
+  <div class="section-desc">Nodes represent roles. Edge color indicates relationship type. Node size reflects connectivity degree. Drag nodes to explore.</div>
+
+  <div class="graph-legend">
+    <div class="legend-item"><div class="legend-dot" style="background:#2563eb"></div> Supply Chain (Corporate)</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#7c3aed"></div> Procurement</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#059669"></div> Manufacturing</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#d97706"></div> Finance</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#0891b2"></div> Logistics</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#dc2626"></div> Engineering</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#16a34a"></div> Plant Ops</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#8b5cf6"></div> Analytics</div>
+  </div>
+  <div class="graph-legend">
+    <div class="legend-item"><div class="legend-line" style="background:#94a3b8"></div> Reporting Line</div>
+    <div class="legend-item"><div class="legend-line" style="background:#2563eb;opacity:0.6"></div> Meeting Co-attendance</div>
+    <div class="legend-item"><div class="legend-line" style="background:#dc2626"></div> KPI Conflict</div>
+    <div class="legend-item"><div class="legend-line" style="background:#d97706"></div> Decision Interdependency</div>
+  </div>
+
+  <svg id="graph-svg"></svg>
+  <div class="interpretation">The graph reveals a hub-and-spoke topology centered on N01 (Michael Chen), with thin bridges between Engineering (N12), Georgetown (N05), and the rest of the network. KPI conflict edges (red) cluster heavily between Finance (N10), Procurement (N02), and Supply Chain leadership — confirming the cost-vs-resilience fault line as the most structurally embedded tension.</div>
+</div>
+</div>
+
+<!-- SECTION: DECISIONS -->
+<div id="section-decisions" class="section">
+<div class="container">
+  <div class="section-title">Decision Inventory</div>
+  <div class="section-desc">⚠ flags contested or ambiguous ownership. 7 of 14 decisions lack a clear single owner with both authority and accountability.</div>
+  <div style="display:flex;gap:10px;margin-bottom:14px;flex-wrap:wrap;">
+    <span style="font-size:12px;color:#475569;">Key:</span>
+    <span class="badge badge-green">Clear</span>
+    <span class="badge badge-red">Contested</span>
+    <span class="badge badge-violet">Ambiguous</span>
+    <span style="font-size:12px;color:#475569;margin-left:4px;">|</span>
+    <span class="badge badge-blue">Strategic</span>
+    <span class="badge badge-cyan">Operational</span>
+    <span class="badge badge-gray">Transactional</span>
+  </div>
+  <div class="table-wrap">
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Decision</th>
+          <th>Primary Owner</th>
+          <th>Co-Owners / Influencers</th>
+          <th>Type</th>
+          <th>Freq.</th>
+          <th>Meeting Venue</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody id="decision-tbody"></tbody>
+    </table>
+  </div>
+</div>
+</div>
+
+<!-- SECTION: MEETINGS -->
+<div id="section-meetings" class="section">
+<div class="container">
+  <div class="section-title">Meeting Map</div>
+  <div class="section-desc">All 13 recurring meetings catalogued by decision-producing capacity. Color of left border indicates classification.</div>
+  <div style="display:flex;gap:16px;flex-wrap:wrap;margin-bottom:16px;font-size:12px;">
+    <span style="display:flex;align-items:center;gap:6px;"><span style="width:12px;height:12px;background:#059669;border-radius:2px;display:inline-block"></span>Decision-Producing</span>
+    <span style="display:flex;align-items:center;gap:6px;"><span style="width:12px;height:12px;background:#2563eb;border-radius:2px;display:inline-block"></span>Mixed</span>
+    <span style="display:flex;align-items:center;gap:6px;"><span style="width:12px;height:12px;background:#dc2626;border-radius:2px;display:inline-block"></span>Overdense</span>
+    <span style="display:flex;align-items:center;gap:6px;"><span style="width:12px;height:12px;background:#d97706;border-radius:2px;display:inline-block"></span>Underdense</span>
+    <span style="display:flex;align-items:center;gap:6px;"><span style="width:12px;height:12px;background:#94a3b8;border-radius:2px;display:inline-block"></span>Performative</span>
+    <span style="display:flex;align-items:center;gap:6px;"><span style="width:12px;height:12px;background:#cbd5e1;border-radius:2px;display:inline-block"></span>Defunct</span>
+  </div>
+  <div class="meeting-grid" id="meeting-grid"></div>
+  <div class="interpretation" style="margin-top:8px;">The Supply Resilience Working Group (defunct since 2022) is the clearest structural gap: it was the only cross-functional forum with a mandate to govern proactive supplier risk. Its dissolution leaves supplier risk governance absorbed but unresolved across S&OP and commodity reviews that are not designed for it.</div>
+</div>
+</div>
+
+<!-- SECTION: KPI CONFLICTS -->
+<div id="section-kpi" class="section">
+<div class="container">
+  <div class="section-title">KPI Conflict Analysis</div>
+  <div class="section-desc">Seven identified KPI pairs where one person's performance metric directly undermines another's. Severity rated High / Medium.</div>
+  <div id="kpi-conflicts"></div>
+  <div class="interpretation">The most systemic pattern is the asymmetry between hard cost KPIs (PPV %, cost realization %, carrying cost %) on the Finance/Procurement axis versus soft directional risk indicators (resilience score, supply risk score) on the Supply Chain side. In any resource conversation, hard numbers win by default — meaning resilience arguments lose structurally, not on merit.</div>
+</div>
+</div>
+
+<!-- SECTION: FAULT LINES -->
+<div id="section-faultlines" class="section">
+<div class="container">
+  <div class="section-title">Fault Line Analysis</div>
+  <div class="section-desc">Six major organizational tensions identified from cross-interview evidence. Each fault line cuts across multiple decision domains.</div>
+  <div id="fault-lines"></div>
+</div>
+</div>
+
+<!-- SECTION: OPPORTUNITIES -->
+<div id="section-opportunities" class="section">
+<div class="container">
+  <div class="section-title">Opportunity Zones</div>
+  <div class="section-desc">Eight structural gaps, bottlenecks, or ownership vacuums identified from the decision graph — framed as diagnostic questions, not prescriptive recommendations.</div>
+  <div class="opp-grid" id="opp-grid"></div>
+</div>
+</div>
+
+<!-- SECTION: PROFILES -->
+<div id="section-profiles" class="section">
+<div class="container">
+  <div class="section-title">Interview Profiles</div>
+  <div class="section-desc">Structured profiles for 12 of 13 interviewees. Each placed precisely in the organizational graph with key connections, KPIs, pain points, and workarounds.</div>
+  <div id="profiles-container"></div>
+</div>
+</div>
+
+<script>
+// ─── NAV ───────────────────────────────────────────────────────────────────
+function showSection(id) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('section-' + id).classList.add('active');
+  event.target.classList.add('active');
+  if (id === 'graph') setTimeout(initGraph, 50);
+}
+
+// ─── DEGREE BARS ────────────────────────────────────────────────────────────
+const nodeData = [
+  { id:'N01', name:'Michael Chen', title:'VP Supply Chain', degree:14, color:'#2563eb' },
+  { id:'N02', name:'Sarah Martinez', title:'Dir. Procurement', degree:12, color:'#7c3aed' },
+  { id:'N08', name:'Lisa Morrison', title:'Dir. Production Planning', degree:10, color:'#059669' },
+  { id:'N04', name:'Jennifer Holt', title:'Dir. Supplier Dev.', degree:10, color:'#7c3aed' },
+  { id:'N06', name:'Patricia Lau', title:'Dir. Logistics', degree:9, color:'#0891b2' },
+  { id:'N07', name:'Robert Park', title:'S&OP Lead', degree:9, color:'#2563eb' },
+  { id:'N09', name:'James Mueller', title:'VP Manufacturing', degree:9, color:'#059669' },
+  { id:'N10', name:'Rajesh Patel', title:'Dir. SC Finance', degree:8, color:'#d97706' },
+  { id:'N03', name:'David Okafor', title:'Commodity Mgr.', degree:8, color:'#7c3aed' },
+  { id:'N11', name:'Amara Okonkwo', title:'Sr. Mgr. Analytics', degree:7, color:'#8b5cf6' },
+  { id:'N05', name:'Marcus Thompson', title:'Plant SC Mgr.', degree:7, color:'#16a34a' },
+  { id:'N12', name:'Dr. G. Chen', title:'Dir. Engineering', degree:7, color:'#dc2626' },
+];
+
+const dbWrap = document.getElementById('degree-bars');
+const maxDeg = 14;
+nodeData.forEach(n => {
+  const row = document.createElement('div');
+  row.className = 'degree-bar-row';
+  row.innerHTML = `<div class="degree-bar-label">${n.name}</div>
+    <div class="degree-bar-track">
+      <div class="degree-bar-fill" style="width:${(n.degree/maxDeg)*100}%;background:${n.color};">
+        <span class="degree-bar-num">${n.degree}</span>
+      </div>
+    </div>`;
+  dbWrap.appendChild(row);
+});
+
+// ─── OWNERSHIP PIE ──────────────────────────────────────────────────────────
+(function(){
+  const c = document.getElementById('ownership-chart');
+  if (!c) return;
+  c.width = c.parentElement.clientWidth || 380;
+  c.height = 220;
+  const ctx = c.getContext('2d');
+  const data = [
+    { label:'Clear Ownership', val:7, color:'#059669' },
+    { label:'Contested', val:4, color:'#dc2626' },
+    { label:'Ambiguous/Unassigned', val:3, color:'#7c3aed' }
+  ];
+  const cx = c.width/2, cy = 100, r = 80;
+  let start = -Math.PI/2;
+  const total = data.reduce((s,d)=>s+d.val,0);
+  data.forEach(d => {
+    const angle = (d.val/total)*2*Math.PI;
+    ctx.beginPath(); ctx.moveTo(cx,cy);
+    ctx.arc(cx,cy,r,start,start+angle);
+    ctx.closePath(); ctx.fillStyle=d.color; ctx.fill();
+    ctx.strokeStyle='white'; ctx.lineWidth=2; ctx.stroke();
+    start += angle;
+  });
+  // center
+  ctx.beginPath(); ctx.arc(cx,cy,40,0,2*Math.PI);
+  ctx.fillStyle='white'; ctx.fill();
+  ctx.fillStyle='#1e293b'; ctx.font='bold 18px system-ui';
+  ctx.textAlign='center'; ctx.textBaseline='middle';
+  ctx.fillText('14', cx, cy-6);
+  ctx.font='10px system-ui'; ctx.fillStyle='#64748b';
+  ctx.fillText('decisions', cx, cy+10);
+  // legend
+  let lx = 10, ly = 192;
+  data.forEach(d => {
+    ctx.fillStyle=d.color;
+    ctx.fillRect(lx,ly,12,12);
+    ctx.fillStyle='#475569'; ctx.font='11px system-ui'; ctx.textAlign='left'; ctx.textBaseline='top';
+    ctx.fillText(`${d.label} (${d.val})`, lx+16, ly+1);
+    lx += ctx.measureText(`${d.label} (${d.val})`).width + 28;
+    if (lx > c.width - 80) { lx=10; ly+=16; }
+  });
+})();
+
+// ─── MEETING BAR CHART ─────────────────────────────────────────────────────
+(function(){
+  const c = document.getElementById('meeting-chart');
+  if (!c) return;
+  c.width = c.parentElement.clientWidth || 900;
+  c.height = 180;
+  const ctx = c.getContext('2d');
+  const cats = [
+    { label:'Decision-Producing', count:5, color:'#059669' },
+    { label:'Mixed', count:3, color:'#2563eb' },
+    { label:'Overdense', count:1, color:'#dc2626' },
+    { label:'Underdense', count:2, color:'#d97706' },
+    { label:'Performative', count:1, color:'#94a3b8' },
+    { label:'Defunct', count:1, color:'#cbd5e1' },
+  ];
+  const barW = Math.min(90, (c.width - 40)/(cats.length+1));
+  const barGap = (c.width - 40 - barW*cats.length) / (cats.length+1);
+  const maxH = 110;
+  const maxV = 5;
+  ctx.fillStyle='#f1f5f9';
+  ctx.fillRect(0,0,c.width,c.height);
+  // gridlines
+  for(let i=0;i<=5;i++){
+    const y = 140 - (i/maxV)*maxH;
+    ctx.strokeStyle='#e2e8f0'; ctx.lineWidth=1;
+    ctx.beginPath(); ctx.moveTo(30,y); ctx.lineTo(c.width-10,y); ctx.stroke();
+    ctx.fillStyle='#94a3b8'; ctx.font='10px system-ui'; ctx.textAlign='right'; ctx.textBaseline='middle';
+    ctx.fillText(i, 24, y);
+  }
+  cats.forEach((cat,i) => {
+    const x = 30 + barGap*(i+1) + barW*i;
+    const h = (cat.count/maxV)*maxH;
+    const y = 140 - h;
+    // shadow
+    ctx.fillStyle='rgba(0,0,0,0.06)';
+    ctx.fillRect(x+3, y+3, barW, h);
+    ctx.fillStyle=cat.color;
+    ctx.fillRect(x, y, barW, h);
+    // count
+    ctx.fillStyle='#1e293b'; ctx.font='bold 13px system-ui'; ctx.textAlign='center'; ctx.textBaseline='bottom';
+    ctx.fillText(cat.count, x+barW/2, y-2);
+    // label
+    ctx.fillStyle='#475569'; ctx.font='10px system-ui'; ctx.textBaseline='top';
+    const words = cat.label.split(' ');
+    words.forEach((w,wi) => ctx.fillText(w, x+barW/2, 145 + wi*13));
+  });
+  // axis label
+  ctx.save(); ctx.translate(10, 80); ctx.rotate(-Math.PI/2);
+  ctx.fillStyle='#64748b'; ctx.font='11px system-ui'; ctx.textAlign='center';
+  ctx.fillText('# of Meetings', 0, 0); ctx.restore();
+})();
+
+// ─── DECISION INVENTORY ────────────────────────────────────────────────────
+const decisions = [
+  { name:'Enterprise supplier selection (direct materials)', owner:'Sarah Martinez', co:'Michael Chen; Jennifer Holt; Patricia Lau', type:'Strategic', freq:'Ad hoc', venue:'Strategic Sourcing Review', status:'Clear' },
+  { name:'⚠ Semiconductor dual-sourcing rationalization', owner:'Contested: Chen / Patel', co:'Martinez; Okafor; HQ VP SC (informal veto)', type:'Strategic', freq:'Annual', venue:'No dedicated forum', status:'Contested' },
+  { name:'⚠ Safety stock level-setting (strategic components)', owner:'Michael Chen (claims)', co:'Rajesh Patel; Marcus Thompson', type:'Operational', freq:'Quarterly', venue:'S&OP; QBR', status:'Contested' },
+  { name:'Commodity contract renewal (semiconductors)', owner:'David Okafor', co:'Sarah Martinez; Michael Chen', type:'Operational', freq:'Ad hoc', venue:'Commodity Review', status:'Clear' },
+  { name:'⚠ Emergency / exception local sourcing (plant)', owner:'Marcus Thompson (practice)', co:'James Mueller (tacit); Michael Chen (formal)', type:'Operational', freq:'Ad hoc', venue:'No formal forum', status:'Contested' },
+  { name:'Supplier watch-list designation', owner:'Jennifer Holt', co:'Sarah Martinez; commodity manager', type:'Operational', freq:'Monthly trigger', venue:'Monthly Commodity Review', status:'Clear' },
+  { name:'⚠ Cross-functional supplier risk governance', owner:'Unassigned', co:'Holt (proposed); Chen M.; Martinez; Mueller', type:'Strategic', freq:'Proposed', venue:'No forum established', status:'Ambiguous' },
+  { name:'Production schedule (S&OP output)', owner:'Lisa Morrison', co:'Robert Park; James Mueller; Michael Chen', type:'Operational', freq:'Monthly', venue:'S&OP Executive Session', status:'Clear' },
+  { name:'⚠ Demand forecast (commercial input)', owner:'Contested: Sarah Chen / Commercial', co:'Robert Park; David Lim (shadow); Tom Bradley (override)', type:'Operational', freq:'Monthly', venue:'S&OP Demand Review', status:'Contested' },
+  { name:'⚠ Engineering change gate approval', owner:'Ambiguous: Dr. G. Chen / David Park', co:'Lisa Morrison; COO Sandra Park', type:'Strategic', freq:'Ad hoc', venue:'Program Mgmt Reviews', status:'Ambiguous' },
+  { name:'Inbound logistics network design', owner:'Patricia Lau', co:'Sarah Martinez; Michael Chen', type:'Strategic', freq:'Annual / ad hoc', venue:'S&OP; Carrier QBRs', status:'Clear' },
+  { name:'⚠ Total landed cost framework (logistics inclusion)', owner:'Unassigned', co:'Patricia Lau (proposed); Sarah Martinez (resistant); Michael Chen', type:'Strategic', freq:'Should be systematic', venue:'No formal trigger', status:'Ambiguous' },
+  { name:'Analytics recommendation adoption', owner:'Function leads (Holt, Morrison, Lau)', co:'Amara Okonkwo (recommends only); Michael Chen', type:'Operational', freq:'Monthly / ad hoc', venue:'Monthly Analytics Review; S&OP', status:'Ambiguous' },
+  { name:'Network optimization (DC repositioning)', owner:'Ambiguous: Chen M. / Lau / Patel', co:'Amara Okonkwo (model owner)', type:'Strategic', freq:'Active workstream', venue:'No dedicated forum', status:'Ambiguous' },
+];
+
+const tbody = document.getElementById('decision-tbody');
+decisions.forEach(d => {
+  const tr = document.createElement('tr');
+  if (d.status==='Contested') tr.className='contested-row';
+  if (d.status==='Ambiguous') tr.className='ambiguous-row';
+  const statusBadge = d.status==='Clear' ? 'badge-green' : d.status==='Contested' ? 'badge-red' : 'badge-violet';
+  const typeBadge = d.type==='Strategic' ? 'badge-blue' : d.type==='Operational' ? 'badge-cyan' : 'badge-gray';
+  tr.innerHTML = `
+    <td style="color:#94a3b8;font-size:11px;">${decisions.indexOf(d)+1}</td>
+    <td style="font-weight:600;font-size:12px;max-width:200px;">${d.name}</td>
+    <td style="font-size:12px;">${d.owner}</td>
+    <td style="font-size:11px;color:#475569;max-width:180px;">${d.co}</td>
+    <td><span class="badge ${typeBadge}">${d.type}</span></td>
+    <td style="font-size:11px;color:#64748b;white-space:nowrap;">${d.freq}</td>
+    <td style="font-size:11px;color:#475569;">${d.venue}</td>
+    <td><span class="badge ${statusBadge}">${d.status}</span></td>
+  `;
+  tbody.appendChild(tr);
+});
+
+// ─── MEETINGS ──────────────────────────────────────────────────────────────
+const meetings = [
+  { name:'Executive S&OP', freq:'Monthly', cls:'overdense', badge:'Overdense', attendees:'M. Chen (chair), R. Park, L. Morrison, J. Mueller, P. Lau, A. Okonkwo, Sales reps', output:'Production plan approval, inventory sign-off, escalated forecast disputes', issue:'Forecast accountability systematically avoided; too many competing agenda items' },
+  { name:'S&OP Demand Review', freq:'Monthly (pre-Executive S&OP)', cls:'underdense', badge:'Underdense', attendees:'R. Park (facilitator), D. Lim, S. Chen (commercial)', output:'Demand forecast input to production plan', issue:'Shadow forecast adjustments happen outside this forum; no formal accountability' },
+  { name:'Monthly Commodity Review', freq:'Monthly', cls:'mixed', badge:'Mixed', attendees:'S. Martinez (chair), D. Okafor, J. Holt (when risk present)', output:'Commodity strategy updates, watch-list flags, sourcing triggers', issue:'Medium-priority risk items lack follow-through to action' },
+  { name:'Biweekly Production-Logistics Touchpoint', freq:'Biweekly', cls:'decision-producing', badge:'Decision-Producing', attendees:'L. Morrison, P. Lau (4–5 each side)', output:'Expedite requests, revised delivery windows, supplier constraint escalations', issue:'' },
+  { name:'Plant Operations Weekly Meeting', freq:'Weekly', cls:'decision-producing', badge:'Decision-Producing', attendees:'M. Thompson, Plant Manager Georgetown, manufacturing leadership', output:'Supply-production alignment, supplier escalation flags', issue:'Plant-only; no Plano participation — decisions invisible to corporate' },
+  { name:'Daily Stand-Up (Georgetown)', freq:'Daily', cls:'decision-producing', badge:'Decision-Producing', attendees:'M. Thompson, inbound logistics supervisors, line-side supervisors', output:'Expedite calls, safety stock draws, delivery exception handling', issue:'' },
+  { name:'Executive Operations Council', freq:'Monthly', cls:'underdense', badge:'Underdense', attendees:'COO Sandra Park (chair), J. Mueller, M. Chen, L. Morrison, peers', output:'Resource allocation, cross-functional priority alignment', issue:'No formal decision log; supply chain–engineering tensions not on agenda' },
+  { name:'Plant Manager Quarterly Meeting', freq:'Quarterly', cls:'underdense', badge:'Underdense', attendees:'J. Mueller (chair), all NA plant managers', output:'Operational performance, standards, best practice sharing', issue:'Exception sourcing protocol not addressed; underdense on supply chain topics' },
+  { name:'Monthly Analytics Review', freq:'Monthly', cls:'performative', badge:'Performative', attendees:'A. Okonkwo (chair), function leads (variable attendance)', output:'Analytics KPI updates — awareness only', issue:'No decisions produced; attendance inconsistent; not connected to decision flow' },
+  { name:'Carrier Quarterly Business Reviews', freq:'Quarterly', cls:'decision-producing', badge:'Decision-Producing', attendees:'P. Lau (owner), carrier partners', output:'Carrier scorecards, contract adjustments, performance improvement plans', issue:'' },
+  { name:'Program Management Reviews', freq:'Monthly', cls:'decision-producing', badge:'Decision-Producing', attendees:'Dr. G. Chen, program managers (incl. D. Park), CPO', output:'Gate approvals/holds, late change log review', issue:'Engineering–supply chain notification gap not addressed in this forum' },
+  { name:'Design-for-Manufacturability Sessions', freq:'Quarterly', cls:'mixed', badge:'Mixed', attendees:'Dr. G. Chen, Rachel Huang (procurement rep), mfg rep', output:'Design simplification, tooling decisions', issue:'Supply chain strategic participation below seniority needed; attendance inconsistent' },
+  { name:'Supply Resilience Working Group', freq:'DEFUNCT (was biweekly 2021–22)', cls:'defunct', badge:'Defunct', attendees:'M. Chen (chair), D. Okafor, logistics, manufacturing, finance (observer)', output:'Supplier risk profiles, scenario modeling — now inactive', issue:'Only cross-functional proactive risk forum; disbanded post-shortage normalization' },
+];
+
+const mgrid = document.getElementById('meeting-grid');
+meetings.forEach(m => {
+  const div = document.createElement('div');
+  div.className = `meeting-card ${m.cls}`;
+  const badgeColor = {
+    'Decision-Producing':'badge-green','Mixed':'badge-blue','Overdense':'badge-red',
+    'Underdense':'badge-amber','Performative':'badge-gray','Defunct':'badge-gray'
+  }[m.badge]||'badge-gray';
+  div.innerHTML = `
+    <h4>${m.name}</h4>
+    <div class="freq">📅 ${m.freq} &nbsp; <span class="badge ${badgeColor}">${m.badge}</span></div>
+    <div class="attendees">👥 ${m.attendees}</div>
+    <div class="output">📋 ${m.output}</div>
+    ${m.issue ? `<div class="issue">⚠ ${m.issue}</div>` : ''}
+  `;
+  mgrid.appendChild(div);
+});
+
+// ─── KPI CONFLICTS ─────────────────────────────────────────────────────────
+const kpiConflicts = [
+  {
+    a:{ owner:'Rajesh Patel (Finance)', metric:'Inventory Carrying Cost <18% of procurement spend' },
+    b:{ owner:'Michael Chen (VP SC)', metric:'Supply Chain Resilience Score (dual-source %, safety stock coverage)' },
+    desc:'Reducing safety stock and consolidating to single-source improves working capital but degrades resilience. Optimizing resilience inflates carrying cost. Neither party can win on their own metric without harming the other.',
+    domains:['Semiconductor dual-sourcing','Safety stock level-setting','2025 operating plan'],
+    severity:'High'
+  },
+  {
+    a:{ owner:'Sarah Martinez (Procurement)', metric:'PPV reduction 3% YoY on direct materials' },
+    b:{ owner:'Patricia Lau (Logistics)', metric:'Freight Cost <5% of total procurement spend' },
+    desc:"Procurement's unit cost optimization (supplier consolidation, offshore sourcing) increases freight complexity and expedite premiums. The cost appears in Lau's scorecard but not Martinez's — creating misaligned incentives with no neutral arbiter.",
+    domains:['Supplier location decisions','Logistics inclusion in sourcing','Dual-source network cost'],
+    severity:'High'
+  },
+  {
+    a:{ owner:'Rajesh Patel (Finance)', metric:'Procurement Cost Realization 90% of committed savings' },
+    b:{ owner:'David Okafor (Procurement)', metric:'Supply Risk Score (composite, directional)' },
+    desc:"Dual-sourcing premium compresses realized savings (metric is numeric and hard-tracked). Risk score justification is directional and carries no dollar target — it loses every budget argument by structure, not merit.",
+    domains:['Dual-source contract flexibility','Volume exclusivity trade-offs'],
+    severity:'High'
+  },
+  {
+    a:{ owner:'James Mueller (VP Manufacturing)', metric:'OEE ≥95% / Zero Line Stoppages' },
+    b:{ owner:'Michael Chen (VP SC)', metric:'On-time Delivery to Plants ≥98% / Total Landed Cost –2%' },
+    desc:"Mueller's OEE mandate creates pressure for exception local sourcing at plant level that violates enterprise supplier agreements, undermining Chen's cost and compliance targets. Both VPs tacitly endorse a workaround rather than escalating.",
+    domains:['Emergency exception sourcing (Georgetown)','Enterprise supplier agreement compliance'],
+    severity:'Medium'
+  },
+  {
+    a:{ owner:'Robert Park (S&OP)', metric:'Forecast Accuracy ±10% at model level (monthly)' },
+    b:{ owner:'Tom Bradley (VP Sales)', metric:'No formal forecast accuracy KPI on commercial side' },
+    desc:'Supply chain carries accountability for a metric substantially driven by commercial inputs that commercial leadership is not measured on. This asymmetry makes the demand review a one-way accountability mechanism — Park can be penalized; Bradley cannot.',
+    domains:['Demand review credibility','Shadow forecasting','Production plan variance'],
+    severity:'High'
+  },
+  {
+    a:{ owner:'Lisa Morrison (Production Planning)', metric:'Production Plan Variance <3% month over month' },
+    b:{ owner:'Dr. Gregory Chen (Engineering)', metric:"Program Schedule Attainment 90% gate-based" },
+    desc:"Engineering's gate attainment metric does not penalize late changes that occur after design freeze. Changes slipping post-freeze create plan variance for Morrison — recorded as a supply chain failure — but register as on-time for Chen's scorecard.",
+    domains:['Engineering change gate enforcement','Production plan variance accountability'],
+    severity:'High'
+  },
+  {
+    a:{ owner:'Amara Okonkwo (Analytics)', metric:'Forecast MAPE improvement –15pp vs. commercial forecast' },
+    b:{ owner:'Robert Park (S&OP)', metric:'S&OP Process Compliance 95%' },
+    desc:"Okonkwo's model outperforms the commercial forecast (her KPI), but planners informally use shadow adjustments rather than formally adopting her output. Park cannot surface this compliance gap without exposing the shadow forecasting practice he has chosen not to escalate.",
+    domains:['Demand sensing adoption','S&OP process integrity'],
+    severity:'Medium'
+  },
+];
+
+const kpiContainer = document.getElementById('kpi-conflicts');
+kpiConflicts.forEach(c => {
+  const div = document.createElement('div');
+  div.className = 'conflict-card';
+  const sev = c.severity === 'High' ? 'badge-red' : 'badge-amber';
+  div.innerHTML = `
+    <div class="conflict-vs">
+      <div class="kpi-box"><div class="owner">${c.a.owner}</div><div class="metric">${c.a.metric}</div></div>
+      <div><div class="vs-circle">VS</div></div>
+      <div class="kpi-box"><div class="owner">${c.b.owner}</div><div class="metric">${c.b.metric}</div></div>
+    </div>
+    <div class="conflict-desc">${c.desc}</div>
+    <div class="conflict-meta">
+      <span class="badge ${sev}">Severity: ${c.severity}</span>
+      ${c.domains.map(d=>`<span class="badge badge-gray">${d}</span>`).join('')}
+    </div>
+  `;
+  kpiContainer.appendChild(div);
+});
+
+// ─── FAULT LINES ──────────────────────────────────────────────────────────
+const faultLines = [
+  {
+    title:'Plant Operations vs. Corporate Procurement',
+    body:'Marcus Thompson exercises de facto emergency sourcing authority at Georgetown that bypasses enterprise supplier agreements. James Mueller tacitly endorses this as an operational necessity. Sarah Martinez has quantified one consequence: a ~$400K annual pricing tier shortfall from Princeton plant non-compliance with a fastener enterprise agreement.',
+    quote:'"What I own outright... emergency local sourcing when the schedule is at risk. That last one is technically in a gray zone formally, but operationally I own it because I\'m the one who has to keep the plant running." — Marcus Thompson',
+    domains:['Exception sourcing','Enterprise agreement compliance','Plant safety stock'],
+    prevalence:'6 of 12 interviews'
+  },
+  {
+    title:'Finance vs. Supply Chain on Resilience Investment',
+    body:'Hard cost KPIs (carrying cost %, cost realization %) systematically outweigh soft resilience indicators (resilience score, supply risk composite) in budget and governance conversations. The 2025 operating plan requires a resolved position on semiconductor dual-sourcing by late October, but the analytical framework to make that decision is not resourced.',
+    quote:'"The CFO\'s chief of staff pushed back... if lead times had normalized, the risk justification for the slow drawdown wasn\'t there." — Rajesh Patel',
+    domains:['Semiconductor dual-sourcing','Safety stock levels','2025 operating plan'],
+    prevalence:'7 of 12 interviews'
+  },
+  {
+    title:'HQ Japan vs. North America Decision Rights',
+    body:'Strategic decisions are shaped by anticipated HQ reaction before they become formal proposals. The dual-sourcing expansion was walked back via informal bilateral call with the HQ VP of Supply Chain — not through any formal governance process. North American autonomy is real on operational matters but illusory on strategic investment decisions.',
+    quote:'"Nobody puts a block in writing if they can avoid it — you have a conversation, the message lands, and the decision adjusts." — Michael Chen',
+    domains:['Dual-sourcing investment scale','Strategic safety stock philosophy','Supplier qualification thresholds'],
+    prevalence:'4 of 12 interviews'
+  },
+  {
+    title:'Engineering vs. Supply Chain on ECN Lead Times',
+    body:'Late engineering changes create production plan variance for Lisa Morrison but register as on-time for Dr. Gregory Chen\'s gate attainment metric. A proposed formal engineering change gate requiring supply chain approval has been discussed for over a year without becoming a formal governance proposal. Jennifer Holt has quantified expedited freight costs from ECN-driven retrofits.',
+    quote:'"There\'s no formal gate process to prevent it from happening again. I can flag it, I can escalate to Michael, but I don\'t have an enforcement mechanism." — Lisa Morrison',
+    domains:['Engineering change gate enforcement','Production plan variance','Supplier lead time commitments'],
+    prevalence:'5 of 12 interviews'
+  },
+  {
+    title:'TPS-Trained Cohort vs. Digital/Analytics Cohort',
+    body:"Amara Okonkwo's demand sensing model demonstrably outperforms the commercial forecast, but planners reject it citing tacit institutional knowledge. Robert Park has knowingly refrained from formally surfacing the shadow forecasting practice for 18 months. The analytics function is structurally subordinated within planning's S&OP section rather than presented as an independent input.",
+    quote:'"The model doesn\'t know what we know about those customer conversations." — Senior planner (as reported by Okonkwo)',
+    domains:['Demand forecast adoption','Analytics recommendation adoption','S&OP process integrity'],
+    prevalence:'4 of 12 interviews'
+  },
+  {
+    title:'Procurement vs. Logistics on Total Landed Cost',
+    body:"Patricia Lau was brought in after semiconductor dual-sourcing decision was essentially made. Procurement's scorecard excludes freight cost, removing the incentive to involve logistics pre-decision. A cross-functional sourcing review protocol exists in policy but is inconsistently applied — particularly when procurement is moving quickly.",
+    quote:'"My role was implementation, not input. By the time I saw the supplier selection, the logistics cost was already baked in." — Patricia Lau',
+    domains:['Total landed cost framework','Logistics inclusion in sourcing','Network cost optimization'],
+    prevalence:'5 of 12 interviews'
+  },
+];
+
+const flContainer = document.getElementById('fault-lines');
+faultLines.forEach((f,i) => {
+  const div = document.createElement('div');
+  div.className = 'fault-card';
+  div.innerHTML = `
+    <div class="fault-header">
+      <div class="fault-num">${i+1}</div>
+      <div class="fault-title">${f.title}</div>
+    </div>
+    <div class="fault-body">${f.body}</div>
+    <div class="fault-quote">${f.quote}</div>
+    <div class="fault-prevalence">
+      <span class="badge badge-red" style="margin-right:8px;">Surfaced in ${f.prevalence}</span>
+      ${f.domains.map(d=>`<span class="badge badge-gray" style="margin-right:4px;">${d}</span>`).join('')}
+    </div>
+  `;
+  flContainer.appendChild(div);
+});
+
+// ─── OPPORTUNITY ZONES ────────────────────────────────────────────────────
+const opps = [
+  {
+    title:'S&OP Forecast Accountability Gap',
+    desc:'A systematic commercial over-forecast has been documented for at least three consecutive months with identified root cause, yet no action owner has been captured in the decision log.',
+    q:'What would need to change in S&OP governance — agenda design, decision documentation, or attendee accountability — for the forecast accuracy gap to produce a named corrective action rather than a bilaterally managed side conversation?'
+  },
+  {
+    title:'Shadow Forecast Legitimacy Question',
+    desc:'Senior planners systematically adjust commercial forecasts downward before production decisions. The S&OP Process Lead has knowingly refrained from surfacing this practice for ~18 months.',
+    q:'Is the shadow forecast a symptom of a broken commercial forecasting process that should be formalized and governed, or an informal quality control mechanism the organization depends on but cannot officially sanction?'
+  },
+  {
+    title:'Resilience Investment Framework Absence',
+    desc:'The 2025 operating plan requires a resolved position on semiconductor dual-sourcing premiums by late October. The analytical framework and cross-functional team needed have not been mobilized.',
+    q:'Is the absence of a shared risk-adjusted framework

@@ -8,6 +8,9 @@ b) A complete system prompt that will make a language model embody this person i
 
 Write each persona's system prompt yourself — do not use templates. Each prompt should encode the character's voice, opinions, communication patterns, emotional state, and consistency rules.
 
+CRITICAL — every persona system prompt MUST include this instruction:
+"Keep your responses concise and natural — answer the question asked in 2–4 paragraphs maximum. Do not volunteer long monologues. Real people in interviews give focused answers and wait for the next question. If a topic requires detail, give the key points and let the interviewer probe deeper."
+
 The persona should NOT know it is being interviewed by an AI. It believes it is a real person in a research interview.
 
 Also write a design rationale: why these personas, what perspectives they represent, and what range of views they collectively cover.

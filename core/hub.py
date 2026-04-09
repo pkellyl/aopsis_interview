@@ -1,6 +1,7 @@
 """System state hub. The only shared dependency. All modules access state through this."""
 
 import json
+import threading
 from pathlib import Path
 from datetime import datetime, timezone
 
@@ -8,12 +9,14 @@ DATA_DIR = Path(__file__).parent.parent / "data"
 STATE_PATH = DATA_DIR / "state.json"
 
 _state = None
+_lock = threading.Lock()
 
 
 def _initial_state():
     """Return a fresh system state."""
     return {
         "phase": "idle",
+        "pending_phase": None,
         "agents": {},
         "events": [],
         "system_log": [],
@@ -44,8 +47,9 @@ def load():
 def save():
     """Persist current state to disk."""
     DATA_DIR.mkdir(exist_ok=True)
-    with open(STATE_PATH, "w") as f:
-        json.dump(_state, f, indent=2, default=str)
+    with _lock:
+        with open(STATE_PATH, "w") as f:
+            json.dump(_state, f, indent=2, default=str)
 
 
 def get_state():
@@ -58,13 +62,15 @@ def get_state():
 def set_state(data: dict):
     """Replace in-memory state."""
     global _state
-    _state = data
+    with _lock:
+        _state = data
 
 
 def reset():
     """Reset to initial state."""
     global _state
-    _state = _initial_state()
+    with _lock:
+        _state = _initial_state()
     save()
     return _state
 
@@ -74,18 +80,19 @@ def reset():
 def register_agent(agent_id, agent_type, system_prompt, model_tier="balanced",
                    created_by=None, metadata=None):
     """Register a new agent in state."""
-    state = get_state()
-    state["agents"][agent_id] = {
-        "id": agent_id,
-        "type": agent_type,
-        "model_tier": model_tier,
-        "system_prompt": system_prompt,
-        "messages": [],
-        "status": "active",
-        "created_by": created_by,
-        "created_at": datetime.now(timezone.utc).isoformat(),
-        "metadata": metadata or {}
-    }
+    with _lock:
+        state = get_state()
+        state["agents"][agent_id] = {
+            "id": agent_id,
+            "type": agent_type,
+            "model_tier": model_tier,
+            "system_prompt": system_prompt,
+            "messages": [],
+            "status": "active",
+            "created_by": created_by,
+            "created_at": datetime.now(timezone.utc).isoformat(),
+            "metadata": metadata or {}
+        }
     save()
     return state["agents"][agent_id]
 
@@ -102,24 +109,26 @@ def get_all_agents():
 
 def append_message(agent_id, role, content):
     """Append a message to an agent's history."""
-    agent = get_agent(agent_id)
-    if agent is None:
-        return None
-    agent["messages"].append({
-        "role": role,
-        "content": content,
-        "timestamp": datetime.now(timezone.utc).isoformat()
-    })
+    with _lock:
+        agent = get_agent(agent_id)
+        if agent is None:
+            return None
+        agent["messages"].append({
+            "role": role,
+            "content": content,
+            "timestamp": datetime.now(timezone.utc).isoformat()
+        })
     save()
     return agent
 
 
 def update_agent_status(agent_id, status):
     """Update an agent's status."""
-    agent = get_agent(agent_id)
-    if agent:
-        agent["status"] = status
-        save()
+    with _lock:
+        agent = get_agent(agent_id)
+        if agent:
+            agent["status"] = status
+    save()
     return agent
 
 
@@ -134,7 +143,8 @@ def add_event(event_type, agent_id=None, summary="", data=None):
         "data": data or {},
         "timestamp": datetime.now(timezone.utc).isoformat()
     }
-    get_state()["events"].append(event)
+    with _lock:
+        get_state()["events"].append(event)
     save()
     return event
 
@@ -148,7 +158,29 @@ def get_phase():
 
 def set_phase(phase):
     """Set current phase."""
-    get_state()["phase"] = phase
+    with _lock:
+        get_state()["phase"] = phase
+    save()
+
+
+# --- Pending phase (gated pipeline) ---
+
+def get_pending_phase():
+    """Return pending phase or None."""
+    return get_state().get("pending_phase")
+
+
+def set_pending_phase(phase):
+    """Store a pending phase transition (gate)."""
+    with _lock:
+        get_state()["pending_phase"] = phase
+    save()
+
+
+def clear_pending_phase():
+    """Clear the pending phase gate."""
+    with _lock:
+        get_state()["pending_phase"] = None
     save()
 
 
@@ -156,7 +188,8 @@ def set_phase(phase):
 
 def set_output(key, value):
     """Set an output value."""
-    get_state()["outputs"][key] = value
+    with _lock:
+        get_state()["outputs"][key] = value
     save()
 
 
@@ -169,13 +202,15 @@ def get_outputs():
 
 def add_system_log(entry):
     """Add entry to system log."""
-    get_state()["system_log"].append(entry)
+    with _lock:
+        get_state()["system_log"].append(entry)
     save()
 
 
 def add_orchestrator_log(entry):
     """Add entry to orchestrator log."""
-    get_state()["orchestrator_log"].append(entry)
+    with _lock:
+        get_state()["orchestrator_log"].append(entry)
     save()
 
 
@@ -191,31 +226,38 @@ def add_transcript(persona_id, persona_name):
         "started_at": datetime.now(timezone.utc).isoformat(),
         "completed_at": None
     }
-    get_state()["outputs"]["transcripts"].append(transcript)
+    with _lock:
+        get_state()["outputs"]["transcripts"].append(transcript)
     save()
     return transcript
 
 
 def append_turn(persona_id, role, content):
     """Append a turn to a running transcript. Role is 'interviewer' or 'persona'."""
-    for t in get_state()["outputs"]["transcripts"]:
-        if t["persona_id"] == persona_id and t["status"] == "running":
-            t["turns"].append({
-                "role": role,
-                "content": content,
-                "timestamp": datetime.now(timezone.utc).isoformat()
-            })
-            save()
-            return t
-    return None
+    with _lock:
+        for t in get_state()["outputs"]["transcripts"]:
+            if t["persona_id"] == persona_id and t["status"] == "running":
+                t["turns"].append({
+                    "role": role,
+                    "content": content,
+                    "timestamp": datetime.now(timezone.utc).isoformat()
+                })
+                break
+        else:
+            return None
+    save()
+    return t
 
 
 def complete_transcript(persona_id):
     """Mark a transcript as complete."""
-    for t in get_state()["outputs"]["transcripts"]:
-        if t["persona_id"] == persona_id and t["status"] == "running":
-            t["status"] = "complete"
-            t["completed_at"] = datetime.now(timezone.utc).isoformat()
-            save()
-            return t
-    return None
+    with _lock:
+        for t in get_state()["outputs"]["transcripts"]:
+            if t["persona_id"] == persona_id and t["status"] == "running":
+                t["status"] = "complete"
+                t["completed_at"] = datetime.now(timezone.utc).isoformat()
+                break
+        else:
+            return None
+    save()
+    return t

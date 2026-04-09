@@ -17,9 +17,9 @@ Thin REST API route wrappers. Each file handles one domain. Routes validate inpu
 
 | File | Purpose | Depends On |
 |------|---------|------------|
-| `config_routes.py` | GET/PUT /api/config | `config` |
-| `state_routes.py` | GET /api/state, /api/agents, /api/export/{full,personas,transcripts,transcript/:id}, POST /api/reset | `core.hub`, `core.agent_runtime` |
-| `chat_routes.py` | POST /api/start, /api/chat, /api/command | `config`, `core.hub`, `core.agent_runtime` |
+| `config_routes.py` | GET/PUT /api/config, GET /api/prompts, GET/PUT /api/prompts/{name} | `config` |
+| `state_routes.py` | GET /api/state, /api/agents, /api/artifacts/{stage}, /api/artifacts/{stage}/{id}, /api/export/{full,personas,transcripts,transcript/:id}. POST /api/reset, /api/proceed, /api/artifacts/{stage}/upload, /api/artifacts/{stage}/select/{id}, /api/export/run | `core.hub`, `core.agent_runtime`, `core.orchestrator`, `artifact_store`, `export_run` |
+| `chat_routes.py` | POST /api/start, /api/chat, /api/command, /api/upload/brief, /api/upload/personas, /api/synthesize, /api/refine-synthesis, /api/visualize | `config`, `artifact_store`, `core.hub`, `core.agent_runtime`, `core.orchestrator` |
 | `events.py` | SSE endpoint GET /api/events, broadcast function | `queue`, `asyncio`, `json` |
 
 ## Change Checklist

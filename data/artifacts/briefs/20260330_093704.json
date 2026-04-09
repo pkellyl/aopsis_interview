@@ -1,0 +1,74 @@
+{
+  "id": "20260330_093704",
+  "label": "Uploaded",
+  "timestamp": "2026-03-30T09:37:04.818122+00:00",
+  "data": {
+    "id": "20260330_093312",
+    "label": "Clarity Partners",
+    "timestamp": "2026-03-30T09:33:12.615979+00:00",
+    "data": {
+      "context": {
+        "organization_name": "Clarity Partners",
+        "industry": "Professional Services (Management Consulting)",
+        "organization_description": "120-person mid-market consulting firm, 12 years old, recently expanded from 1 office to 3 (NYC, SF, Austin)",
+        "key_dynamics": [
+          "Rapid growth straining culture cohesion",
+          "Competing philosophies: founders (in-person traditionalists) vs. younger partners (hybrid advocates)",
+          "Geographic divide: SF/Austin teams more remote-oriented; NYC headquarters culturally in-office",
+          "Unspoken tension: senior partners worry about junior talent development and mentorship; junior staff worry about overwork and surveillance",
+          "Financial pressure: real estate costs vs. client expectations about junior team availability"
+        ],
+        "known_tensions": [
+          "Generational: Partners (avg age 48) vs. Consultants (avg age 29)",
+          "Geography-based: Headquarters-centric vs. distributed",
+          "Tenure-based: 5+ year veterans more compliant; <2 year staff more resistant",
+          "Function-based: Client-facing staff push back on in-office more; Operations/Finance largely in-office"
+        ]
+      },
+      "interview_objectives": {
+        "research_topic": "Hybrid work policy adoption, experienced barriers, and impact on retention and team dynamics",
+        "primary_research_question": "Why is the 3-day-in-office mandate not being consistently followed, and what would actually drive compliance or policy revision?",
+        "key_themes_to_probe": [
+          "Perceived purpose of in-office time (mentorship? culture? surveillance?)",
+          "Client work realities (can it actually be done better in-office?)",
+          "Who is exempt or non-compliant, and why",
+          "Generational/tenure differences in how people experience the policy",
+          "Hidden costs (turnover, talent recruitment, morale)",
+          "What would make people want to come in, vs. what forces them"
+        ],
+        "depth_criteria": "Move beyond stated compliance reasons into emotional drivers, unspoken concerns, and what people actually think leadership believes vs. what they say"
+      },
+      "interview_output_structure": {
+        "required_topics_per_interview": [
+          "Current hybrid work arrangement (de facto, not de jure)",
+          "Perception of policy purpose and fairness",
+          "Impact on their actual work (productivity, collaboration, client relationships)",
+          "Social/cultural experience of office vs. remote",
+          "Retention sentiment and alternative job consideration",
+          "What leadership 'actually' believes (perception vs. stated reasoning)",
+          "What would change their behavior or the policy"
+        ],
+        "depth_expectation": "30-45 min interviews; allow for contradiction, nuance, off-the-record thinking",
+        "per_interview_deliverable": "Transcript + coded themes + direct quotes capturing the interviewee's perspective and contradictions"
+      },
+      "report_objectives": {
+        "report_type": "Narrative synthesis with segmented findings",
+        "target_audience_for_report": "Executive team (partners) + HR + office management",
+        "output_sections": [
+          "Executive Summary: Key tensions and behavioral reality",
+          "Segmented Findings: By role (partner/senior/junior), geography, tenure",
+          "The Compliance Gap: Where policy and practice diverge and why",
+          "Hidden Costs: Retention risk, recruitment impact, cultural friction",
+          "What Actually Drives Behavior: Incentives, social proof, trust",
+          "Recommendations: Policy revision options and conditions for adoption"
+        ],
+        "focus_areas": [
+          "Surface the generational and geographic divides without taking sides",
+          "Distinguish between stated policy rationale and what people actually believe",
+          "Make visible what's currently invisible (who's leaving, who's struggling, who's gaming it)",
+          "Offer pathways for leadership to address underlying concerns, not just mandate compliance"
+        ]
+      }
+    }
+  }
+}

@@ -1,6 +1,6 @@
 # Architecture — Synthetic Audience Interview System
 
-An agent-first multi-agent research pipeline. A human user converses with a context agent, then an orchestrator autonomously drives persona generation, interview design, and synthetic interviews — all decided by LLM agents, not code.
+An agent-first multi-agent research pipeline. A human user converses with a context agent, then a deterministic pipeline runner drives persona generation, interview design, parallel synthetic interviews, and synthesis — each step directly triggers the next with no LLM orchestrator overhead.
 
 ---
 
@@ -10,8 +10,8 @@ An agent-first multi-agent research pipeline. A human user converses with a cont
 2. **One hub, many spokes.** The hub is the only shared dependency.
 3. **Agent runtime is the glue.** Adding a capability = adding a runtime function.
 4. **Operational after every phase.** System is runnable after each phase.
-5. **Fail gracefully.** Errors are data (events), not crashes. Orchestrator handles recovery.
-6. **Agent-first.** All reasoning, judgment, and decisions by LLM agents. Code handles I/O, routing, storage.
+5. **Fail gracefully.** Errors are data (events), not crashes. Pipeline stops on failure and reports via SSE.
+6. **Agent-first.** Specialist agents handle reasoning (personas, strategy, interviews, synthesis). Pipeline runner handles sequencing.
 7. **Files over databases.** All state is JSON on disk.
 8. **Dynamic model selection.** Agents request capability tiers (fast/balanced/smart/reasoning), resolved to model IDs at runtime.
 
@@ -47,14 +47,18 @@ An agent-first multi-agent research pipeline. A human user converses with a cont
 ### Agent Architecture
 
 ```
-  Orchestrator (watches all events, decides everything)
+  Pipeline Runner (deterministic: resume() → steps in sequence)
        │
        ├── Context Agent (multi-turn, interviews user → produces brief)
        ├── Persona Architect (single-shot, brief → personas + system prompts)
        ├── Interview Designer (single-shot, brief + personas → strategy + interviewer prompt)
        ├── Interview Agent × N (multi-turn, one per persona, prompt from designer)
        ├── Persona Agent × N (multi-turn, one per interview, prompt from architect)
-       └── Quality Reviewer (optional, single-shot, spawned by orchestrator)
+       ├── Synthesis Designer (single-shot, brief → custom synthesis prompt + methodology)
+       ├── Synthesis Agent (single-shot, designer prompt + transcripts → flexible report)
+       ├── Synthesis Refiner (multi-turn, user instructions → refined report)
+       ├── Visualizer (single-shot, synthesis → self-contained HTML visualization, uses extended thinking)
+       └── Quality Reviewer (optional, single-shot)
 ```
 
 ---
@@ -65,11 +69,11 @@ An agent-first multi-agent research pipeline. A human user converses with a cont
 
 ```json
 {
-  "phase": "idle | context_gathering | persona_generation | interviewing | complete",
+  "phase": "idle | context_gathering | persona_generation | interviewing | synthesizing | refining | complete",
   "agents": {
     "<agent_id>": {
       "id": "string",
-      "type": "orchestrator | context | persona_architect | interview_designer | interviewer | persona | quality_reviewer",
+      "type": "context | persona_architect | interview_designer | interviewer | persona | synthesis_designer | synthesis_agent | synthesis_refiner | quality_reviewer",
       "model_tier": "fast | balanced | smart | reasoning",
       "system_prompt": "string",
       "messages": [{"role": "user|assistant", "content": "...", "timestamp": "..."}],
@@ -86,7 +90,11 @@ An agent-first multi-agent research pipeline. A human user converses with a cont
     "brief": null | {},
     "personas": null | {"design_rationale": "...", "personas": [...]},
     "interview_strategy": null | {"interview_strategy": "...", "interviewer_system_prompt": "..."},
-    "transcripts": []
+    "transcripts": [],
+    "synthesis_design": null | {"synthesis_system_prompt": "...", "methodology_notes": "..."},
+    "synthesis": null | {"title": "...", "executive_summary": "...", "sections": [{"heading": "...", "content": "markdown..."}]},
+    "synthesis_history": [{"version": 1, "instruction": "...", "synthesis": {}, "timestamp": "..."}],
+    "visualization": null | "<html>...self-contained HTML string...</html>"
   }
 }
 ```
@@ -99,19 +107,19 @@ Centralized config: model tiers, organization context, runtime settings.
 
 ```json
 {
-  "models": {
-    "fast": "claude-3-5-haiku-20241022",
-    "balanced": "claude-sonnet-4-20250514",
-    "smart": "claude-opus-4-20250514",
-    "reasoning": "claude-opus-4-20250514"
+  "models": { "fast": "...", "balanced": "...", "smart": "...", "reasoning": "..." },
+  "presets": {
+    "test":       { "fast": "...", "balanced": "...", "smart": "...", "reasoning": "..." },
+    "dev":        { "fast": "...", "balanced": "...", "smart": "...", "reasoning": "..." },
+    "production": { "fast": "...", "balanced": "...", "smart": "...", "reasoning": "..." }
   },
-  "organization": {
-    "name": "",
-    "industry": "",
-    "description": ""
-  },
+  "agent_overrides": {},
+  "turn_limits": { "test": 5, "dev": 10, "production": 15 },
+  "organization": { "name": "", "industry": "", "description": "" },
   "max_interview_turns": 15,
-  "default_model_tier": "balanced"
+  "default_model_tier": "balanced",
+  "model_mode": "dev",
+  "max_concurrent_api_calls": 10
 }
 ```
 
@@ -139,7 +147,7 @@ add_event(type, agent_id, summary) Record system event
 get/set_phase(phase)              Phase management
 set_output(key, value)            Store output data
 add_system_log(entry)             Log API call
-add_orchestrator_log(entry)       Log orchestrator decision
+add_orchestrator_log(entry)       Log pipeline decision
 ```
 
 ### 5.2 Agent Runtime (`core/agent_runtime.py`)
@@ -148,7 +156,7 @@ The 5 capabilities that agents operate on:
 
 ```
 create_agent(id, type, prompt, tier) → agent    Register + emit agent_created
-send_message(id, message) → response            Call API + emit message_sent/received
+send_message(id, msg, use_thinking) → response  Call API + emit message_sent/received
 _log_api_call(...)                               Record to system log
 emit_event(type, agent_id, summary)              Push to hub + SSE subscribers
 export_agent(id) / export_all()                  Serialize state to JSON
@@ -157,8 +165,8 @@ export_agent(id) / export_all()                  Serialize state to JSON
 ### 5.3 Model Selector (`core/model_selector.py`)
 
 ```
-resolve(tier) → model_id          Map tier name to model ID from config
-suggest_tier(agent_type) → tier   Default tier for an agent type
+resolve(tier, agent_type) → model_id  Check agent_overrides first, then mode preset, then fallback
+suggest_tier(agent_type) → tier       Default tier for an agent type
 ```
 
 ### 5.4 Prompts (`prompts/`)
@@ -169,9 +177,12 @@ Base prompts read from disk at runtime. Agent-written prompts stored in hub stat
 
 ## 6. API Endpoints
 
-### Config
+### Config & Prompts
 - `GET  /api/config` — current configuration
 - `PUT  /api/config` — update configuration
+- `GET  /api/prompts` — list prompt file names
+- `GET  /api/prompts/{name}` — read prompt content
+- `PUT  /api/prompts/{name}` — write prompt content to disk
 
 ### Health
 - `GET  /api/health` — status, phase, agent count, API key presence
@@ -184,7 +195,25 @@ Base prompts read from disk at runtime. Agent-written prompts stored in hub stat
 
 ### Chat (Phase 2+)
 - `POST /api/chat` — send message to context agent
-- `POST /api/command` — send command to orchestrator
+- `POST /api/command` — send command (no-op, kept for API compat)
+
+### Upload (skip phases, legacy)
+- `POST /api/upload/brief` — upload brief JSON, skip to persona generation
+- `POST /api/upload/personas` — upload personas JSON (with optional brief), skip to interview design
+
+### Artifacts (modular pipeline)
+- `GET  /api/artifacts/{stage}` — list saved artifacts for a stage (briefs, personas, strategies, transcripts, syntheses, visualizations)
+- `GET  /api/artifacts/{stage}/{id}` — load a specific artifact's data
+- `POST /api/artifacts/{stage}/upload` — upload artifact, save to library, set as current output, set pending_phase
+- `POST /api/artifacts/{stage}/select/{id}` — select a saved artifact as current output
+
+### Pipeline Control
+- `POST /api/proceed` — clear pipeline gate and run pipeline from pending phase
+
+### Synthesis
+- `POST /api/synthesize` — trigger synthesis from transcripts (background thread)
+- `POST /api/refine-synthesis` — refine synthesis with user instruction (background thread)
+- `POST /api/visualize` — generate rich HTML visualization from synthesis (background thread, uses extended thinking)
 
 ### Events
 - `GET  /api/events` — SSE stream of real-time events
@@ -194,6 +223,7 @@ Base prompts read from disk at runtime. Agent-written prompts stored in hub stat
 - `GET  /api/export/brief` — brief JSON
 - `GET  /api/export/personas` — personas JSON
 - `GET  /api/export/transcripts` — transcripts JSON
+- `POST /api/export/run` — generate timestamped folder with styled HTML files (brief, personas, transcripts, synthesis, visualization)
 
 ---
 
@@ -212,6 +242,8 @@ interview_synth/
 ├── index.html                    # Vite entry HTML
 ├── server.py                     # FastAPI entry point
 ├── config.py                     # Centralized config loader
+├── artifact_store.py             # Save/list/load pipeline artifacts per stage
+├── export_run.py                 # Generate styled HTML export folder per run
 ├── core/                         # Core modules
 │   ├── AGENTS.md
 │   ├── hub.py                    # State hub — single source of truth
@@ -219,7 +251,8 @@ interview_synth/
 │   └── model_selector.py         # Tier → model resolution
 ├── api/                          # Route files (thin wrappers)
 │   ├── AGENTS.md
-│   ├── config_routes.py          # Config CRUD
+│   ├── config_routes.py          # Config + prompt CRUD
+│   ├── chat_routes.py            # Chat, commands, synthesis
 │   ├── state_routes.py           # State + export endpoints
 │   └── events.py                 # SSE streaming
 ├── data/                         # All persistent data
@@ -228,20 +261,28 @@ interview_synth/
 │   └── state.json                # System state (gitignored)
 ├── prompts/                      # Editable prompt files
 │   ├── AGENTS.md
-│   ├── orchestrator.md
+│   ├── orchestrator.md            # (legacy, no longer used by pipeline)
 │   ├── context_agent.md
 │   ├── persona_architect.md
 │   ├── interview_designer.md
-│   └── quality_reviewer.md
+│   ├── quality_reviewer.md
+│   ├── synthesis_agent.md
+│   ├── synthesis_designer.md
+│   ├── synthesis_refiner.md
+│   └── visualizer.md
 ├── src/                          # React frontend (flat)
 │   ├── AGENTS.md
 │   ├── main.jsx                  # Entry point
 │   ├── index.css                 # Tailwind + custom styles
-│   ├── App.jsx                   # 4-panel layout
-│   ├── ConversationPanel.jsx     # Panel 1: chat
-│   ├── PersonaPanel.jsx          # Panel 2: personas
-│   ├── InterviewPanel.jsx        # Panel 3: interviews
-│   ├── LogPanel.jsx              # Panel 4: system log
+│   ├── App.jsx                   # Tab layout + settings drawer
+│   ├── BriefingTab.jsx           # Tab 1: chat + brief
+│   ├── ConversationPanel.jsx     # Chat UI component
+│   ├── PersonasTab.jsx           # Tab 2: personas
+│   ├── InterviewPanel.jsx        # Tab 3: interviews
+│   ├── SummaryTab.jsx            # Tab 4: synthesis report
+│   ├── LogPanel.jsx              # Log sidebar
+│   ├── SettingsDrawer.jsx        # Settings drawer (gear icon)
+│   ├── ConfigPanel.jsx           # Legacy mode selector
 │   ├── useSSE.js                 # SSE hook
 │   └── useAPI.js                 # Fetch hook
 └── docs/
@@ -290,17 +331,17 @@ interview_synth/
 
 ---
 
-### Phase 3: Orchestrator
+### Phase 3: Pipeline Runner
 
-**Goal:** Orchestrator watches events, parses decisions, executes actions. Log feed in Panel 4.
+**Goal:** Deterministic pipeline runner executes steps sequentially via resume(). SSE events update frontend.
 
-**Update:** `core/agent_runtime.py`, `server.py`, `LogPanel.jsx`
+**Update:** `core/orchestrator.py`, `server.py`
 
 **Test:**
-1. Orchestrator created at session start
-2. Events routed to orchestrator after each action
-3. Orchestrator decisions parsed and executed
-4. Panel 4 shows orchestrator reasoning
+1. resume() spawns background thread running pipeline steps
+2. Each step emits SSE events for frontend updates
+3. Errors stop pipeline and report via SSE
+4. No LLM orchestrator agent needed
 
 **State after Phase 3:** System transitions autonomously from brief → persona generation.
 
@@ -311,7 +352,7 @@ interview_synth/
 **Goal:** Persona architect creates personas. Panel 2 shows cards + rationale.
 
 **Test:**
-1. Orchestrator creates persona architect after brief
+1. Pipeline runs persona architect after brief
 2. Personas stored in outputs
 3. Panel 2 shows persona cards with profiles
 4. System prompts visible in detail view
@@ -325,7 +366,7 @@ interview_synth/
 **Goal:** Interview designer produces strategy + interviewer prompt. Panel 3 shows strategy.
 
 **Test:**
-1. Orchestrator creates interview designer after personas approved
+1. Pipeline runs interview designer after personas
 2. Strategy stored in outputs
 3. Panel 3 shows collapsible strategy document
 
@@ -338,7 +379,7 @@ interview_synth/
 **Goal:** Sequential interviews. Real-time transcript streaming in Panel 3.
 
 **Test:**
-1. Orchestrator starts interviews one at a time
+1. Pipeline starts all interviews in parallel (thread.join waits for all)
 2. Each interview creates interviewer + persona agent pair
 3. Transcript streams in Panel 3
 4. 15-turn safety rail enforced
@@ -353,11 +394,10 @@ interview_synth/
 **Goal:** Quality reviewer, inspection modals, all download buttons, /commands, error recovery.
 
 **Test:**
-1. Orchestrator can spawn quality reviewer
+1. Quality reviewer can be spawned if needed
 2. All download buttons produce correct files
-3. /commands reach orchestrator
-4. Inspection modals show full agent state
-5. Error injection triggers orchestrator recovery
+3. Inspection modals show full agent state
+4. Error injection triggers pipeline error handling
 
 **State after Phase 7:** Complete POC as specified in scope.md.
 

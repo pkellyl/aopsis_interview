@@ -17,7 +17,7 @@ All persistent data. JSON files on disk are the source of truth. config.json hol
 
 | File | Purpose | Depends On |
 |------|---------|------------|
-| `config.json` | Runtime configuration: models, organization, settings | — |
+| `config.json` | Runtime configuration: models, presets (per-mode tier→model), agent_overrides, turn_limits (per-mode), organization, model_mode, max_concurrent_api_calls | — |
 | `state.json` | System state (gitignored, created at runtime) | Managed by `core/hub.py` |
 
 ## Change Checklist
