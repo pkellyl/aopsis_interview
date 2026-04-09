@@ -1,10 +1,13 @@
 """Synthetic Audience Interview System. FastAPI entry point."""
 
 import os
+from pathlib import Path
 from contextlib import asynccontextmanager
 
-from fastapi import FastAPI
+from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
+from fastapi.responses import FileResponse
 from dotenv import load_dotenv
 
 import config
@@ -52,6 +55,20 @@ def health():
         "agent_count": len(hub.get_all_agents()),
         "has_api_key": bool(config.get_api_key())
     }
+
+
+# Serve built frontend (Vite output in dist/)
+DIST = Path(__file__).parent / "dist"
+if DIST.is_dir():
+    app.mount("/assets", StaticFiles(directory=DIST / "assets"), name="assets")
+
+    @app.get("/{path:path}")
+    async def spa_fallback(request: Request, path: str):
+        """Serve index.html for all non-API routes (SPA client-side routing)."""
+        file = DIST / path
+        if file.is_file():
+            return FileResponse(file)
+        return FileResponse(DIST / "index.html")
 
 
 if __name__ == "__main__":
